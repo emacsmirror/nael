@@ -1,4 +1,4 @@
-;;; nael.el --- A humble major-mode for Lean  -*- lexical-binding: t; -*-
+;;; nael.el --- A deprecated Fork of Lean4-Mode  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014 Microsoft Corp. (R)
 ;; Copyright (C) 2024 Free Software Foundation, Inc.
@@ -30,7 +30,7 @@
 ;; Package-Requires: ((emacs "29.1") (markdown-mode "2"))
 ;; SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
 ;; URL: https://codeberg.org/mekeor/nael
-;; Version: 0.2.3
+;; Version: 0.3.0
 
 ;; This file is not part of GNU Emacs.
 
@@ -41,8 +41,8 @@
 
 ;;; Commentary:
 
-;; Nael is a humble major-mode for Lean.  Its documentation is given
-;; as `README.org' which is also provided as Info manual.
+;; Nael was a fork of Lean4-Mode.  It has been deprecated in favor of
+;; development on Lean4-Mode itself.
 
 ;;; Code:
 

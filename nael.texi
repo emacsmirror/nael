@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename nael.info
-@settitle Nael – A humble Emacs major-mode for Lean
+@settitle Nael – A deprecated fork of Lean4-Mode
 @documentencoding UTF-8
 @documentlanguage en
 @c %**end of header
@@ -13,7 +13,7 @@
 
 @finalout
 @titlepage
-@title Nael – A humble Emacs major-mode for Lean
+@title Nael – A deprecated fork of Lean4-Mode
 @author Mekeor Melire
 @end titlepage
 
@@ -21,161 +21,26 @@
 
 @ifnottex
 @node Top
-@top Nael – A humble Emacs major-mode for Lean
+@top Nael – A deprecated fork of Lean4-Mode
 
-Nael is a package for GNU Emacs providing a humble major-mode for the
-@uref{https://lean-lang.org/, Lean} programming-language and theorem-prover.
-
-“Nael” is “Lean” reversed and ends in “el” as in Emacs-Lisp.
+Nael was a fork of Lean4-Mode.  It has been deprecated in favor of
+development on Lean4-Mode itself.
 
 @end ifnottex
 
 @menu
-* Usage::
-* About::
-* Alternatives::
 * Changelog::
 
 @detailmenu
 --- The Detailed Node Listing ---
 
-About
-
-* Status::
-* License::
-
-Alternatives
-
-* History::
-* Comparison::
-
 Changelog
 
+* Version 0.3.0 @emph{<2024-11-19 Tue>}: Version 030 @emph{<2024-11-19 Tue>}. 
 * Version 0.2.2 released on @emph{<2024-07-05 Fri>}: Version 022 released on @emph{<2024-07-05 Fri>}. 
 
 @end detailmenu
 @end menu
-
-@node Usage
-@chapter Usage
-
-@enumerate
-@item
-@uref{https://lean-lang.org/lean4/doc/setup.html, Install Lean}.
-@item
-Install Nael. For example, manually:
-@enumerate
-@item
-Clone the Git repository.
-@example
-git clone https://codeberg.org/mekeor/nael.git ~/path/to/nael
-@end example
-@item
-Set up @code{load-path}.
-@lisp
-(add-to-list 'load-path "~/path/to/nael")
-@end lisp
-@end enumerate
-@item
-Load Nael.  (Nael does not autoload anything.)
-@lisp
-(require 'nael)
-@end lisp
-@item
-Optionally, configure Nael.
-@lisp
-(defun my-nael-setup ()
-  (interactive)
-  ;; Enable Emacs' built-in `TeX' input-method.  Alternatively, you
-  ;; could install the external `unicode-math-input' package and
-  ;; use the `unicode-math' input-method.
-  (set-input-method "TeX")
-  ;; Enable Emacs' built-in LSP-client Eglot.
-  (eglot-ensure))
-
-(add-hook 'nael-mode-hook #'my-nael-setup)
-
-;; Nael buffer-locally sets `compile-command' to "lake build".
-(keymap-set nael-mode-map "C-c C-c" #'project-compile)
-
-;; Find out how to type the character at point in the current
-;; input-method.
-(keymap-set nael-mode-map "C-c C-k" #'quail-show-key)
-@end lisp
-@end enumerate
-
-@node About
-@chapter About
-
-@menu
-* Status::
-* License::
-@end menu
-
-@node Status
-@section Status
-
-Nael is actively maintained but still in rather early stage of
-development.  Thus, it is not as fully featured as @samp{lean4-mode} and
-may of course contain severe bugs.
-
-@node License
-@section License
-
-This program is based on lean4-mode which is licensed under
-Apache-2.0.  Additions and modifications made within this repository
-are licensed under GNU General Public License version 3 or later.
-
-@node Alternatives
-@chapter Alternatives
-
-@menu
-* History::
-* Comparison::
-@end menu
-
-@node History
-@section History
-
-@enumerate
-@item
-@emph{Microsoft Corp.®} et al. developed @uref{https://github.com/leanprover-community/lean4-mode, lean4-mode} based on @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode}.
-@item
-@emph{Richard Copley} developed a @uref{https://github.com/bustercopley/lean4-mode, fork} based on Emacs' built-in @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot}.
-@item
-@emph{Mekeor Melire} developed a fork based on Richard Copley's fork.
-It is called Nael and strives to be more humble by relying on
-Emacs' built-in facilities, like Eglot, ElDoc and Project.
-@end enumerate
-
-@node Comparison
-@section Comparison
-
-@itemize
-@item
-Nael does not depend on third-party lsp-mode.  Instead, you can
-optionally use Nael together with Emacs' built-in LSP-client Eglot.
-@item
-Nael does not offer any special buffer for information on the
-current goal etc.  Instead, Nael introduces two ElDoc documentation
-functions which will show up in the usual ElDoc buffer.
-@item
-Nael does not offer any special mechanism to detect the current
-project.  Instead, it introduces Lakefiles as Project root markers.
-@item
-Nael does not offer any special command to build the current
-project.  Instead, it configures the built-in @code{project-compile}
-command to work.
-@item
-Nael does not offer any special input-method.  Instead, you may use
-the built-in @samp{TeX} input-method or the @samp{unicode-math} from the
-external @uref{https://github.com/astoff/unicode-math-input.el, unicode-math-input} package.
-@item
-Nael does not solely use the Apache-2 license.  Instead, it is
-licensed partly under Apache-2, and partly under GPLv3+.
-Altogether, you can treat Nael as if it was under GPLv3+ since
-that's the stricter license.
-@end itemize
 
 @node Changelog
 @chapter Changelog
@@ -183,8 +48,17 @@ that's the stricter license.
 This changelog only describes user-facing changes.
 
 @menu
+* Version 0.3.0 @emph{<2024-11-19 Tue>}: Version 030 @emph{<2024-11-19 Tue>}. 
 * Version 0.2.2 released on @emph{<2024-07-05 Fri>}: Version 022 released on @emph{<2024-07-05 Fri>}. 
 @end menu
+
+@node Version 030 @emph{<2024-11-19 Tue>}
+@section Version 0.3.0 @emph{<2024-11-19 Tue>}
+
+@itemize
+@item
+Deprecate Nael.
+@end itemize
 
 @node Version 022 released on @emph{<2024-07-05 Fri>}
 @section Version 0.2.2 released on @emph{<2024-07-05 Fri>}
