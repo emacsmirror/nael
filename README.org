@@ -11,67 +11,58 @@ Nael is a package for GNU Emacs providing a humble major-mode for the
 
 “Nael” is “Lean” reversed and ends in “el” as in Emacs-Lisp.
 
-* Usage
+* Installation
 
-1. [[https://lean-lang.org/lean4/doc/setup.html][Install Lean]].
-2. Install Nael. For example, manually:
-   1. Clone the Git repository.
-      #+begin_src sh
-      git clone https://codeberg.org/mekeor/nael.git ~/path/to/nael
-      #+end_src
-   2. Set up ~load-path~.
-      #+begin_src elisp
-      (add-to-list 'load-path "~/path/to/nael")
-      #+end_src
-3. Load Nael.  (Nael does not autoload anything.)
-   #+begin_src elisp
-   (require 'nael)
-   #+end_src
-4. Optionally, configure Nael.
-   #+begin_src elisp
-   (defun my-nael-setup ()
-     (interactive)
-     ;; Enable Emacs' built-in `TeX' input-method.  Alternatively, you
-     ;; could install the external `unicode-math-input' package and
-     ;; use the `unicode-math' input-method.
-     (set-input-method "TeX")
-     ;; Enable Emacs' built-in LSP-client Eglot.
-     (eglot-ensure))
+After cloning Nael's Git repository, adopt following in your Emacs
+user initialization file:
 
-   (add-hook 'nael-mode-hook #'my-nael-setup)
+#+begin_src elisp
+;;;; Load
 
-   ;; Nael buffer-locally sets `compile-command' to "lake build".
-   (keymap-set nael-mode-map "C-c C-c" #'project-compile)
+(add-to-list 'load-path "~/path/to/nael")
+(require 'nael)
 
-   ;; Find out how to type the character at point in the current
-   ;; input-method.
-   (keymap-set nael-mode-map "C-c C-k" #'quail-show-key)
-   #+end_src
+;; Configure (opional)
 
-* About
+(defun my-nael-setup ()
+  (interactive)
+  ;; Enable Emacs' built-in `TeX' input-method.  Alternatively, you
+  ;; could install the external `unicode-math-input' package and
+  ;; use the `unicode-math' input-method.
+  (set-input-method "TeX")
+  ;; Enable Emacs' built-in LSP-client Eglot.
+  (eglot-ensure))
 
-** Status
+(add-hook 'nael-mode-hook #'my-nael-setup)
+
+;; Nael buffer-locally sets `compile-command' to "lake build".
+(keymap-set nael-mode-map "C-c C-c" #'project-compile)
+
+;; Find out how to type the character at point in the current
+;; input-method.
+(keymap-set nael-mode-map "C-c C-k" #'quail-show-key)
+#+end_src
+
+* Status
 
 The future of Nael is uncertain. It hasn't been maintained for a while
 but might be maintained in future.
 
-** License
+* License
 
-This program is based on lean4-mode which is licensed under
+This program is based on Lean4-Mode which is licensed under
 Apache-2.0.  Additions and modifications made within this repository
 are licensed under GNU General Public License version 3 or later.
 
-* Alternatives
+* History
 
-** History
-
-1. /Microsoft Corp.®/ et al. developed [[https://github.com/leanprover-community/lean4-mode][lean4-mode]] based on [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]].
+1. /Microsoft/ et al. developed [[https://github.com/leanprover-community/lean4-mode][Lean4-Mode]] based on [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]].
 2. /Richard Copley/ developed a [[https://github.com/bustercopley/lean4-mode][fork]] based on Emacs' built-in [[https://www.gnu.org/software/emacs/manual/html_node/eglot/][Eglot]].
 3. /Mekeor Melire/ developed a fork based on Richard Copley's fork.
    It is called Nael and strives to be more humble by relying on
    Emacs' built-in facilities, like Eglot, ElDoc and Project.
 
-** Comparison
+* Comparison
 
 - Nael does not depend on third-party lsp-mode.  Instead, you can
   optionally use Nael together with Emacs' built-in LSP-client Eglot.
@@ -108,6 +99,8 @@ This changelog only describes user-facing changes.
 
 * Roadmap :noexport:
 
+- Extract support for Eglot into a separate minor mode and file.
+- Support lsp-mode along Eglot.
 - Consider Emacs' built-in SMIE for indentation.
 - Consider setting variables:
   - ~comment-quote-nested~

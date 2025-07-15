@@ -31,23 +31,15 @@ Nael is a package for GNU Emacs providing a humble major-mode for the
 @end ifnottex
 
 @menu
-* Usage::
-* About::
-* Alternatives::
+* Installation::
+* Status::
+* License::
+* History::
+* Comparison::
 * Changelog::
 
 @detailmenu
 --- The Detailed Node Listing ---
-
-About
-
-* Status::
-* License::
-
-Alternatives
-
-* History::
-* Comparison::
 
 Changelog
 
@@ -57,34 +49,20 @@ Changelog
 @end detailmenu
 @end menu
 
-@node Usage
-@chapter Usage
+@node Installation
+@chapter Installation
 
-@enumerate
-@item
-@uref{https://lean-lang.org/lean4/doc/setup.html, Install Lean}.
-@item
-Install Nael. For example, manually:
-@enumerate
-@item
-Clone the Git repository.
-@example
-git clone https://codeberg.org/mekeor/nael.git ~/path/to/nael
-@end example
-@item
-Set up @code{load-path}.
+After cloning Nael's Git repository, adopt following in your Emacs
+user initialization file:
+
 @lisp
+;;;; Load
+
 (add-to-list 'load-path "~/path/to/nael")
-@end lisp
-@end enumerate
-@item
-Load Nael.  (Nael does not autoload anything.)
-@lisp
 (require 'nael)
-@end lisp
-@item
-Optionally, configure Nael.
-@lisp
+
+;; Configure (opional)
+
 (defun my-nael-setup ()
   (interactive)
   ;; Enable Emacs' built-in `TeX' input-method.  Alternatively, you
@@ -103,43 +81,26 @@ Optionally, configure Nael.
 ;; input-method.
 (keymap-set nael-mode-map "C-c C-k" #'quail-show-key)
 @end lisp
-@end enumerate
-
-@node About
-@chapter About
-
-@menu
-* Status::
-* License::
-@end menu
 
 @node Status
-@section Status
+@chapter Status
 
 The future of Nael is uncertain. It hasn't been maintained for a while
 but might be maintained in future.
 
 @node License
-@section License
+@chapter License
 
-This program is based on lean4-mode which is licensed under
+This program is based on Lean4-Mode which is licensed under
 Apache-2.0.  Additions and modifications made within this repository
 are licensed under GNU General Public License version 3 or later.
 
-@node Alternatives
-@chapter Alternatives
-
-@menu
-* History::
-* Comparison::
-@end menu
-
 @node History
-@section History
+@chapter History
 
 @enumerate
 @item
-@emph{Microsoft Corp.®} et al. developed @uref{https://github.com/leanprover-community/lean4-mode, lean4-mode} based on @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode}.
+@emph{Microsoft} et al. developed @uref{https://github.com/leanprover-community/lean4-mode, Lean4-Mode} based on @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode}.
 @item
 @emph{Richard Copley} developed a @uref{https://github.com/bustercopley/lean4-mode, fork} based on Emacs' built-in @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot}.
 @item
@@ -149,7 +110,7 @@ Emacs' built-in facilities, like Eglot, ElDoc and Project.
 @end enumerate
 
 @node Comparison
-@section Comparison
+@chapter Comparison
 
 @itemize
 @item
