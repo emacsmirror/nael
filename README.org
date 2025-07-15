@@ -5,6 +5,7 @@
 #+texinfo_dir_desc:     Major mode for Lean.
 #+texinfo_dir_title:    Nael: (nael).
 #+export_file_name:     nael.texi
+#+options:              toc:nil
 
 Nael is a package for [[https://www.gnu.org/software/emacs/][GNU Emacs]] that provides a major-mode for the
 [[https://lean-lang.org/][Lean]] language. “Nael” reversed is “Lean” and ends in “el” as in
