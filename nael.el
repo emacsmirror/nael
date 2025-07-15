@@ -1,6 +1,6 @@
 ;;; nael.el --- A humble major-mode for Lean  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2014 Microsoft Corp. (R)
+;; Copyright (C) 2014 Microsoft Corp.
 ;; Copyright (C) 2024 Free Software Foundation, Inc.
 
 ;; Author:
@@ -32,7 +32,7 @@
 ;; URL: https://codeberg.org/mekeor/nael
 ;; Version: 0.3.0
 
-;; This file is not part of GNU Emacs.
+;; This file is NOT part of GNU Emacs.
 
 ;; This program is based on `lean4-mode' which is licensed under
 ;; Apache-2.0.  Additions and modifications made within this
