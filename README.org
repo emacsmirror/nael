@@ -52,9 +52,8 @@ Nael is a package for GNU Emacs providing a humble major-mode for the
 
 ** Status
 
-Nael is actively maintained but still in rather early stage of
-development.  Thus, it is not as fully featured as =lean4-mode= and
-may of course contain severe bugs.
+The future of Nael is uncertain. It hasn't been maintained for a while
+but might be maintained in future.
 
 ** License
 

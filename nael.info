@@ -91,9 +91,8 @@ File: nael.info,  Node: Status,  Next: License,  Up: About
 2.1 Status
 ==========
 
-Nael is actively maintained but still in rather early stage of
-development.  Thus, it is not as fully featured as ‘lean4-mode’ and may
-of course contain severe bugs.
+The future of Nael is uncertain.  It hasn't been maintained for a while
+but might be maintained in future.
 
 
 File: nael.info,  Node: License,  Prev: Status,  Up: About
@@ -197,13 +196,13 @@ Node: Top192
 Node: Usage919
 Node: About2171
 Node: Status2299
-Node: License2555
-Node: Alternatives2837
-Node: History2987
-Node: Comparison3655
-Node: Changelog4896
-Node: Version 030 released on _<2024-11-19 Tue>_5235
-Node: Version 022 released on _<2024-07-05 Fri>_5495
+Node: License2492
+Node: Alternatives2774
+Node: History2924
+Node: Comparison3592
+Node: Changelog4833
+Node: Version 030 released on _<2024-11-19 Tue>_5172
+Node: Version 022 released on _<2024-07-05 Fri>_5432
 
 End Tag Table
 
