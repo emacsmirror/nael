@@ -8,13 +8,12 @@ END-INFO-DIR-ENTRY
 
 File: nael.info,  Node: Top,  Next: Installation,  Up: (dir)
 
-Nael – A humble Emacs major-mode for Lean
-*****************************************
+Nael – An Emacs major mode for Lean
+***********************************
 
-Nael is a package for GNU Emacs providing a humble major-mode for the
-Lean (https://lean-lang.org/) programming-language and theorem-prover.
-
-   “Nael” is “Lean” reversed and ends in “el” as in Emacs-Lisp.
+Nael is a package for GNU Emacs (https://www.gnu.org/software/emacs/)
+that provides a major-mode for the Lean (https://lean-lang.org/)
+language.  “Nael” reversed is “Lean” and ends in “el” as in Emacs-Lisp.
 
 * Menu:
 
@@ -99,9 +98,9 @@ File: nael.info,  Node: History,  Next: Comparison,  Prev: License,  Up: Top
      (https://github.com/bustercopley/lean4-mode) based on Emacs'
      built-in Eglot
      (https://www.gnu.org/software/emacs/manual/html_node/eglot/).
-  3. _Mekeor Melire_ developed a fork based on Richard Copley's fork.
-     It is called Nael and strives to be more humble by relying on
-     Emacs' built-in facilities, like Eglot, ElDoc and Project.
+  3. _Mekeor Melire_ developed Nael, a fork based on Richard Copley's
+     fork, that heavily uses Emacs' built-in facilities like Eglot,
+     ElDoc and Project.
 
 
 File: nael.info,  Node: Comparison,  Next: Changelog,  Prev: History,  Up: Top
@@ -155,7 +154,7 @@ File: nael.info,  Node: Version 022 released on _<2024-07-05 Fri>_,  Prev: Versi
 6.2 Version 0.2.2 released on _<2024-07-05 Fri>_
 ================================================
 
-   • Fix link to homepage (<https://codeberg.org/mekeor/nael>).
+   • Fix link to homepage (https://codeberg.org/mekeor/nael).
    • Add links to Nael customization group.
    • Support Imenu even if Eglot is not enabled.
    • When customizing Nael mode hook, suggest functions.
@@ -164,14 +163,14 @@ File: nael.info,  Node: Version 022 released on _<2024-07-05 Fri>_,  Prev: Versi
 
 Tag Table:
 Node: Top192
-Node: Installation883
-Node: Status1873
-Node: License2081
-Node: History2373
-Node: Comparison3036
-Node: Changelog4282
-Node: Version 030 released on _<2024-11-19 Tue>_4619
-Node: Version 022 released on _<2024-07-05 Fri>_4879
+Node: Installation872
+Node: Status1862
+Node: License2070
+Node: History2362
+Node: Comparison2986
+Node: Changelog4232
+Node: Version 030 released on _<2024-11-19 Tue>_4569
+Node: Version 022 released on _<2024-07-05 Fri>_4829
 
 End Tag Table
 

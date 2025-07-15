@@ -1,4 +1,4 @@
-#+title:                Nael – A humble Emacs major-mode for Lean
+#+title:                Nael – An Emacs major mode for Lean
 #+author:               Mekeor Melire
 #+language:             en
 #+texinfo_dir_category: Emacs misc features
@@ -6,10 +6,9 @@
 #+texinfo_dir_title:    Nael: (nael).
 #+export_file_name:     nael.texi
 
-Nael is a package for GNU Emacs providing a humble major-mode for the
-[[https://lean-lang.org/][Lean]] programming-language and theorem-prover.
-
-“Nael” is “Lean” reversed and ends in “el” as in Emacs-Lisp.
+Nael is a package for [[https://www.gnu.org/software/emacs/][GNU Emacs]] that provides a major-mode for the
+[[https://lean-lang.org/][Lean]] language. “Nael” reversed is “Lean” and ends in “el” as in
+Emacs-Lisp.
 
 * Installation
 
@@ -58,9 +57,9 @@ are licensed under GNU General Public License version 3 or later.
 
 1. /Microsoft/ et al. developed [[https://github.com/leanprover-community/lean4-mode][Lean4-Mode]] based on [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]].
 2. /Richard Copley/ developed a [[https://github.com/bustercopley/lean4-mode][fork]] based on Emacs' built-in [[https://www.gnu.org/software/emacs/manual/html_node/eglot/][Eglot]].
-3. /Mekeor Melire/ developed a fork based on Richard Copley's fork.
-   It is called Nael and strives to be more humble by relying on
-   Emacs' built-in facilities, like Eglot, ElDoc and Project.
+3. /Mekeor Melire/ developed Nael, a fork based on Richard Copley's
+   fork, that heavily uses Emacs' built-in facilities like Eglot,
+   ElDoc and Project.
 
 * Comparison
 
@@ -92,7 +91,7 @@ This changelog only describes user-facing changes.
 
 ** Version 0.2.2 released on <2024-07-05 Fri>
 
-- Fix link to homepage (https://codeberg.org/mekeor/nael).
+- Fix link to [[https://codeberg.org/mekeor/nael][homepage]].
 - Add links to Nael customization group.
 - Support Imenu even if Eglot is not enabled.
 - When customizing Nael mode hook, suggest functions.
@@ -101,6 +100,7 @@ This changelog only describes user-facing changes.
 
 - Extract support for Eglot into a separate minor mode and file.
 - Support lsp-mode along Eglot.
+- Autogenerate abbrev table from Lean4 VSCode plugin sources.
 - Consider Emacs' built-in SMIE for indentation.
 - Consider setting variables:
   - ~comment-quote-nested~

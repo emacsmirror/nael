@@ -1,4 +1,4 @@
-;;; nael.el --- A humble major-mode for Lean  -*- lexical-binding: t; -*-
+;;; nael.el --- Major mode for Lean  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014 Microsoft Corp.
 ;; Copyright (C) 2024 Free Software Foundation, Inc.
@@ -41,8 +41,8 @@
 
 ;;; Commentary:
 
-;; Nael is a humble major-mode for Lean.  Its documentation is given
-;; as `README.org' which is also provided as Info manual.
+;; Nael is a major mode for Lean.  It is documented in the
+;; `README.org' that is also provided as Info manual.
 
 ;;; Code:
 
@@ -55,7 +55,7 @@
 (require 'markdown-mode)
 
 (defgroup nael nil
-  "A humble major-mode for Lean."
+  "Major mode for Lean."
   :group 'languages
   :link '(emacs-library-link
           :tag "Source Lisp File"
@@ -412,7 +412,7 @@ functions for `plain-goal' and `plain-term-goal'."
   :group 'nael)
 
 (define-derived-mode nael-mode prog-mode "Nael"
-  "A humble major-mode for Lean.
+  "Major mode for Lean.
 
 \\{nael-mode-map}"
   ;; Comments:
