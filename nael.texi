@@ -17,8 +17,6 @@
 @author Mekeor Melire
 @end titlepage
 
-@contents
-
 @ifnottex
 @node Top
 @top Nael – An Emacs major mode for Lean
@@ -60,7 +58,7 @@ user initialization file:
 (add-to-list 'load-path "~/path/to/nael")
 (require 'nael)
 
-;; Configure (opional)
+;; Configure (optional)
 
 (defun my-nael-setup ()
   (interactive)
@@ -84,15 +82,16 @@ user initialization file:
 @node Status
 @chapter Status
 
-The future of Nael is uncertain. It hasn't been maintained for a while
-but might be maintained in future.
+Nael is experimental. Basic features work but breaking changes are
+expected at any time. Also, the future of Nael is uncertain. It hasn't
+been maintained for a while but might be maintained in future.
 
 @node License
 @chapter License
 
-This program is based on Lean4-Mode which is licensed under
-Apache-2.0.  Additions and modifications made within this repository
-are licensed under GNU General Public License version 3 or later.
+Effectively, Nael is licensed under GPLv3. To be more precise, some
+parts are under Apache-2.0 whereas other parts are under the stricter
+GPLv3.
 
 @node History
 @chapter History
@@ -114,7 +113,8 @@ ElDoc and Project.
 @itemize
 @item
 Nael does not depend on third-party lsp-mode.  Instead, you can
-optionally use Nael together with Emacs' built-in LSP-client Eglot.
+optionally use Nael together with Emacs' built-in LSP-client
+Eglot. (It is planned to optionally support lsp-mode as well.)
 @item
 Nael does not offer any special buffer for information on the
 current goal etc.  Instead, Nael introduces two ElDoc documentation

@@ -46,7 +46,7 @@ initialization file:
      (add-to-list 'load-path "~/path/to/nael")
      (require 'nael)
 
-     ;; Configure (opional)
+     ;; Configure (optional)
 
      (defun my-nael-setup ()
        (interactive)
@@ -72,8 +72,9 @@ File: nael.info,  Node: Status,  Next: License,  Prev: Installation,  Up: Top
 2 Status
 ********
 
-The future of Nael is uncertain.  It hasn't been maintained for a while
-but might be maintained in future.
+Nael is experimental.  Basic features work but breaking changes are
+expected at any time.  Also, the future of Nael is uncertain.  It hasn't
+been maintained for a while but might be maintained in future.
 
 
 File: nael.info,  Node: License,  Next: History,  Prev: Status,  Up: Top
@@ -81,9 +82,9 @@ File: nael.info,  Node: License,  Next: History,  Prev: Status,  Up: Top
 3 License
 *********
 
-This program is based on Lean4-Mode which is licensed under Apache-2.0.
-Additions and modifications made within this repository are licensed
-under GNU General Public License version 3 or later.
+Effectively, Nael is licensed under GPLv3.  To be more precise, some
+parts are under Apache-2.0 whereas other parts are under the stricter
+GPLv3.
 
 
 File: nael.info,  Node: History,  Next: Comparison,  Prev: License,  Up: Top
@@ -110,6 +111,7 @@ File: nael.info,  Node: Comparison,  Next: Changelog,  Prev: History,  Up: Top
 
    • Nael does not depend on third-party lsp-mode.  Instead, you can
      optionally use Nael together with Emacs' built-in LSP-client Eglot.
+     (It is planned to optionally support lsp-mode as well.)
    • Nael does not offer any special buffer for information on the
      current goal etc.  Instead, Nael introduces two ElDoc documentation
      functions which will show up in the usual ElDoc buffer.
@@ -164,13 +166,13 @@ File: nael.info,  Node: Version 022 released on _<2024-07-05 Fri>_,  Prev: Versi
 Tag Table:
 Node: Top192
 Node: Installation872
-Node: Status1862
-Node: License2070
-Node: History2362
-Node: Comparison2986
-Node: Changelog4232
-Node: Version 030 released on _<2024-11-19 Tue>_4569
-Node: Version 022 released on _<2024-07-05 Fri>_4829
+Node: Status1863
+Node: License2168
+Node: History2412
+Node: Comparison3036
+Node: Changelog4343
+Node: Version 030 released on _<2024-11-19 Tue>_4680
+Node: Version 022 released on _<2024-07-05 Fri>_4940
 
 End Tag Table
 
