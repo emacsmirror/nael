@@ -50,7 +50,7 @@
   :prefix "nael-eglot-")
 
 (defface nael-eglot-eldoc-header
-  '((t (:extend t :inherit markdown-header-face-1)))
+  '((t (:extend t :weight bold :inherit markdown-header-face-1)))
   "Face for section-headers of Nael-specific ElDoc documentations."
   :group 'nael)
 
