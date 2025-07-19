@@ -35,7 +35,11 @@
 
 ;;; Commentary:
 
-;; TODO
+;; This file defines the function `nael-eglot-managed-setup' which is
+;; meant to be locally hooked onto `eglot-managed-mode-hook' in Nael
+;; buffers.  When called, it teaches Eglot how to request information
+;; (such as the goals at point) from a Lean LSP server; and ElDoc is
+;; taught how to display this information.
 
 ;;; Code:
 
