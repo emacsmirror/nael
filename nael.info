@@ -12,8 +12,8 @@ Nael – An Emacs major mode for Lean
 ***********************************
 
 Nael is a package for GNU Emacs (https://www.gnu.org/software/emacs/)
-that provides a major-mode for the Lean (https://lean-lang.org/)
-language.  “Nael” reversed is “Lean” and ends in “el” as in Emacs-Lisp.
+that provides a major mode for Lean (https://lean-lang.org/) language.
+“Nael” reversed is “Lean” and ends in “el” as in Emacs-Lisp.
 
 * Menu:
 
@@ -148,7 +148,9 @@ File: nael.info,  Node: Version 030 released on _<2024-11-19 Tue>_,  Next: Versi
 6.1 Version 0.3.0 released on _<2024-11-19 Tue>_
 ================================================
 
-   • Deprecate Nael.
+   • Deprecate Nael in favor of working on
+     leanprover-community/lean4-mode
+     (https://github.com/leanprover-community/lean4-mode).
 
 
 File: nael.info,  Node: Version 022 released on _<2024-07-05 Fri>_,  Prev: Version 030 released on _<2024-11-19 Tue>_,  Up: Changelog
@@ -165,14 +167,14 @@ File: nael.info,  Node: Version 022 released on _<2024-07-05 Fri>_,  Prev: Versi
 
 Tag Table:
 Node: Top192
-Node: Installation872
-Node: Status1863
-Node: License2168
-Node: History2412
-Node: Comparison3036
-Node: Changelog4343
-Node: Version 030 released on _<2024-11-19 Tue>_4680
-Node: Version 022 released on _<2024-07-05 Fri>_4940
+Node: Installation867
+Node: Status1858
+Node: License2163
+Node: History2407
+Node: Comparison3031
+Node: Changelog4338
+Node: Version 030 released on _<2024-11-19 Tue>_4675
+Node: Version 022 released on _<2024-07-05 Fri>_5053
 
 End Tag Table
 

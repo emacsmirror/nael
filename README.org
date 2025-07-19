@@ -7,9 +7,8 @@
 #+export_file_name:     nael.texi
 #+options:              toc:nil
 
-Nael is a package for [[https://www.gnu.org/software/emacs/][GNU Emacs]] that provides a major-mode for the
-[[https://lean-lang.org/][Lean]] language. “Nael” reversed is “Lean” and ends in “el” as in
-Emacs-Lisp.
+Nael is a package for [[https://www.gnu.org/software/emacs/][GNU Emacs]] that provides a major mode for [[https://lean-lang.org/][Lean]]
+language. “Nael” reversed is “Lean” and ends in “el” as in Emacs-Lisp.
 
 * Installation
 
@@ -90,7 +89,8 @@ This changelog only describes user-facing changes.
 
 ** Version 0.3.0 released on <2024-11-19 Tue>
 
-- Deprecate Nael.
+- Deprecate Nael in favor of working on
+  [[https://github.com/leanprover-community/lean4-mode][leanprover-community/lean4-mode]].
 
 ** Version 0.2.2 released on <2024-07-05 Fri>
 
