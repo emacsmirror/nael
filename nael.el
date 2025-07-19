@@ -7,11 +7,11 @@
 ;; Author:
 ;;   Adam Topaz <topaz@ualberta.ca>
 ;;   Akira Komamura <akira.komamura@gmail.com>
-;;   Bao Zhiyuan
+;;   Bao Zhiyuan <bzy_sustech@foxmail.com>
 ;;   Daniel Selsam <daniel.selsam@protonmail.com>
 ;;   Gabriel Ebner <gebner@gebner.org>
 ;;   Henrik Böving <hargonix@gmail.com>
-;;   Hongyu Ouyang
+;;   Hongyu Ouyang  <oyhy0214@163.com>
 ;;   Jakub Bartczuk <bartczukkuba@gmail.com>
 ;;   Leonardo de Moura <leonardo@microsoft.com>
 ;;   Mauricio Collares <mauricio@collares.org>
