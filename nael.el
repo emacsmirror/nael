@@ -285,6 +285,10 @@
   :type 'hook
   :group 'nael)
 
+(defvar-keymap nael-mode-map
+  "C-c c" #'project-compile
+  "C-c e" #'eglot)
+
 (define-derived-mode nael-mode prog-mode "Nael"
   "Major mode for Lean.
 

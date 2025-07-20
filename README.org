@@ -34,9 +34,6 @@ user initialization file:
 
 (add-hook 'nael-mode-hook #'my-nael-setup)
 
-;; Nael buffer-locally sets `compile-command' to "lake build".
-(keymap-set nael-mode-map "C-c C-c" #'project-compile)
-
 ;; Find out how to type the character at point in the current
 ;; input-method.
 (keymap-set nael-mode-map "C-c C-k" #'quail-show-key)
