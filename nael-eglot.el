@@ -126,10 +126,10 @@ Extra.html#Lean.Lsp.PlainTermGoal"
   t)
 
 (defun nael-eglot-managed ()
-  "Buffer-locally setup ElDoc for Nael.
+  "Buffer-locally set up ElDoc and Eglot for Nael.
 
 Use ElDoc documentation strategy `compose' and add ElDoc documentation
-functions for `plain-goal' and `plain-term-goal'."
+functions for goal and term goal."
   (interactive)
   (setq-local eldoc-documentation-strategy
               #'eldoc-documentation-compose)
@@ -138,9 +138,16 @@ functions for `plain-goal' and `plain-term-goal'."
   (add-hook 'eldoc-documentation-functions
             #'nael-eglot-eldoc-term-goal -80 'local))
 
-;; Use "lake serve" as language-server.
-(setf (alist-get 'nael-mode eglot-server-programs)
-      '("lake" "serve"))
+(defun nael-eglot-server-initialized ()
+  "Buffer-locally correct Eglot's expectations on Lean LSP server.
+
+Since `lake serve' does not output anything, instruct Eglot to not wait
+for any output."
+  (setq-local eglot-sync-connect
+              nil))
+
+(add-to-list 'eglot-server-programs
+             (list 'nael-mode "lake" "serve"))
 
 (provide 'nael-eglot)
 
