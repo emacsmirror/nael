@@ -318,12 +318,10 @@
   ;; Flymake:
   (setq-local next-error-function
               #'flymake-goto-next-error)
-  ;; Eglot: Since "lake serve" does not output anything, don't wait
-  ;; for any output. (bug#1)
-  (setq-local eglot-sync-connect
-              nil)
+  (add-hook 'eglot-server-initialized-hook
+            #'nael-eglot-server-initialized nil 'local)
   (add-hook 'eglot-managed-mode-hook
-            #'nael-eglot-managed-setup nil 'local))
+            #'nael-eglot-managed nil 'local))
 
 (add-to-list 'auto-mode-alist
              (cons "\\.lean\\'" 'nael-mode))

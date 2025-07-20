@@ -15,12 +15,12 @@
 ;;; Commentary:
 
 ;; This file configures Eglot and ElDoc to work with Nael.  Not only
-;; but in particular, it defines the function
-;; `nael-eglot-managed-setup' which is meant to be locally hooked onto
-;; `eglot-managed-mode-hook' in Nael buffers.  When called, it teaches
-;; Eglot about some LSP requests information (such as information
-;; about the proof goals at point) that are special to the Lean LSP
-;; server; and it teaches ElDoc how to display this information.
+;; but in particular, it defines the function `nael-eglot-managed'
+;; which is meant to be locally hooked onto `eglot-managed-mode-hook'
+;; in Nael buffers.  When called, it teaches Eglot about some LSP
+;; requests information (such as information about the proof goals at
+;; point) that are special to the Lean LSP server; and it teaches
+;; ElDoc how to display this information.
 
 ;;; Code:
 
@@ -125,7 +125,7 @@ Extra.html#Lean.Lsp.PlainTermGoal"
         (list nil)))))
   t)
 
-(defun nael-eglot-managed-setup ()
+(defun nael-eglot-managed ()
   "Buffer-locally setup ElDoc for Nael.
 
 Use ElDoc documentation strategy `compose' and add ElDoc documentation
