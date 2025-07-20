@@ -33,11 +33,12 @@
 (defface nael-eglot-eldoc-header
   '((t (:inherit font-lock-function-name-face :weight bold)))
   "Face for section-headers of Nael-specific ElDoc documentations."
-  :group 'nael)
+  :group 'nael-eglot)
 
-(defvar nael-eglot-eldoc-fontify-buffer
+(defcustom nael-eglot-eldoc-fontify-buffer
   "*Nael Eglot ElDoc Fontify*"
-  "Name of buffer that is reused in order to fontify Nael code.")
+  "Name of buffer that is reused in order to fontify Nael code."
+  :group 'nael-eglot)
 
 (defun nael-eglot-eldoc-fontify (string)
   "Apply Nael font-lock rules to STRING."
