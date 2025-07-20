@@ -139,7 +139,7 @@ functions for goal and term goal."
   (add-hook 'eldoc-documentation-functions
             #'nael-eglot-eldoc-term-goal -80 'local))
 
-(defun nael-eglot-server-initialized ()
+(defun nael-eglot-server-initialized (_)
   "Buffer-locally correct Eglot's expectations on Lean LSP server.
 
 Since `lake serve' does not output anything, instruct Eglot to not wait

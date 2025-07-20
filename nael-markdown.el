@@ -44,8 +44,8 @@
 
 ;;; Code:
 
-(add-to-list (cons "lean" 'nael-mode)
-             'markdown-code-lang-modes)
+(add-to-list 'markdown-code-lang-modes
+             (cons "lean" 'nael-mode))
 
 (provide 'nael-markdown)
 

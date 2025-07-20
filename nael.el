@@ -322,6 +322,7 @@
   ;; Flymake:
   (setq-local next-error-function
               #'flymake-goto-next-error)
+  ;; Eglot:
   (add-hook 'eglot-server-initialized-hook
             #'nael-eglot-server-initialized nil 'local)
   (add-hook 'eglot-managed-mode-hook
