@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename nael.info
-@settitle Nael – An Emacs major mode for Lean
+@settitle Nael – Emacs major mode for Lean
 @documentencoding UTF-8
 @documentlanguage en
 @c %**end of header
@@ -13,13 +13,13 @@
 
 @finalout
 @titlepage
-@title Nael – An Emacs major mode for Lean
+@title Nael – Emacs major mode for Lean
 @author Mekeor Melire
 @end titlepage
 
 @ifnottex
 @node Top
-@top Nael – An Emacs major mode for Lean
+@top Nael – Emacs major mode for Lean
 
 Nael is a package for @uref{https://www.gnu.org/software/emacs/, GNU Emacs} that provides a major mode for @uref{https://lean-lang.org/, Lean}
 language. “Nael” reversed is “Lean” and ends in “el” as in Emacs-Lisp.
@@ -30,8 +30,6 @@ language. “Nael” reversed is “Lean” and ends in “el” as in Emacs-Lis
 * Installation::
 * Status::
 * License::
-* History::
-* Comparison::
 * Changelog::
 
 @detailmenu
@@ -57,7 +55,7 @@ user initialization file:
 (add-to-list 'load-path "~/path/to/nael")
 (require 'nael)
 
-;; Configure (optional)
+;;;; Optional: Configure
 
 (defun my-nael-setup ()
   (interactive)
@@ -81,60 +79,15 @@ user initialization file:
 @node Status
 @chapter Status
 
-Nael is experimental. Basic features work but breaking changes are
-expected at any time. Also, the future of Nael is uncertain. It hasn't
-been maintained for a while but might be maintained in future.
+Nael is experimental and it's uncertain if it'll be maintained in
+future.
 
 @node License
 @chapter License
 
-Effectively, Nael is licensed under GPLv3. To be more precise, some
-parts are under Apache-2.0 whereas other parts are under the stricter
-GPLv3.
-
-@node History
-@chapter History
-
-@enumerate
-@item
-@emph{Microsoft} et al. developed @uref{https://github.com/leanprover-community/lean4-mode, Lean4-Mode} based on @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode}.
-@item
-@emph{Richard Copley} developed a @uref{https://github.com/bustercopley/lean4-mode, fork} based on Emacs' built-in @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot}.
-@item
-@emph{Mekeor Melire} developed Nael, a fork based on Richard Copley's
-fork, that heavily uses Emacs' built-in facilities like Eglot,
-ElDoc and Project.
-@end enumerate
-
-@node Comparison
-@chapter Comparison
-
-@itemize
-@item
-Nael does not depend on third-party lsp-mode.  Instead, you can
-optionally use Nael together with Emacs' built-in LSP-client
-Eglot. (It is planned to optionally support lsp-mode as well.)
-@item
-Nael does not offer any special buffer for information on the
-current goal etc.  Instead, Nael introduces two ElDoc documentation
-functions which will show up in the usual ElDoc buffer.
-@item
-Nael does not offer any special mechanism to detect the current
-project.  Instead, it introduces Lakefiles as Project root markers.
-@item
-Nael does not offer any special command to build the current
-project.  Instead, it configures the built-in @code{project-compile}
-command to work.
-@item
-Nael does not offer any special input-method.  Instead, you may use
-the built-in @samp{TeX} input-method or the @samp{unicode-math} from the
-external @uref{https://github.com/astoff/unicode-math-input.el, unicode-math-input} package.
-@item
-Nael does not solely use the Apache-2 license.  Instead, it is
-licensed partly under Apache-2, and partly under GPLv3+.
-Altogether, you can treat Nael as if it was under GPLv3+ since
-that's the stricter license.
-@end itemize
+Effectively, Nael is licensed under GPLv3.  To be more precise, some
+parts are under weak Apache-2.0 license whereas other parts are under
+the stricter GPLv3.
 
 @node Changelog
 @chapter Changelog

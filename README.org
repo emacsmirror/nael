@@ -1,4 +1,4 @@
-#+title:                Nael – An Emacs major mode for Lean
+#+title:                Nael – Emacs major mode for Lean
 #+author:               Mekeor Melire
 #+language:             en
 #+texinfo_dir_category: Emacs misc features
@@ -21,7 +21,7 @@ user initialization file:
 (add-to-list 'load-path "~/path/to/nael")
 (require 'nael)
 
-;; Configure (optional)
+;;;; Optional: Configure
 
 (defun my-nael-setup ()
   (interactive)
@@ -44,44 +44,14 @@ user initialization file:
 
 * Status
 
-Nael is experimental. Basic features work but breaking changes are
-expected at any time. Also, the future of Nael is uncertain. It hasn't
-been maintained for a while but might be maintained in future.
+Nael is experimental and it's uncertain if it'll be maintained in
+future.
 
 * License
 
-Effectively, Nael is licensed under GPLv3. To be more precise, some
-parts are under Apache-2.0 whereas other parts are under the stricter
-GPLv3.
-
-* History
-
-1. /Microsoft/ et al. developed [[https://github.com/leanprover-community/lean4-mode][Lean4-Mode]] based on [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]].
-2. /Richard Copley/ developed a [[https://github.com/bustercopley/lean4-mode][fork]] based on Emacs' built-in [[https://www.gnu.org/software/emacs/manual/html_node/eglot/][Eglot]].
-3. /Mekeor Melire/ developed Nael, a fork based on Richard Copley's
-   fork, that heavily uses Emacs' built-in facilities like Eglot,
-   ElDoc and Project.
-
-* Comparison
-
-- Nael does not depend on third-party lsp-mode.  Instead, you can
-  optionally use Nael together with Emacs' built-in LSP-client
-  Eglot. (It is planned to optionally support lsp-mode as well.)
-- Nael does not offer any special buffer for information on the
-  current goal etc.  Instead, Nael introduces two ElDoc documentation
-  functions which will show up in the usual ElDoc buffer.
-- Nael does not offer any special mechanism to detect the current
-  project.  Instead, it introduces Lakefiles as Project root markers.
-- Nael does not offer any special command to build the current
-  project.  Instead, it configures the built-in ~project-compile~
-  command to work.
-- Nael does not offer any special input-method.  Instead, you may use
-  the built-in =TeX= input-method or the =unicode-math= from the
-  external [[https://github.com/astoff/unicode-math-input.el][unicode-math-input]] package.
-- Nael does not solely use the Apache-2 license.  Instead, it is
-  licensed partly under Apache-2, and partly under GPLv3+.
-  Altogether, you can treat Nael as if it was under GPLv3+ since
-  that's the stricter license.
+Effectively, Nael is licensed under GPLv3.  To be more precise, some
+parts are under weak Apache-2.0 license whereas other parts are under
+the stricter GPLv3.
 
 * Changelog
 

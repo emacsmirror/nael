@@ -8,8 +8,8 @@ END-INFO-DIR-ENTRY
 
 File: nael.info,  Node: Top,  Next: Installation,  Up: (dir)
 
-Nael – An Emacs major mode for Lean
-***********************************
+Nael – Emacs major mode for Lean
+********************************
 
 Nael is a package for GNU Emacs (https://www.gnu.org/software/emacs/)
 that provides a major mode for Lean (https://lean-lang.org/) language.
@@ -20,8 +20,6 @@ that provides a major mode for Lean (https://lean-lang.org/) language.
 * Installation::
 * Status::
 * License::
-* History::
-* Comparison::
 * Changelog::
 
 -- The Detailed Node Listing --
@@ -46,7 +44,7 @@ initialization file:
      (add-to-list 'load-path "~/path/to/nael")
      (require 'nael)
 
-     ;; Configure (optional)
+     ;;;; Optional: Configure
 
      (defun my-nael-setup ()
        (interactive)
@@ -72,67 +70,23 @@ File: nael.info,  Node: Status,  Next: License,  Prev: Installation,  Up: Top
 2 Status
 ********
 
-Nael is experimental.  Basic features work but breaking changes are
-expected at any time.  Also, the future of Nael is uncertain.  It hasn't
-been maintained for a while but might be maintained in future.
+Nael is experimental and it's uncertain if it'll be maintained in
+future.
 
 
-File: nael.info,  Node: License,  Next: History,  Prev: Status,  Up: Top
+File: nael.info,  Node: License,  Next: Changelog,  Prev: Status,  Up: Top
 
 3 License
 *********
 
 Effectively, Nael is licensed under GPLv3.  To be more precise, some
-parts are under Apache-2.0 whereas other parts are under the stricter
-GPLv3.
+parts are under weak Apache-2.0 license whereas other parts are under
+the stricter GPLv3.
 
 
-File: nael.info,  Node: History,  Next: Comparison,  Prev: License,  Up: Top
+File: nael.info,  Node: Changelog,  Prev: License,  Up: Top
 
-4 History
-*********
-
-  1. _Microsoft_ et al.  developed Lean4-Mode
-     (https://github.com/leanprover-community/lean4-mode) based on
-     lsp-mode (https://github.com/emacs-lsp/lsp-mode).
-  2. _Richard Copley_ developed a fork
-     (https://github.com/bustercopley/lean4-mode) based on Emacs'
-     built-in Eglot
-     (https://www.gnu.org/software/emacs/manual/html_node/eglot/).
-  3. _Mekeor Melire_ developed Nael, a fork based on Richard Copley's
-     fork, that heavily uses Emacs' built-in facilities like Eglot,
-     ElDoc and Project.
-
-
-File: nael.info,  Node: Comparison,  Next: Changelog,  Prev: History,  Up: Top
-
-5 Comparison
-************
-
-   • Nael does not depend on third-party lsp-mode.  Instead, you can
-     optionally use Nael together with Emacs' built-in LSP-client Eglot.
-     (It is planned to optionally support lsp-mode as well.)
-   • Nael does not offer any special buffer for information on the
-     current goal etc.  Instead, Nael introduces two ElDoc documentation
-     functions which will show up in the usual ElDoc buffer.
-   • Nael does not offer any special mechanism to detect the current
-     project.  Instead, it introduces Lakefiles as Project root markers.
-   • Nael does not offer any special command to build the current
-     project.  Instead, it configures the built-in ‘project-compile’
-     command to work.
-   • Nael does not offer any special input-method.  Instead, you may use
-     the built-in ‘TeX’ input-method or the ‘unicode-math’ from the
-     external unicode-math-input
-     (https://github.com/astoff/unicode-math-input.el) package.
-   • Nael does not solely use the Apache-2 license.  Instead, it is
-     licensed partly under Apache-2, and partly under GPLv3+.
-     Altogether, you can treat Nael as if it was under GPLv3+ since
-     that's the stricter license.
-
-
-File: nael.info,  Node: Changelog,  Prev: Comparison,  Up: Top
-
-6 Changelog
+4 Changelog
 ***********
 
 This changelog only describes user-facing changes.
@@ -145,7 +99,7 @@ This changelog only describes user-facing changes.
 
 File: nael.info,  Node: Version 030 released on _<2024-11-19 Tue>_,  Next: Version 022 released on _<2024-07-05 Fri>_,  Up: Changelog
 
-6.1 Version 0.3.0 released on _<2024-11-19 Tue>_
+4.1 Version 0.3.0 released on _<2024-11-19 Tue>_
 ================================================
 
    • Deprecate Nael in favor of working on
@@ -155,7 +109,7 @@ File: nael.info,  Node: Version 030 released on _<2024-11-19 Tue>_,  Next: Versi
 
 File: nael.info,  Node: Version 022 released on _<2024-07-05 Fri>_,  Prev: Version 030 released on _<2024-11-19 Tue>_,  Up: Changelog
 
-6.2 Version 0.2.2 released on _<2024-07-05 Fri>_
+4.2 Version 0.2.2 released on _<2024-07-05 Fri>_
 ================================================
 
    • Fix link to homepage (https://codeberg.org/mekeor/nael).
@@ -167,14 +121,12 @@ File: nael.info,  Node: Version 022 released on _<2024-07-05 Fri>_,  Prev: Versi
 
 Tag Table:
 Node: Top192
-Node: Installation867
-Node: Status1858
-Node: License2163
-Node: History2407
-Node: Comparison3031
-Node: Changelog4338
-Node: Version 030 released on _<2024-11-19 Tue>_4675
-Node: Version 022 released on _<2024-07-05 Fri>_5053
+Node: Installation834
+Node: Status1826
+Node: License2001
+Node: Changelog2260
+Node: Version 030 released on _<2024-11-19 Tue>_2594
+Node: Version 022 released on _<2024-07-05 Fri>_2972
 
 End Tag Table
 
