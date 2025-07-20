@@ -1,56 +1,37 @@
 ;;; nael-eglot.el --- Eglot for Nael  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2014 Microsoft Corp.
+;; Copyright (C) 2024 Free Software Foundation, Inc.
 ;; Copyright (C) 2025 Mekeor Melire
-
-;; Author:
-;;   Adam Topaz <topaz@ualberta.ca>
-;;   Akira Komamura <akira.komamura@gmail.com>
-;;   Bao Zhiyuan <bzy_sustech@foxmail.com>
-;;   Daniel Selsam <daniel.selsam@protonmail.com>
-;;   Gabriel Ebner <gebner@gebner.org>
-;;   Henrik Böving <hargonix@gmail.com>
-;;   Hongyu Ouyang <oyhy0214@163.com>
-;;   Jakub Bartczuk <bartczukkuba@gmail.com>
-;;   Leonardo de Moura <leonardo@microsoft.com>
-;;   Mauricio Collares <mauricio@collares.org>
-;;   Mekeor Melire <mekeor@posteo.de>
-;;   Philip Kaludercic <philipk@posteo.net>
-;;   Richard Copley <buster@buster.me.uk>
-;;   Sebastian Ullrich <sebasti@nullri.ch>
-;;   Siddharth Bhat <siddu.druid@gmail.com>
-;;   Simon Hudon <simon.hudon@gmail.com>
-;;   Soonho Kong <soonhok@cs.cmu.edu>
-;;   Tomáš Skřivan <skrivantomas@seznam.cz>
-;;   Wojciech Nawrocki <wjnawrocki@protonmail.com>
-;;   Yael Dillies <yael.dillies@gmail.com>
-;;   Yury G. Kudryashov <urkud@urkud.name>
-;; Keywords: languages
-;; Maintainer: Mekeor Melire <mekeor@posteo.de>
-;; Package-Requires: ((emacs "29.1") (markdown-mode "2"))
-;; SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
-;; URL: https://codeberg.org/mekeor/nael
-;; Version: 0.3.0
 
 ;; This file is NOT part of GNU Emacs.
 
+;; This source code is forked from `lean4-mode'
+;; <https://github.com/bustercopley/lean4-mode> which is licensed
+;; under Apache-2.0 (see `LICENSE.APACHE').  Additions and
+;; modifications made within this fork are licensed under GNU General
+;; Public License version 3 (see `LICENSE.GPL').
+
 ;;; Commentary:
 
-;; This file defines the function `nael-eglot-managed-setup' which is
-;; meant to be locally hooked onto `eglot-managed-mode-hook' in Nael
-;; buffers.  When called, it teaches Eglot how to request information
-;; (such as the goals at point) from a Lean LSP server; and ElDoc is
-;; taught how to display this information.
+;; This file configures Eglot and ElDoc to work with Nael.  Not only
+;; but in particular, it defines the function
+;; `nael-eglot-managed-setup' which is meant to be locally hooked onto
+;; `eglot-managed-mode-hook' in Nael buffers.  When called, it teaches
+;; Eglot about some LSP requests information (such as information
+;; about the proof goals at point) that are special to the Lean LSP
+;; server; and it teaches ElDoc how to display this information.
 
 ;;; Code:
 
 (defgroup nael-eglot nil
-  "Configure Eglot to work with Nael."
+  "Eglot and ElDoc configured to work with Nael."
   :group 'nael
   :group 'eglot
   :prefix "nael-eglot-")
 
 (defface nael-eglot-eldoc-header
-  '((t (:extend t :weight bold :inherit markdown-header-face-1)))
+  '((t (:inherit font-lock-function-name-face :weight bold)))
   "Face for section-headers of Nael-specific ElDoc documentations."
   :group 'nael)
 

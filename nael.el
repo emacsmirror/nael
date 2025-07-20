@@ -28,17 +28,18 @@
 ;;   Yury G. Kudryashov <urkud@urkud.name>
 ;; Keywords: languages
 ;; Maintainer: Mekeor Melire <mekeor@posteo.de>
-;; Package-Requires: ((emacs "29.1") (markdown-mode "2"))
+;; Package-Requires: ((emacs "29.1"))
 ;; SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
 ;; URL: https://codeberg.org/mekeor/nael
 ;; Version: 0.3.0
 
 ;; This file is NOT part of GNU Emacs.
 
-;; This program is based on `lean4-mode' which is licensed under
-;; Apache-2.0.  Additions and modifications made within this
-;; repository are licensed under GNU General Public License version 3
-;; or later.
+;; This source code is forked from `lean4-mode'
+;; <https://github.com/bustercopley/lean4-mode> which is licensed
+;; under Apache-2.0 (see `LICENSE.APACHE').  Additions and
+;; modifications made within this fork are licensed under GNU General
+;; Public License version 3 (see `LICENSE.GPL').
 
 ;;; Commentary:
 
@@ -52,23 +53,14 @@
 (require 'rx)
 (require 'seq)
 
-(require 'markdown-mode)
-
 (defgroup nael nil
   "Major mode for Lean."
   :group 'languages
-  :link '(emacs-library-link
-          :tag "Source Lisp File"
-          "nael.el")
-  :link '(info-link
-          :tag "Info manual"
-          "(nael)Top")
-  :link '(url-link :tag "Website"
-                   "https://codeberg.org/mekeor/nael")
+  :link '(emacs-library-link :tag "Source Lisp File" "nael.el")
+  :link '(info-link :tag "Info manual" "(nael) Top")
+  :link '(url-link :tag "Website" "https://codeberg.org/mekeor/nael")
   :prefix "nael-"
   :tag "Nael")
-
-;;;; Syntax:
 
 (defvar nael-mode-syntax-table
   (let ((table (make-syntax-table)))
@@ -287,8 +279,6 @@
               4))
   "`imenu-generic-expression' for Nael mode.")
 
-;;;; Mode:
-
 (defcustom nael-mode-hook nil
   "Hook run when entering Nael mode."
   :options '(eglot-ensure imenu-add-menubar-index)
@@ -328,33 +318,15 @@
   ;; Flymake:
   (setq-local next-error-function
               #'flymake-goto-next-error)
-  ;; Eglot: Don't wait for "lake serve" to output anything when
-  ;; launched because it won't. (bug#1)
+  ;; Eglot: Since "lake serve" does not output anything, don't wait
+  ;; for any output. (bug#1)
   (setq-local eglot-sync-connect
               nil)
   (add-hook 'eglot-managed-mode-hook
             #'nael-eglot-managed-setup nil 'local))
 
-;;;; Project:
-
-;; Use Lakefiles as Project root-markers.  In particular, this will
-;; make "lake serve" (the language-server associated with Nael) and
-;; "lake build" (the `compile-command' in Nael) work.
-(add-to-list 'project-vc-extra-root-markers
-             "lakefile.lean")
-
-;;;; File extension:
-
-;; Associate the ".lean" file-extension with Nael.
-(setf (alist-get "\\.lean\\'" auto-mode-alist nil nil #'equal)
-      'nael-mode)
-
-;; Associate the "lean" language-specification in markdown code-fences
-;; with Nael.
-(setf (alist-get "lean" markdown-code-lang-modes nil nil #'equal)
-      'nael-mode)
-
-;;;; End:
+(add-to-list 'auto-mode-alist
+             (cons "\\.lean\\'" 'nael-mode))
 
 (provide 'nael)
 
