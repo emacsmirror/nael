@@ -35,21 +35,21 @@
   "Face for section-headers of Nael-specific ElDoc documentations."
   :group 'nael)
 
-(defvar nael-eglot-eldoc-fontify-buffer-name
+(defvar nael-eglot-eldoc-fontify-buffer
   "*Nael Eglot ElDoc Fontify*"
   "Name of buffer that is reused in order to fontify Nael code.")
 
 (defun nael-eglot-eldoc-fontify (string)
   "Apply Nael font-lock rules to STRING."
   (with-current-buffer
-      (get-buffer-create nael-eglot-eldoc-fontify-buffer-name)
+      (get-buffer-create nael-eglot-eldoc-fontify-buffer)
     (erase-buffer)
     (insert string)
     (setq-local font-lock-defaults nael-font-lock-defaults)
     (font-lock-ensure)
     (buffer-string)))
 
-(defun nael-eglot-eldoc-plain-goal (cb)
+(defun nael-eglot-eldoc-goal (cb)
   "`PlainGoal' for `eldoc-documentation-functions'.
 
 CB is the callback provided to members of ElDoc documentation
@@ -92,7 +92,7 @@ Extra.html#Lean.Lsp.PlainGoal"
         (list nil)))))
   t)
 
-(defun nael-eglot-eldoc-plain-term-goal (cb)
+(defun nael-eglot-eldoc-term-goal (cb)
   "`PlainTermGoal' for `eldoc-documentation-functions'.
 
 CB is the callback provided to members of ElDoc documentation
@@ -134,9 +134,9 @@ functions for `plain-goal' and `plain-term-goal'."
   (setq-local eldoc-documentation-strategy
               #'eldoc-documentation-compose)
   (add-hook 'eldoc-documentation-functions
-            #'nael-eglot-eldoc-plain-goal -90 'local)
+            #'nael-eglot-eldoc-goal -90 'local)
   (add-hook 'eldoc-documentation-functions
-            #'nael-eglot-eldoc-plain-term-goal -80 'local))
+            #'nael-eglot-eldoc-term-goal -80 'local))
 
 ;; Use "lake serve" as language-server.
 (setf (alist-get 'nael-mode eglot-server-programs)
