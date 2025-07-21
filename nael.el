@@ -321,15 +321,7 @@
               nael-imenu-generic-expression)
   ;; Flymake:
   (setq-local next-error-function
-              #'flymake-goto-next-error)
-  ;; Eglot:
-  (add-hook 'eglot-server-initialized-hook
-            #'nael-eglot-server-initialized nil 'local)
-  (add-hook 'eglot-managed-mode-hook
-            #'nael-eglot-managed nil 'local)
-  ;; lsp-mode:
-  (add-hook 'lsp-managed-mode-hook
-            #'nael-lsp-managed nil 'local))
+              #'flymake-goto-next-error))
 
 (add-to-list 'auto-mode-alist
              (cons "\\.lean\\'" 'nael-mode))

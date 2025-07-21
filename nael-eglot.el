@@ -24,6 +24,10 @@
 
 ;;; Code:
 
+(require 'eglot)
+
+(require 'nael)
+
 (defgroup nael-eglot nil
   "Eglot and ElDoc configured to work with Nael."
   :group 'nael
@@ -149,6 +153,16 @@ for any output."
 
 (add-to-list 'eglot-server-programs
              (list 'nael-mode "lake" "serve"))
+
+(defun nael-eglot-setup ()
+  "Configure `eglot' to work with `nael-mode'."
+  (add-hook 'eglot-server-initialized-hook
+            #'nael-eglot-server-initialized nil 'local)
+  (add-hook 'eglot-managed-mode-hook
+            #'nael-eglot-managed nil 'local))
+
+(add-hook 'nael-mode-hook
+          #'nael-eglot-setup)
 
 (provide 'nael-eglot)
 

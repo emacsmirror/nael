@@ -16,6 +16,10 @@
 
 ;;; Code:
 
+(require 'lsp-mode)
+
+(require 'nael)
+
 (defgroup nael-lsp nil
   "lsp-mode configured to work with Nael."
   :group 'nael
@@ -115,6 +119,14 @@ functions for proof goal."
             #'nael-lsp-eldoc-goal -90 'local)
   (add-hook 'eldoc-documentation-functions
             #'nael-lsp-eldoc-term-goal -80 'local))
+
+(defun nael-lsp-setup ()
+  "Configure `lsp-mode' to work with `nael-mode'."
+  (add-hook 'lsp-managed-mode-hook
+            #'nael-lsp-managed nil 'local))
+
+(add-hook 'nael-mode-hook
+          #'nael-lsp-setup)
 
 (provide 'nael-lsp)
 
