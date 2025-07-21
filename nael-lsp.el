@@ -44,33 +44,62 @@ Extra.html#Lean.Lsp.PlainGoal"
   (lsp-request-async
    "$/lean/plainGoal"
    (lsp--text-document-position-params)
-   (lambda (TODO)
-     ;; TODO
-     ;; (apply
-     ;;  cb
-     ;;  (if-let*
-     ;;      (((not (seq-empty-p goals)))
-     ;;       (first-goal (seq-first goals))
-     ;;       (first-goal (nael-eglot-eldoc-fontify first-goal)))
-     ;;      (list (concat
-     ;;             ;; Propertize the first newline so that a potential
-     ;;             ;; t-valued `:extend' face-attribute works correctly.
-     ;;             (propertize "Tactic state:\n"
-     ;;                         'face 'nael-eglot-eldoc-header)
-     ;;             "\n"
-     ;;             ;; Re-use the previously rendered documentation of
-     ;;             ;; the first goal rather than rendering it again.
-     ;;             (replace-regexp-in-string "^" "  " first-goal)
-     ;;             (seq-mapcat
-     ;;              (lambda (goal)
-     ;;                (concat "\n\n" (replace-regexp-in-string
-     ;;                                "^" "  "
-     ;;                                (nael-eglot-eldoc-fontify goal))))
-     ;;              (seq-drop goals 1) 'string)
-     ;;             "\n")
-     ;;            :echo first-goal)
-     ;;    (list nil)))
-     )
+   ;; TODO: Use Dash's `-lambda' instead.
+   (lambda (tbl)
+     (apply
+      cb
+      (if-let*
+          (((hash-table-p tbl))
+           (goals (gethash "goals" tbl))
+           ((not (seq-empty-p goals)))
+           (first-goal (seq-first goals))
+           (first-goal (nael-eglot-eldoc-fontify first-goal)))
+          (list (concat
+                 ;; Propertize the first newline so that a potential
+                 ;; t-valued `:extend' face-attribute works correctly.
+                 (propertize "Tactic state:\n"
+                             'face 'nael-eglot-eldoc-header)
+                 "\n"
+                 ;; Re-use the previously rendered documentation of
+                 ;; the first goal rather than rendering it again.
+                 (replace-regexp-in-string "^" "  " first-goal)
+                 (seq-mapcat
+                  (lambda (goal)
+                    (concat "\n\n" (replace-regexp-in-string
+                                    "^" "  "
+                                    (nael-eglot-eldoc-fontify goal))))
+                  (seq-drop goals 1) 'string)
+                 "\n")
+                :echo first-goal)
+        (list nil))))
+   :error-handler #'ignore
+   :mode 'tick))
+
+(defun nael-lsp-eldoc-term-goal (cb &rest _)
+  "`PlainTermGoal' for `eldoc-documentation-functions'."
+  (lsp-request-async
+   "$/lean/plainTermGoal"
+   (lsp--text-document-position-params)
+   ;; TODO: Use Dash's `-lambda' instead.
+   (lambda (response)
+     (apply
+      cb
+      (if-let*
+          (((hash-table-p response))
+           (goal (gethash "goal" response))
+           ((not (string= "" goal)))
+           (doc (eglot--format-markup goal)))
+          (list (concat
+                 ;; Propertize the first newline so that a potential
+                 ;; t-valued `:extend' face-attribute works correctly.
+                 (propertize "Expected type:\n"
+                             'face 'nael-eglot-eldoc-header)
+                 "\n"
+                 (replace-regexp-in-string "^" "  " doc)
+                 "\n")
+                ;; Don't echo any docstring at all.
+                :echo 'skip)
+        (list nil))))
    :error-handler #'ignore
    :mode 'tick))
 
@@ -83,7 +112,9 @@ functions for proof goal."
   (setq-local eldoc-documentation-strategy
               #'eldoc-documentation-compose)
   (add-hook 'eldoc-documentation-functions
-            #'nael-lsp-eldoc-goal -90 'local))
+            #'nael-lsp-eldoc-goal -90 'local)
+  (add-hook 'eldoc-documentation-functions
+            #'nael-lsp-eldoc-term-goal -80 'local))
 
 (provide 'nael-lsp)
 
