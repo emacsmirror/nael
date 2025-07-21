@@ -286,6 +286,7 @@
   :group 'nael)
 
 (defvar-keymap nael-mode-map
+  "<remap> <display-local-help>" #'eldoc-doc-buffer
   "C-c c" #'project-compile
   "C-c e" #'eglot)
 
