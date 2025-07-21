@@ -1,27 +1,8 @@
 ;;; nael-markdown.el --- Nael in Markdown  -*- lexical-binding: t; -*-
 
-;; Author:
-;;   Adam Topaz <topaz@ualberta.ca>
-;;   Akira Komamura <akira.komamura@gmail.com>
-;;   Bao Zhiyuan <bzy_sustech@foxmail.com>
-;;   Daniel Selsam <daniel.selsam@protonmail.com>
-;;   Gabriel Ebner <gebner@gebner.org>
-;;   Henrik Böving <hargonix@gmail.com>
-;;   Hongyu Ouyang  <oyhy0214@163.com>
-;;   Jakub Bartczuk <bartczukkuba@gmail.com>
-;;   Leonardo de Moura <leonardo@microsoft.com>
-;;   Mauricio Collares <mauricio@collares.org>
-;;   Mekeor Melire <mekeor@posteo.de>
-;;   Philip Kaludercic <philipk@posteo.net>
-;;   Richard Copley <buster@buster.me.uk>
-;;   Sebastian Ullrich <sebasti@nullri.ch>
-;;   Siddharth Bhat <siddu.druid@gmail.com>
-;;   Simon Hudon <simon.hudon@gmail.com>
-;;   Soonho Kong <soonhok@cs.cmu.edu>
-;;   Tomáš Skřivan <skrivantomas@seznam.cz>
-;;   Wojciech Nawrocki <wjnawrocki@protonmail.com>
-;;   Yael Dillies <yael.dillies@gmail.com>
-;;   Yury G. Kudryashov <urkud@urkud.name>
+;; Copyright (C) 2025 Mekeor Melire
+
+;; Author: Mekeor Melire <mekeor@posteo.de>
 ;; Keywords: languages
 ;; Maintainer: Mekeor Melire <mekeor@posteo.de>
 ;; Package-Requires: ((emacs "29.1") (markdown-mode "2"))

@@ -50,7 +50,7 @@
     (font-lock-ensure)
     (buffer-string)))
 
-(defun nael-eglot-eldoc-goal (cb)
+(defun nael-eglot-eldoc-goal (cb &rest _)
   "`PlainGoal' for `eldoc-documentation-functions'.
 
 CB is the callback provided to members of ElDoc documentation
@@ -93,7 +93,7 @@ Extra.html#Lean.Lsp.PlainGoal"
         (list nil)))))
   t)
 
-(defun nael-eglot-eldoc-term-goal (cb)
+(defun nael-eglot-eldoc-term-goal (cb &rest _)
   "`PlainTermGoal' for `eldoc-documentation-functions'.
 
 CB is the callback provided to members of ElDoc documentation
