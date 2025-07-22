@@ -6,11 +6,9 @@
 
 ;; This file is NOT part of GNU Emacs.
 
-;; This source code is forked from Lean4-Mode
-;; <https://github.com/bustercopley/lean4-mode> which is licensed
-;; under Apache-2.0 (see LICENSE.APACHE2).  Additions and modifications
-;; made within this fork are licensed under GNU General Public License
-;; version 3 (see LICENSE.GPL3).
+;; This code is effectively licensed under GNU General Public License
+;; version 3, see LICENSE.GPL3.  To be more precise, it's forked from
+;; code that has been licensed under Apache-2.0, see LICENSE.APACHE2.
 
 ;;; Commentary:
 
