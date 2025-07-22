@@ -1,0 +1,39 @@
+Nael is an experimental, work-in-progress package for [[https://www.gnu.org/software/emacs/][GNU Emacs]] that
+provides a major mode for [[https://lean-lang.org/][Lean]] language. “Nael” reversed is “Lean” and
+ends in “el” as in Emacs-Lisp.
+
+* License
+
+Effectively, Nael is licensed under GPLv3.  To be more precise, some
+parts are under weak Apache-2.0 license whereas other parts are under
+the stricter GPLv3.
+
+* Roadmap
+
+- Optional support for LSP via both
+  - Eglot
+  - lsp-mode
+- Optional support help at point via both
+  - ElDoc
+  - An in-house implementation of an “info view”
+- Optional support for symbol completion via both
+  - Abbrev tables
+  - Template packages like Tempel
+- Good support for indentation. Perhaps via Emacs' built-in SMIE for
+  indentation?
+- Consider setting variables:
+  - ~comment-quote-nested~
+  - ~prettify-symbols-alist~
+  - ~outline-regexp~
+  - ~add-log-current-defun-function~
+  - ~paragraph-separate~
+  - ~electric-indent-chars~
+  - ~electric-layout-rules~
+- Check if we need to handle LSP code-actions in a special way, just
+  like upstream.
+- Check if we should to disable =workspace/didChangeWatchedFiles= just
+  like upstream.
+- For Eglot, support semantic tokens via:
+  https://codeberg.org/eownerdead/eglot-semantic-tokens
+  https://codeberg.org/harald/eglot-semtok
+  https://github.com/joaotavora/eglot/pull/839

@@ -6,9 +6,9 @@
 
 ;; This source code is forked from Lean4-Mode
 ;; <https://github.com/bustercopley/lean4-mode> which is licensed
-;; under Apache-2.0 (see LICENSE.APACHE).  Additions and modifications
-;; made within this fork are licensed under GNU General Public License
-;; version 3 (see LICENSE.GPL).
+;; under Apache-2.0 (see LICENSE.APACHE2).  Additions and
+;; modifications made within this fork are licensed under GNU General
+;; Public License version 3 (see LICENSE.GPL3).
 
 ;;; Commentary:
 
