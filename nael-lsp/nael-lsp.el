@@ -35,9 +35,16 @@
   :semantic-tokens-faces-overrides '(:types (("leanSorryLike" . font-lock-warning-face)))
   :server-id 'nael))
 
-(lsp-interface
- (nael:Goal (:goals :rendered) nil)
- (nael:TermGoal (:goal :range) nil))
+;; We could introduce the following interfaces so that we can use
+;; destructuring features of Dash like (-lambda ((&nael:Goal :goals
+;; :rendered)) (something goals rendered)) but in the context of
+;; `nael-lsp-eldoc(-term)-goal', I wasn't yet able to use it like that
+;; because sometimes the response will be nil and the destructuring
+;; will fail.
+;;
+;; (lsp-interface
+;;  (nael:Goal (:goals :rendered) nil)
+;;  (nael:TermGoal (:goal :range) nil))
 
 (defun nael-lsp-eldoc-goal (cb &rest _)
   "`PlainGoal' for `eldoc-documentation-functions'.
@@ -50,11 +57,12 @@ Extra.html#Lean.Lsp.PlainGoal"
   (lsp-request-async
    "$/lean/plainGoal"
    (lsp--text-document-position-params)
-   (-lambda ((&nael:Goal :goals))
+   (lambda (response)
      (apply
       cb
       (if-let*
-          (goals
+          (response
+           (goals (lsp-get response :goals))
            ((not (seq-empty-p goals)))
            (first-goal (seq-first goals))
            (first-goal (nael-eglot-eldoc-fontify first-goal)))
@@ -84,14 +92,14 @@ Extra.html#Lean.Lsp.PlainGoal"
   (lsp-request-async
    "$/lean/plainTermGoal"
    (lsp--text-document-position-params)
-   ;; TODO: Use Dash's `-lambda' instead.
-   (-lambda ((&nael:TermGoal :goal))
+   (lambda (response)
      (apply
       cb
       (if-let*
-          (goal
+          (response
+           (goal (lsp-get response :goal))
            ((not (string= "" goal)))
-           (doc (eglot--format-markup goal)))
+           (doc (lsp--render-element goal)))
           (list (concat
                  ;; Propertize the first newline so that a potential
                  ;; t-valued `:extend' face-attribute works correctly.
