@@ -35,6 +35,10 @@
   :semantic-tokens-faces-overrides '(:types (("leanSorryLike" . font-lock-warning-face)))
   :server-id 'nael))
 
+(lsp-interface
+ (nael:Goal (:goals :rendered) nil)
+ (nael:TermGoal (:goal :range) nil))
+
 (defun nael-lsp-eldoc-goal (cb &rest _)
   "`PlainGoal' for `eldoc-documentation-functions'.
 
@@ -46,13 +50,11 @@ Extra.html#Lean.Lsp.PlainGoal"
   (lsp-request-async
    "$/lean/plainGoal"
    (lsp--text-document-position-params)
-   ;; TODO: Use Dash's `-lambda' instead.
-   (lambda (tbl)
+   (-lambda ((&nael:Goal :goals))
      (apply
       cb
       (if-let*
-          (((hash-table-p tbl))
-           (goals (gethash "goals" tbl))
+          (goals
            ((not (seq-empty-p goals)))
            (first-goal (seq-first goals))
            (first-goal (nael-eglot-eldoc-fontify first-goal)))
@@ -83,12 +85,11 @@ Extra.html#Lean.Lsp.PlainGoal"
    "$/lean/plainTermGoal"
    (lsp--text-document-position-params)
    ;; TODO: Use Dash's `-lambda' instead.
-   (lambda (response)
+   (-lambda ((&nael:TermGoal :goal))
      (apply
       cb
       (if-let*
-          (((hash-table-p response))
-           (goal (gethash "goal" response))
+          (goal
            ((not (string= "" goal)))
            (doc (eglot--format-markup goal)))
           (list (concat
