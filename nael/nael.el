@@ -41,8 +41,7 @@
 
 ;;; Commentary:
 
-;; Nael is a major mode for Lean.  It is documented in the
-;; `README.org'.
+;; `nael-mode' is a major mode for in Lean version 4.
 
 ;;; Code:
 
