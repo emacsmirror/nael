@@ -52,80 +52,85 @@
     (font-lock-ensure)
     (buffer-string)))
 
+(defun nael-eglot-eldoc-goal-fn (cb get)
+  "Construct ElDoc CB handler function for Lean LSP goal response with GET."
+  (lambda (response)
+    (apply
+     cb
+     (if-let*
+         ((goals (funcall get response :goals))
+          ((not (seq-empty-p goals)))
+          (first-goal (seq-first goals))
+          (first-goal (nael-eglot-eldoc-fontify first-goal)))
+         (list (concat
+                ;; Propertize `\n' so that `:extend' works.
+                (propertize "Tactic state:\n"
+                            'face 'nael-eglot-eldoc-header)
+                "\n"
+                ;; Avoid rendering `first-goal' twice.
+                (replace-regexp-in-string "^" "  " first-goal)
+                (seq-mapcat
+                 (lambda (goal)
+                   (concat "\n\n" (replace-regexp-in-string
+                                   "^" "  "
+                                   (nael-eglot-eldoc-fontify goal))))
+                 (seq-drop goals 1) 'string)
+                "\n")
+               :echo first-goal)
+       (list nil)))))
+
 (defun nael-eglot-eldoc-goal (cb &rest _)
-  "`PlainGoal' for `eldoc-documentation-functions'.
+  "ElDoc documentation function for plain goal.
 
-CB is the callback provided to members of ElDoc documentation
-functions.
+Callback CB is provided to any member of
+`eldoc-documentation-functions'.
 
+The request target path is `$/lean/plainGoal' as documented here:
 https://leanprover-community.github.io/mathlib4_docs/Lean/Data/Lsp/\
 Extra.html#Lean.Lsp.PlainGoal"
   (jsonrpc-async-request
    (eglot--current-server-or-lose)
    :$/lean/plainGoal
    (eglot--TextDocumentPositionParams)
-   :success-fn
-   (lambda (response)
-     (apply
-      cb
-      (if-let*
-          ((goals (plist-get response :goals))
-           ;; Since `goals' is not a list, we separately need to
-           ;; ensure it's not empty.
-           ((not (seq-empty-p goals)))
-           (first-goal (seq-first goals))
-           (first-goal (nael-eglot-eldoc-fontify first-goal)))
-          (list (concat
-                 ;; Propertize the first newline so that a potential
-                 ;; t-valued `:extend' face-attribute works correctly.
-                 (propertize "Tactic state:\n"
-                             'face 'nael-eglot-eldoc-header)
-                 "\n"
-                 ;; Re-use the previously rendered documentation of
-                 ;; the first goal rather than rendering it again.
-                 (replace-regexp-in-string "^" "  " first-goal)
-                 (seq-mapcat
-                  (lambda (goal)
-                    (concat "\n\n" (replace-regexp-in-string
-                                    "^" "  "
-                                    (nael-eglot-eldoc-fontify goal))))
-                  (seq-drop goals 1) 'string)
-                 "\n")
-                :echo first-goal)
-        (list nil)))))
+   :success-fn (nael-eglot-eldoc-goal-fn #'plist-get))
   t)
 
+(defun nael-eglot-eldoc-term-goal-fn (cb get format)
+  "Construct ElDoc CB handler function for Lean LSP term-goal response.
+
+Use callback CB, GET to access a slot of the response, and FORMAT as
+function to format / render a string, possibly with markup."
+  (lambda (response)
+    (apply
+     cb
+     (if-let*
+         ((goal (funcall get response :goal))
+          ((not (string= "" goal)))
+          (doc (funcall format goal)))
+         (list (concat
+                ;; Propertize `\n' so that `:extend' works.
+                (propertize "Expected type:\n"
+                            'face 'nael-eglot-eldoc-header)
+                "\n" (replace-regexp-in-string "^" "  " doc) "\n")
+               ;; Don't echo any docstring at all.
+               :echo 'skip)
+       (list nil)))))
+
 (defun nael-eglot-eldoc-term-goal (cb &rest _)
-  "`PlainTermGoal' for `eldoc-documentation-functions'.
+  "ElDoc documentation function for plain goal.
 
-CB is the callback provided to members of ElDoc documentation
-functions.
+Callback CB is provided to any member of
+`eldoc-documentation-functions'.
 
+The request target path is `$/lean/plainTermGoal' as documented here:
 https://leanprover-community.github.io/mathlib4_docs/Lean/Data/Lsp/\
 Extra.html#Lean.Lsp.PlainTermGoal"
   (jsonrpc-async-request
    (eglot--current-server-or-lose)
    :$/lean/plainTermGoal
    (eglot--TextDocumentPositionParams)
-   :success-fn
-   (lambda (response)
-     (apply
-      cb
-      (if-let*
-          ((goal (plist-get response :goal))
-           ((not (string= "" goal)))
-           (doc (eglot--format-markup goal)))
-          (list (concat
-                 ;; Propertize the first newline so that a potential
-                 ;; t-valued `:extend' face-attribute works correctly.
-                 (propertize "Expected type:\n"
-                             'face 'nael-eglot-eldoc-header)
-                 "\n"
-                 (replace-regexp-in-string "^" "  " doc)
-                 "\n")
-                ;; Don't echo any docstring at all.
-                :echo 'skip)
-        (list nil)))))
+   :success-fn (nael-eglot-eldoc-term-goal-fn
+                cb #'plist-get #'eglot--format-markup))
   t)
 
 (defun nael-eglot-managed ()

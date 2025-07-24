@@ -57,33 +57,7 @@ Extra.html#Lean.Lsp.PlainGoal"
   (lsp-request-async
    "$/lean/plainGoal"
    (lsp--text-document-position-params)
-   (lambda (response)
-     (apply
-      cb
-      (if-let*
-          (response
-           (goals (lsp-get response :goals))
-           ((not (seq-empty-p goals)))
-           (first-goal (seq-first goals))
-           (first-goal (nael-eglot-eldoc-fontify first-goal)))
-          (list (concat
-                 ;; Propertize the first newline so that a potential
-                 ;; t-valued `:extend' face-attribute works correctly.
-                 (propertize "Tactic state:\n"
-                             'face 'nael-eglot-eldoc-header)
-                 "\n"
-                 ;; Re-use the previously rendered documentation of
-                 ;; the first goal rather than rendering it again.
-                 (replace-regexp-in-string "^" "  " first-goal)
-                 (seq-mapcat
-                  (lambda (goal)
-                    (concat "\n\n" (replace-regexp-in-string
-                                    "^" "  "
-                                    (nael-eglot-eldoc-fontify goal))))
-                  (seq-drop goals 1) 'string)
-                 "\n")
-                :echo first-goal)
-        (list nil))))
+   (nael-eglot-eldoc-goal-fn cb #'lsp-get)
    :error-handler #'ignore
    :mode 'tick))
 
@@ -92,25 +66,7 @@ Extra.html#Lean.Lsp.PlainGoal"
   (lsp-request-async
    "$/lean/plainTermGoal"
    (lsp--text-document-position-params)
-   (lambda (response)
-     (apply
-      cb
-      (if-let*
-          (response
-           (goal (lsp-get response :goal))
-           ((not (string= "" goal)))
-           (doc (lsp--render-element goal)))
-          (list (concat
-                 ;; Propertize the first newline so that a potential
-                 ;; t-valued `:extend' face-attribute works correctly.
-                 (propertize "Expected type:\n"
-                             'face 'nael-eglot-eldoc-header)
-                 "\n"
-                 (replace-regexp-in-string "^" "  " doc)
-                 "\n")
-                ;; Don't echo any docstring at all.
-                :echo 'skip)
-        (list nil))))
+   (nael-eglot-eldoc-term-goal-fn cb #'lsp-get #'lsp--render-element)
    :error-handler #'ignore
    :mode 'tick))
 
