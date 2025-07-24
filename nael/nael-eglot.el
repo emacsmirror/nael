@@ -157,15 +157,20 @@ for any output."
 (add-to-list 'eglot-server-programs
              (list 'nael-mode "lake" "serve"))
 
-(defun nael-eglot-setup ()
-  "Configure `eglot' to work with `nael-mode'."
+(defun nael-eglot-init ()
+  "Prepare `eglot' to work with `nael-mode'."
   (add-hook 'eglot-server-initialized-hook
             #'nael-eglot-server-initialized nil 'local)
   (add-hook 'eglot-managed-mode-hook
             #'nael-eglot-managed nil 'local))
 
 (add-hook 'nael-mode-hook
-          #'nael-eglot-setup)
+          #'nael-eglot-init
+          ;; Users may (add-hook 'nael-mode-hook #'eglot-ensure) which
+          ;; will default to zero depth. By choosing -80 here,
+          ;; `nael-eglot-init' would then be invoked prior to
+          ;; `eglot-ensure'.
+          -80)
 
 (provide 'nael-eglot)
 

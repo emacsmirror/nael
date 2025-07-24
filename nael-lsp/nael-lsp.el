@@ -83,13 +83,17 @@ functions for proof goal."
   (add-hook 'eldoc-documentation-functions
             #'nael-lsp-eldoc-term-goal -80 'local))
 
-(defun nael-lsp-setup ()
-  "Configure `lsp-mode' to work with `nael-mode'."
+(defun nael-lsp-init ()
+  "Prepare `lsp-mode' to work with `nael-mode'."
   (add-hook 'lsp-managed-mode-hook
             #'nael-lsp-managed nil 'local))
 
 (add-hook 'nael-mode-hook
-          #'nael-lsp-setup)
+          #'nael-lsp-init
+          ;; Users may (add-hook 'nael-mode-hook #'lsp) which will
+          ;; default to zero depth. By choosing -80 here,
+          ;; `nael-lsp-init' would then be invoked prior to `lsp'.
+          -80)
 
 (provide 'nael-lsp)
 
