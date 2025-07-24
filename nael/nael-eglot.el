@@ -74,8 +74,7 @@
                    (concat "\n\n" (replace-regexp-in-string
                                    "^" "  "
                                    (nael-eglot-eldoc-fontify goal))))
-                 (seq-drop goals 1) 'string)
-                "\n")
+                 (seq-drop goals 1) 'string))
                :echo first-goal)
        (list nil)))))
 
@@ -92,7 +91,7 @@ Extra.html#Lean.Lsp.PlainGoal"
    (eglot--current-server-or-lose)
    :$/lean/plainGoal
    (eglot--TextDocumentPositionParams)
-   :success-fn (nael-eglot-eldoc-goal-fn #'plist-get))
+   :success-fn (nael-eglot-eldoc-goal-fn cb #'plist-get))
   t)
 
 (defun nael-eglot-eldoc-term-goal-fn (cb get format)
@@ -111,7 +110,7 @@ function to format / render a string, possibly with markup."
                 ;; Propertize `\n' so that `:extend' works.
                 (propertize "Expected type:\n"
                             'face 'nael-eglot-eldoc-header)
-                "\n" (replace-regexp-in-string "^" "  " doc) "\n")
+                "\n" (replace-regexp-in-string "^" "  " doc))
                ;; Don't echo any docstring at all.
                :echo 'skip)
        (list nil)))))
