@@ -303,6 +303,9 @@ are members, they should appear in that order."
               "[ \t]*\\(-/\\|\\s>\\)")
   (setq-local comment-padding
               1)
+  ;; In Lean4, comments may be nested.
+  (setq-local comment-quote-nested
+              nil)
   (setq-local comment-start
               "--")
   (setq-local comment-start-skip
