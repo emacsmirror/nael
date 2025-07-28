@@ -283,15 +283,16 @@
   "Hook run when entering `nael-mode'.
 
 If both `nael-eglot-init' and `eglot-ensure' are members, they should
-appear in that order.  If both `nael-lsp-init' and `lsp' / `lsp-mode'
-are members, they should appear in that order."
-  :options '( eglot-ensure imenu-add-menubar-index
+appear in that order.  If both `nael-lsp-init' and `lsp' are members,
+they should appear in that order."
+  :options '( abbrev-mode eglot-ensure imenu-add-menubar-index
               nael-eglot-init nael-lsp-init)
   :type 'hook
   :group 'nael)
 
 (defvar-keymap nael-mode-map
   "<remap> <display-local-help>" #'eldoc-doc-buffer
+  "C-c a" #'abbrev-mode
   "C-c c" #'project-compile
   "C-c e" #'eglot)
 
