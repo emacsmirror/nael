@@ -254,11 +254,24 @@
           '(1 font-lock-comment-face t)
           '(2 nil t)
           '(3 font-lock-comment-face t))))
-  "Defaults for Font Lock mode used by `nael-mode'.")
+  "Defaults for `font-lock-mode' used by `nael-mode'.")
+
+;; TODO: Both `nael-navigation-defun-beginning' and
+;; `nael-navigation-defun-name' currently lack support for `mutual'
+;; blocks, i.e. mutually recursive definitions.
 
 (defun nael-navigation-defun-beginning ()
+  "`beginning-of-defun-function' for `nael-mode'."
   (interactive)
-  (re-search-backward nael-syntax-definition nil 'noerror))
+  (re-search-backward nael-syntax-definition nil t))
+
+(defun nael-navigation-defun-name ()
+  "`add-log-current-defun-function' for `nael-mode'."
+  (save-excursion
+    (when (nael-navigation-defun-beginning)
+      (forward-symbol 1)
+      (forward-whitespace 1)
+      (symbol-at-point))))
 
 (defvar nael-imenu-generic-expression
   (list (list nil nael-syntax-definition 4))
@@ -285,6 +298,8 @@ are members, they should appear in that order."
 
 \\{nael-mode-map}"
   ;; Navigation:
+  (setq-local add-log-current-defun-function
+              #'nael-navigation-defun-name)
   (setq-local beginning-of-defun-function
               #'nael-navigation-defun-beginning)
   ;; Comments:
