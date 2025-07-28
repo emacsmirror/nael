@@ -50,6 +50,8 @@
 (require 'rx)
 (require 'seq)
 
+(require 'nael-abbrev)
+
 (defgroup nael nil
   "Major mode for Lean."
   :group 'languages
@@ -297,6 +299,7 @@ are members, they should appear in that order."
   "Major mode for Lean.
 
 \\{nael-mode-map}"
+  :abbrev-table nael-abbrev-table
   ;; Navigation:
   (setq-local add-log-current-defun-function
               #'nael-navigation-defun-name)
