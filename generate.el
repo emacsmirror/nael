@@ -1,4 +1,4 @@
-#!/usr/bin/env -S emacs -Q --script
+#!/usr/bin/env -S emacs -x
 
 ;;;; Download and parse JSON from VS-Code plugin.
 
