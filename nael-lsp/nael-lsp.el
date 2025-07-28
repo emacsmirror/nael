@@ -14,6 +14,8 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 (require 'lsp-mode)
 
 (require 'nael)
@@ -94,6 +96,10 @@ functions for proof goal."
           ;; default to zero depth. By choosing -80 here,
           ;; `nael-lsp-init' would then be invoked prior to `lsp'.
           -80)
+
+;; Modify the suggestions of Customize for functions that users might
+;; want to hook onto `nael-mode-hook'.
+(cl-pushnew 'lsp (get 'nael-mode-hook 'custom-options))
 
 (provide 'nael-lsp)
 
