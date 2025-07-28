@@ -126,6 +126,24 @@
     table)
   "Syntax table used in Nael mode.")
 
+(defconst nael-syntax-definition
+  ;; The following `rx'-expression is duplicated from
+  ;; definition of `nael-font-lock-defaults'.
+  (rx
+   ;; Use `line-start' rather than `word-start' for speed.
+   line-start
+   (group
+    (or "axiom" "class" "constant" "def" "definition" "inductive"
+        "instance" "lemma" "opaque" "structure" "theorem"
+        (group "class" (zero-or-more space) "inductive")))
+   word-end
+   (zero-or-more space)
+   (group (zero-or-more
+           "{" (zero-or-more (not (any "}"))) "}"
+           (zero-or-more space)))
+   (zero-or-more space)
+   (group (zero-or-more (not (any " \t\n\r{(["))))))
+
 (defvar nael-font-lock-defaults
   (list
    (list
@@ -152,23 +170,8 @@
                                    (not (any " \t\n\r{([,")))))
           '(1 'font-lock-function-name-face))
 
-    ;; Declarations:
-    (list (rx word-start
-              (group
-               (or "axiom" "class" "constant" "def" "definition"
-                   "inductive" "instance" "lemma" "opaque"
-                   "structure" "theorem"
-                   (group "class"
-                          (zero-or-more space)
-                          "inductive")))
-              word-end
-              (zero-or-more space)
-              (group (zero-or-more
-                      "{" (zero-or-more (not (any "}"))) "}"
-                      (zero-or-more space)))
-              (zero-or-more space)
-              (group (zero-or-more (not (any " \t\n\r{([")))))
-          '(4 'font-lock-function-name-face))
+    ;; Definitions:
+    nael-syntax-definition
 
     ;; Constants which have a keyword as subterm:
     (cons "∘if"
@@ -253,27 +256,12 @@
           '(3 font-lock-comment-face t))))
   "Defaults for Font Lock mode used by Nael mode.")
 
+(defun nael-navigation-defun-beginning ()
+  (interactive)
+  (re-search-backward nael-syntax-definition nil 'noerror))
+
 (defvar nael-imenu-generic-expression
-  (list (list nil
-              ;; The following `rx'-expression is duplicated from
-              ;; definition of `nael-font-lock-defaults'.
-              (rx line-start ;; Use `line-start' rather than
-                             ;; `word-start' for speed.
-                  (group
-                   (or "axiom" "class" "constant" "def" "definition"
-                       "inductive" "instance" "lemma" "opaque"
-                       "structure" "theorem"
-                       (group "class"
-                              (zero-or-more space)
-                              "inductive")))
-                  word-end
-                  (zero-or-more space)
-                  (group (zero-or-more
-                          "{" (zero-or-more (not (any "}"))) "}"
-                          (zero-or-more space)))
-                  (zero-or-more space)
-                  (group (zero-or-more (not (any " \t\n\r{([")))))
-              4))
+  (list (list nil nael-syntax-definition 4))
   "`imenu-generic-expression' for Nael mode.")
 
 (defcustom nael-mode-hook nil
@@ -296,6 +284,9 @@ are members, they should appear in that order."
   "Major mode for Lean.
 
 \\{nael-mode-map}"
+  ;; Navigation:
+  (setq-local beginning-of-defun-function
+              #'nael-navigation-defun-beginning)
   ;; Comments:
   (setq-local comment-end
               "")
@@ -303,7 +294,7 @@ are members, they should appear in that order."
               "[ \t]*\\(-/\\|\\s>\\)")
   (setq-local comment-padding
               1)
-  ;; In Lean4, comments may be nested.
+  ;; (In Lean4, comments may be nested.)
   (setq-local comment-quote-nested
               nil)
   (setq-local comment-start
