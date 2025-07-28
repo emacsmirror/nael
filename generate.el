@@ -66,12 +66,6 @@
   (insert "\n")
   (insert "\n;;; Code:")
   (insert "\n")
-  (insert "\n(defgroup nael-abbrev nil")
-  (insert "\n  \"`local-abbrev-table' for `nael-mode'.\"")
-  (insert "\n  :group 'nael")
-  (insert "\n  :group 'eglot")
-  (insert "\n  :prefix \"nael-abbrev-\")")
-  (insert "\n")
   (insert "\n(define-abbrev-table 'nael-abbrev-table")
   (let ((max (1- (length vscode-json-one))))
     (seq-do-indexed

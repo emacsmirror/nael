@@ -14,12 +14,6 @@
 
 ;;; Code:
 
-(defgroup nael-abbrev nil
-  "`local-abbrev-table' for `nael-mode'."
-  :group 'nael
-  :group 'eglot
-  :prefix "nael-abbrev-")
-
 (define-abbrev-table 'nael-abbrev-table
   '(("\\\\" "\\" nil :system t)
     ("\\a" "α" nil :system t)
