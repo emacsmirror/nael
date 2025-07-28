@@ -1,6 +1,21 @@
 #!/usr/bin/env -S emacs -x
+;; -*- lexical-binding: t; -*-
 
-;;;; Download and parse JSON from VS-Code plugin.
+;; Copyright (C) 2025 Mekeor Melire
+
+;; This file is NOT part of GNU Emacs.
+
+;; This code is licensed under GNU General Public License version 3,
+;; see LICENSE.GPL3.
+
+;;; Commentary:
+
+;; This file generates Emacs-Lisp files based on data from Lean4
+;; plugin for VS-Code.
+
+;;; Code:
+
+;;;; Fetch from VS-Code
 
 (defconst vscode-json
   (with-temp-buffer
