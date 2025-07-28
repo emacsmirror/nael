@@ -124,7 +124,7 @@
     (modify-syntax-entry ?\\ "/"  table)
 
     table)
-  "Syntax table used in Nael mode.")
+  "Syntax table used in `nael-mode'.")
 
 (defconst nael-syntax-definition
   ;; The following `rx'-expression is duplicated from
@@ -254,7 +254,7 @@
           '(1 font-lock-comment-face t)
           '(2 nil t)
           '(3 font-lock-comment-face t))))
-  "Defaults for Font Lock mode used by Nael mode.")
+  "Defaults for Font Lock mode used by `nael-mode'.")
 
 (defun nael-navigation-defun-beginning ()
   (interactive)
@@ -262,10 +262,10 @@
 
 (defvar nael-imenu-generic-expression
   (list (list nil nael-syntax-definition 4))
-  "`imenu-generic-expression' for Nael mode.")
+  "`imenu-generic-expression' for `nael-mode'.")
 
 (defcustom nael-mode-hook nil
-  "Hook run when entering Nael mode.
+  "Hook run when entering `nael-mode'.
 
 If both `nael-eglot-init' and `eglot-ensure' are members, they should
 appear in that order.  If both `nael-lsp-init' and `lsp' / `lsp-mode'
