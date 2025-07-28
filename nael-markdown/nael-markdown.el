@@ -23,6 +23,8 @@
 
 ;;; Code:
 
+(require 'markdown-mode)
+
 (add-to-list 'markdown-code-lang-modes
              (cons "lean" 'nael-mode))
 
