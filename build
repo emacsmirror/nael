@@ -84,6 +84,45 @@ Keys may include `$CURSOR'.")
    "\n"
    "\n;;; nael-abbrev.el ends here"))
 
+;;;; Generate `neal-skeleton.el'
+
+(with-temp-file "nael/nael-skeleton.el"
+  (insert
+   ";;; nael-skeleton.el --- Skeleton for Nael  -*- lexical-binding: t; -*-"
+   "\n"
+   "\n;; Copyright (C) 2025 Mekeor Melire"
+   "\n"
+   "\n;; This file is NOT part of GNU Emacs."
+   "\n"
+   "\n;; This code is licensed under GNU General Public License version 3,"
+   "\n;; see LICENSE.GPL3."
+   "\n"
+   "\n;;; Commentary:"
+   "\n"
+   "\n;; TODO"
+   "\n"
+   "\n;;; Code:"
+   "\n"
+   "\n(require 'skeleton)"
+   "\n")
+  (let ((max (1- (length b-abbrev-separable))))
+    (seq-do-indexed
+     (lambda (pair index)
+       (insert "\n(define-skeleton nael-skeleton-")
+       (dolist (char (append (string-to-list (cadr pair))
+                             (string-to-list (cddr pair))))
+         (insert (format "%x" char)))
+       (insert
+        " nil nil"
+        (format " %S _ %S" (cadr pair) (cddr pair))
+        ")"))
+     b-abbrev-separable))
+  (insert
+   "\n"
+   "\n(provide 'nael-skeleton)"
+   "\n"
+   "\n;;; nael-skeleton.el ends here"))
+
 ;; Local Variables:
 ;; fill-column: 80
 ;; read-symbol-shorthands: (("b-" . "build-"))
