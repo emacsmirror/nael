@@ -43,19 +43,16 @@ Keys may include `$CURSOR'.")
               build-abbrev-alist))
 
 (defconst build-abbrev-skeletons
-  (mapcan (pcase-lambda (`(,abbrev . ,expans))
-            (when-let*
-                ((expans (string-split expans build-abbrev-separator))
-                 ((not (length= expans 1)))
-                 (expl (car expans))
-                 (expr (cadr expans))
-                 (expans (string-to-list (concat expl expr))))
-              (list (list abbrev expl expr
-                          (concat "nael-skeleton-"
-                                  (mapconcat (apply-partially #'format
-                                                              "%x")
-                                             abbrev))))))
-          build-abbrev-alist))
+  (mapcan
+   (pcase-lambda (`(,abbrev . ,expans))
+     (when-let*
+         ((expans (string-split expans build-abbrev-separator))
+          ((not (length= expans 1))))
+       (list (list abbrev (car expans) (cadr expans)
+                   (concat "nael-skeleton-"
+                           (mapconcat (apply-partially #'format "%x")
+                                      abbrev))))))
+   build-abbrev-alist))
 
 (defconst build-abbrev-table-regexp
   ;; The regexp for characters that might be part of abbreviations, in
