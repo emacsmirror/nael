@@ -140,8 +140,6 @@
   "Syntax table used in `nael-mode'.")
 
 (defconst nael-syntax-definition
-  ;; The following `rx'-expression is duplicated from
-  ;; definition of `nael-font-lock-defaults'.
   (rx
    ;; Use `line-start' rather than `word-start' for speed.
    line-start
@@ -155,7 +153,8 @@
            "{" (zero-or-more (not (any "}"))) "}"
            (zero-or-more space)))
    (zero-or-more space)
-   (group (zero-or-more (not (any " \t\n\r{(["))))))
+   (group (zero-or-more (not (any " \t\n\r{([")))))
+  "Regular expression matching definitions.")
 
 (defvar nael-font-lock-defaults
   (list
