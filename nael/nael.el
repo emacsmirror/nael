@@ -301,6 +301,9 @@ they should appear in that order."
 
 \\{nael-mode-map}"
   :abbrev-table nael-abbrev-table
+  (add-hook 'abbrev-mode-hook
+            #'nael-abbrev-special-init
+            nil t)
   ;; Navigation:
   (setq-local add-log-current-defun-function
               #'nael-navigation-defun-name)
