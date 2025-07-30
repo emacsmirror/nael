@@ -40,7 +40,7 @@
 ;; One crucial challenge in the development of this file was that
 ;; `abbrev-mode' was originally designed for abbreviations that
 ;; exclusively consist of word-constituent characters.  Whereas in
-;; Lean4, we desire abbreviations like <<>>.  One measure we need to
+;; Lean4, we desire abbreviations like \f<<>>.  One measure we need to
 ;; take for this requirement is to specify `:regexp' properties for
 ;; our Abbrev tables; see (info "(elisp) Abbrev Table Properties").
 ;; This already works fine when calling `expand-abbrev' explicitly.
