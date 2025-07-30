@@ -385,8 +385,9 @@ they should appear in that order."
   (setq-local next-error-function
               #'flymake-goto-next-error))
 
-(add-to-list 'auto-mode-alist
-             (cons "\\.lean\\'" 'nael-mode))
+(add-to-list 'auto-mode-alist (cons "\\.lean\\'" 'nael-mode))
+
+(modify-coding-system-alist 'file "\\.lean\\'" 'utf-8)
 
 (provide 'nael)
 
