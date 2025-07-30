@@ -357,7 +357,7 @@ they should appear in that order."
               #'nael-comment-insert)
   (setq-local comment-padding
               1)
-  ;; (In Lean4, comments may be nested.)
+  ;; (Comments may be nested.)
   (setq-local comment-quote-nested
               nil)
   (setq-local comment-start
