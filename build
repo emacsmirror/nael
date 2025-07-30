@@ -251,3 +251,13 @@ being placed between the left and the right part.\"
            name left right))
         build-abbrev-skeletons)
        "\n")))))
+
+;;;; Generate `**/*-autoloads.el'
+
+(dolist (dir (file-expand-wildcards "nael*"))
+  (message dir)
+  (loaddefs-generate
+   dir
+   (file-name-concat dir (concat dir "-autoloads.el"))))
+
+;;; build ends here

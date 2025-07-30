@@ -58,6 +58,7 @@
 
 ;; Following features are not strictly loaded here in order to leave
 ;; it up to users:
+(autoload 'lsp "lsp-mode" nil t) ;; lsp
 (autoload 'nael-abbrev-special-init "nael-abbrev" nil t) ;; nael
 (autoload 'nael-eglot-init "nael-eglot" nil t) ;; nael
 (autoload 'nael-lsp-init "nael-lsp" nil t) ;; nael-lsp
@@ -296,7 +297,8 @@ If both `nael-eglot-init' and `eglot-ensure' are members, they should
 appear in that order.  If both `nael-lsp-init' and `lsp' are members,
 they should appear in that order."
   :options '( abbrev-mode eglot-ensure imenu-add-menubar-index
-              nael-eglot-init nael-lsp-init)
+              nael-eglot-init nael-lsp-init
+              lsp)
   :type 'hook
   :group 'nael)
 
@@ -306,6 +308,7 @@ they should appear in that order."
   "C-c c" #'project-compile
   "C-c e" #'eglot)
 
+;;;###autoload
 (define-derived-mode nael-mode prog-mode "Nael"
   "Major mode for Lean.
 

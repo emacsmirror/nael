@@ -85,6 +85,7 @@ functions for proof goal."
   (add-hook 'eldoc-documentation-functions
             #'nael-lsp-eldoc-term-goal -80 'local))
 
+;;;###autoload
 (defun nael-lsp-init ()
   "Prepare `lsp-mode' to work with `nael-mode'."
   (interactive)
@@ -97,10 +98,6 @@ functions for proof goal."
           ;; default to zero depth. By choosing -80 here,
           ;; `nael-lsp-init' would then be invoked prior to `lsp'.
           -80)
-
-;; Modify the suggestions of Customize for functions that users might
-;; want to hook onto `nael-mode-hook'.
-(cl-pushnew 'lsp (get 'nael-mode-hook 'custom-options))
 
 (provide 'nael-lsp)
 

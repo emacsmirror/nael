@@ -156,6 +156,7 @@ for any output."
 (add-to-list 'eglot-server-programs
              (list 'nael-mode "lake" "serve"))
 
+;;;###autoload
 (defun nael-eglot-init ()
   "Prepare `eglot' to work with `nael-mode'."
   (interactive)
