@@ -289,6 +289,12 @@
 ;; `nael-navigation-defun-name' currently lack support for `mutual'
 ;; blocks, i.e. mutually recursive definitions.
 
+(defun nael-navigation-defun-end ()
+  "`end-of-defun-function' for `nael-mode'."
+  (interactive)
+  (when (re-search-forward nael-syntax-definition nil t)
+    (goto-char (match-beginning 0))))
+
 (defun nael-navigation-defun-beginning ()
   "`beginning-of-defun-function' for `nael-mode'."
   (interactive)
@@ -340,6 +346,8 @@ they should appear in that order."
               #'nael-navigation-defun-name)
   (setq-local beginning-of-defun-function
               #'nael-navigation-defun-beginning)
+  (setq-local end-of-defun-function
+              #'nael-navigation-defun-end)
   ;; Comments:
   (setq-local comment-end
               "-/")
