@@ -301,6 +301,8 @@ they should appear in that order."
 
 \\{nael-mode-map}"
   :abbrev-table nael-abbrev-table
+  ;; Abbreviations: (The commentary of `nael-abbrev' explains in depth
+  ;; why this workaround is needed.)
   (add-hook 'abbrev-mode-hook
             #'nael-abbrev-special-init
             nil t)
