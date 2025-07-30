@@ -22,6 +22,9 @@
 
 (require 'nael-skeleton)
 
+(defun nael-abbrev-expand ()
+  "Expand abbreviations that don't only consist of word constituents.")
+
 (define-abbrev-table 'nael-abbrev-table-without-skeletons
   '(("\\\\" "\\" nil :system t)
     ("\\a" "α" nil :system t)
@@ -1876,7 +1879,7 @@
 
 (define-abbrev-table 'nael-abbrev-table
   nil
-  :regexp"\\(\\\\.*\\)"
+  :regexp "\\(\\\\.*\\)"
   :parents (list nael-abbrev-table-without-skeletons
                  nael-abbrev-table-only-skeletons))
 

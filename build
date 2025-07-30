@@ -10,14 +10,16 @@
 
 ;;; Commentary:
 
-;; This file generates Emacs-Lisp files based on data from Lean4
-;; plugin for VS-Code.
+;; This file generates Emacs-Lisp files based on data from Lean4 plugin for
+;; VS-Code.  For editing the strings that include Elisp code, I recommend
+;; installing the package `separedit', then typing C-u M-x separedit-dwim RET
+;; emacs-lisp-mode RET.
 
 ;;; Code:
 
 ;;;; Fetch Upstream Abbreviations
 
-(defconst b-abbrev-alist
+(defconst build-abbrev-alist
   (with-temp-buffer
     (url-insert-file-contents
      (concat "https://raw.githubusercontent.com"
@@ -30,16 +32,16 @@
 
 Keys may include `$CURSOR'.")
 
-(defconst b-abbrev-separator
+(defconst build-abbrev-separator
   (regexp-quote "$CURSOR"))
 
-(defconst b-abbrev-inseparable
-  (seq-remove (lambda (pair) (string-match-p b-abbrev-separator (cdr pair)))
-              b-abbrev-alist))
+(defconst build-abbrev-inseparable
+  (seq-remove (lambda (pair) (string-match-p build-abbrev-separator (cdr pair)))
+              build-abbrev-alist))
 
-(defconst b-abbrev-separable
+(defconst build-abbrev-separable
   (mapcan (pcase-lambda (`(,abbrev . ,expans))
-            (when-let* ((expans (string-split expans b-abbrev-separator))
+            (when-let* ((expans (string-split expans build-abbrev-separator))
                         ((not (length= expans 1)))
                         (expl (car expans))
                         (expr (cadr expans))
@@ -48,15 +50,16 @@ Keys may include `$CURSOR'.")
                           (concat "nael-skeleton-"
                                   (mapconcat (apply-partially #'format "%x")
                                              abbrev))))))
-          b-abbrev-alist))
+          build-abbrev-alist))
 
-(defconst b-abbrev-table-regexp "\\(\\\\.*\\)")
+(defconst build-abbrev-table-regexp "\\(\\\\.*\\)")
 
 ;;;; Generate `nael-abbrev.el'
 
 (with-temp-file "nael/nael-abbrev.el"
   (insert
-   ";;; nael-abbrev.el --- Abbrev for Nael  -*- lexical-binding: t; -*-
+   (format
+    ";;; nael-abbrev.el --- Abbrev for Nael  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2025 Mekeor Melire
 
@@ -80,50 +83,58 @@ Keys may include `$CURSOR'.")
 
 (require 'nael-skeleton)
 
-(define-abbrev-table 'nael-abbrev-table-without-skeletons")
-  (let ((max (1- (length b-abbrev-inseparable))))
-    (seq-do-indexed
-     (lambda (pair index)
-       (insert (format "\n%s%S %S nil :system t%s"
-                       (if (eq 0 index) "  '((" "    (")
-                       (concat "\\" (car pair))
-                       (cdr pair)
-                       (if (eq max index) "))" ")"))))
-     b-abbrev-inseparable))
-  (insert (format "\n  :regexp %S)" b-abbrev-table-regexp))
-  (insert
-   "\n"
-   "\n(define-abbrev-table 'nael-abbrev-table-only-skeletons")
-  (let ((max (1- (length b-abbrev-separable))))
-    (seq-do-indexed
-     (pcase-lambda (`(,abbrev ,expl ,expr ,name) index)
-       (insert (format "\n%s%S \"\" %s :system t%s"
-                       (if (eq 0 index) "  '((" "    (")
-                       (concat "\\" abbrev)
-                       name
-                       (if (eq max index) "))" ")"))))
-     b-abbrev-separable))
-  (insert (format "\n  :regexp %S)" b-abbrev-table-regexp))
-  (insert
-   "
+(defun nael-abbrev-expand ()
+  \"Expand abbreviations that don't only consist of word constituents.\")
+
+(define-abbrev-table 'nael-abbrev-table-without-skeletons
+  %s
+  :regexp %S)
+
+(define-abbrev-table 'nael-abbrev-table-only-skeletons
+  %s
+  :regexp %S)
 
 (define-abbrev-table 'nael-abbrev-table
   nil
-  :regexp"
-   (format "%S" b-abbrev-table-regexp)
-   "
+  :regexp %S
   :parents (list nael-abbrev-table-without-skeletons
                  nael-abbrev-table-only-skeletons))
 
 (provide 'nael-abbrev)
 
-;;; nael-abbrev.el ends here"))
+;;; nael-abbrev.el ends here"
+    (let ((max (1- (length build-abbrev-inseparable))))
+      (string-join
+       (seq-map-indexed
+        (lambda (pair index)
+          (format "%s%S %S nil :system t%s"
+                  (if (eq 0 index) "'((" "    (")
+                  (concat "\\" (car pair))
+                  (cdr pair)
+                  (if (eq max index) "))" ")")))
+        build-abbrev-inseparable)
+      "\n"))
+    build-abbrev-table-regexp
+    (let ((max (1- (length build-abbrev-separable))))
+      (string-join
+       (seq-map-indexed
+        (pcase-lambda (`(,abbrev ,expl ,expr ,name) index)
+          (format "%s%S \"\" %s :system t%s"
+                  (if (eq 0 index) "'((" "    (")
+                  (concat "\\" abbrev)
+                  name
+                  (if (eq max index) "))" ")")))
+        build-abbrev-separable)
+       "\n"))
+    build-abbrev-table-regexp
+    build-abbrev-table-regexp)))
 
 ;;;; Generate `neal-skeleton.el'
 
 (with-temp-file "nael/nael-skeleton.el"
   (insert
-   ";;; nael-skeleton.el --- Skeleton for Nael  -*- lexical-binding: t; -*-
+   (format
+    ";;; nael-skeleton.el --- Skeleton for Nael  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2025 Mekeor Melire
 
@@ -139,24 +150,18 @@ Keys may include `$CURSOR'.")
 ;;; Code:
 
 (require 'skeleton)
-")
-  (let ((max (1- (length b-abbrev-separable))))
-    (seq-do-indexed
-     (pcase-lambda (`(,abbrev ,left ,right ,name) index)
-       (insert
-        "\n(define-skeleton "
-        name
-        " \"\" nil"
-        (format " %S _ %S" left right)
-        ")"))
-     b-abbrev-separable))
-  (insert
-   "
+
+%s
 
 (provide 'nael-skeleton)
 
-;;; nael-skeleton.el ends here"))
-
-;; Local Variables:
-;; read-symbol-shorthands: (("b-" . "build-"))
-;; End:
+;;; nael-skeleton.el ends here"
+    (let ((max (1- (length build-abbrev-separable))))
+      (string-join
+       (seq-map-indexed
+        (pcase-lambda (`(,abbrev ,left ,right ,name) index)
+          (format
+           "(define-skeleton %s \"\" nil %S _ %S)"
+           name left right))
+        build-abbrev-separable)
+       "\n")))))
