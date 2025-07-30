@@ -18,7 +18,11 @@
 
 ;;; Code:
 
-(define-abbrev-table 'nael-abbrev-table
+(require 'abbrev)
+
+(require 'nael-skeleton)
+
+(define-abbrev-table 'nael-abbrev-table-without-skeletons
   '(("\\\\" "\\" nil :system t)
     ("\\a" "α" nil :system t)
     ("\\b" "β" nil :system t)
@@ -1841,7 +1845,40 @@
     ("\\Vvdash" "⊪" nil :system t)
     ("\\tiny" "⧾" nil :system t)
     ("\\miny" "⧿" nil :system t)
-    ("\\heq" "≍" nil :system t)))
+    ("\\heq" "≍" nil :system t))
+  :regexp "\\(\\\\.*\\)")
+
+(define-abbrev-table 'nael-abbrev-table-only-skeletons
+  '(("\\{}" "" nael-skeleton-7b7d :system t)
+    ("\\{}_" "" nael-skeleton-7b7d5f :system t)
+    ("\\{{}}" "" nael-skeleton-7b7b7d7d :system t)
+    ("\\[]" "" nael-skeleton-5b5d :system t)
+    ("\\[]_" "" nael-skeleton-5b5d5f :system t)
+    ("\\[[]]" "" nael-skeleton-5b5b5d5d :system t)
+    ("\\<>" "" nael-skeleton-3c3e :system t)
+    ("\\()" "" nael-skeleton-2829 :system t)
+    ("\\()_" "" nael-skeleton-28295f :system t)
+    ("\\([])'" "" nael-skeleton-285b5d2927 :system t)
+    ("\\(())" "" nael-skeleton-28282929 :system t)
+    ("\\f<>" "" nael-skeleton-663c3e :system t)
+    ("\\f<<>>" "" nael-skeleton-663c3c3e3e :system t)
+    ("\\[--]" "" nael-skeleton-5b2d2d5d :system t)
+    ("\\||||" "" nael-skeleton-7c7c7c7c :system t)
+    ("\\nnnorm" "" nael-skeleton-6e6e6e6f726d :system t)
+    ("\\norm" "" nael-skeleton-6e6f726d :system t)
+    ("\\floor" "" nael-skeleton-666c6f6f72 :system t)
+    ("\\ceil" "" nael-skeleton-6365696c :system t)
+    ("\\nfloor" "" nael-skeleton-6e666c6f6f72 :system t)
+    ("\\nceil" "" nael-skeleton-6e6365696c :system t)
+    ("\\s[]" "" nael-skeleton-735b5d :system t)
+    ("\\simplex" "" nael-skeleton-73696d706c6578 :system t))
+  :regexp "\\(\\\\.*\\)")
+
+(define-abbrev-table 'nael-abbrev-table
+  nil
+  :regexp"\\(\\\\.*\\)"
+  :parents (list nael-abbrev-table-without-skeletons
+                 nael-abbrev-table-only-skeletons))
 
 (provide 'nael-abbrev)
 
