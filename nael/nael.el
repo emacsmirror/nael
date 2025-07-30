@@ -50,7 +50,17 @@
 (require 'rx)
 (require 'seq)
 
-(require 'nael-abbrev)
+;; For following external functions no feature needs to be loaded:
+;;
+;; - `abbrev-mode' from core `abbrev' is strictly loaded in core
+;;   `loadup'.
+;; - `eglot-ensure' from core `eglot' is autoloaded.
+
+;; Following features are not strictly loaded here in order to leave
+;; it up to users:
+(autoload 'nael-abbrev-special-init "nael-abbrev" nil t) ;; nael
+(autoload 'nael-eglot-init "nael-eglot" nil t) ;; nael
+(autoload 'nael-lsp-init "nael-lsp" nil t) ;; nael-lsp
 
 (defgroup nael nil
   "Major mode for Lean."

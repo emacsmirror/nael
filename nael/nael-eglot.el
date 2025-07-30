@@ -158,6 +158,7 @@ for any output."
 
 (defun nael-eglot-init ()
   "Prepare `eglot' to work with `nael-mode'."
+  (interactive)
   (add-hook 'eglot-server-initialized-hook
             #'nael-eglot-server-initialized nil 'local)
   (add-hook 'eglot-managed-mode-hook

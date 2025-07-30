@@ -70,6 +70,7 @@
 
 (defun nael-abbrev-special-init ()
   "Expand symbol-including abbreviations when adequate character inserted."
+  (interactive)
   (add-hook 'post-self-insert-hook
             #'nael-abbrev-special-expand
             nil t))

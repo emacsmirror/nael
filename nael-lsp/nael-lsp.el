@@ -87,6 +87,7 @@ functions for proof goal."
 
 (defun nael-lsp-init ()
   "Prepare `lsp-mode' to work with `nael-mode'."
+  (interactive)
   (add-hook 'lsp-managed-mode-hook
             #'nael-lsp-managed nil 'local))
 
