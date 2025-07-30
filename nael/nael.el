@@ -269,6 +269,23 @@
           '(3 font-lock-comment-face t))))
   "Defaults for `font-lock-mode' used by `nael-mode'.")
 
+(defun nael-comment-insert ()
+  "`comment-insert-comment-function' for `nael-mode'."
+  (interactive)
+  (if (save-excursion (beginning-of-line)
+                      (looking-at-p "[[:blank:]]*$"))
+      (progn
+        ;; Respect users who set `comment-start' to "--".
+        (insert (or comment-start " "))
+        ;; Respect users who set `comment-end' to "".
+        (unless (length= comment-end 0)
+          (save-excursion
+            (insert " " comment-end))))
+    (end-of-line)
+    (unless (looking-back "[[:blank:]]")
+      (insert " "))
+    (insert "-- ")))
+
 ;; TODO: Both `nael-navigation-defun-beginning' and
 ;; `nael-navigation-defun-name' currently lack support for `mutual'
 ;; blocks, i.e. mutually recursive definitions.
@@ -326,18 +343,22 @@ they should appear in that order."
               #'nael-navigation-defun-beginning)
   ;; Comments:
   (setq-local comment-end
-              "")
+              "-/")
   (setq-local comment-end-skip
-              "[ \t]*\\(-/\\|\\s>\\)")
+              "[[:space:]]*-/")
+  (setq-local comment-insert-comment-function
+              #'nael-comment-insert)
   (setq-local comment-padding
               1)
   ;; (In Lean4, comments may be nested.)
   (setq-local comment-quote-nested
               nil)
   (setq-local comment-start
-              "--")
+              "/-")
   (setq-local comment-start-skip
-              "[-/]-[ \t]*")
+              "/-[[:space:]]*")
+  (setq-local comment-style
+              'multi-line)
   (setq-local comment-use-syntax
               t)
   (setq-local parse-sexp-ignore-comments
