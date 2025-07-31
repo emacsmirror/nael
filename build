@@ -173,7 +173,12 @@ being placed between the left and the right part.\"
 
 (provide 'nael-abbrev)
 
-;;; nael-abbrev.el ends here"
+;;; nael-abbrev.el ends here
+
+;; Local Variables:
+;; buffer-read-only: t
+;; End:
+"
     "[^][)(}{><|[:word:]-]"
     (let ((max (1- (length build-abbrev-singletons))))
       (string-join
@@ -241,7 +246,12 @@ being placed between the left and the right part.\"
 
 (provide 'nael-skeleton)
 
-;;; nael-skeleton.el ends here"
+;;; nael-skeleton.el ends here
+
+;; Local Variables:
+;; buffer-read-only: t
+;; End:
+"
     (let ((max (1- (length build-abbrev-skeletons))))
       (string-join
        (seq-map-indexed

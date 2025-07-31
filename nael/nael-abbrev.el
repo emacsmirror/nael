@@ -1950,3 +1950,7 @@ being placed between the left and the right part."
 (provide 'nael-abbrev)
 
 ;;; nael-abbrev.el ends here
+
+;; Local Variables:
+;; buffer-read-only: t
+;; End:

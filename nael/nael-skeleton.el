@@ -56,3 +56,7 @@
 (provide 'nael-skeleton)
 
 ;;; nael-skeleton.el ends here
+
+;; Local Variables:
+;; buffer-read-only: t
+;; End:
