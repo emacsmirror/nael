@@ -20,14 +20,26 @@ Major mode for Lean.
 
 ;;; Generated autoloads from nael-abbrev.el
 
+(autoload 'nael-abbrev-expand "nael-abbrev" "\
+Expand symbol-including abbreviation before point.")
 (register-definition-prefixes "nael-abbrev" '("nael-abbrev-"))
 
 
 ;;; Generated autoloads from nael-eglot.el
 
-(autoload 'nael-eglot-init "nael-eglot" "\
-Prepare `eglot' to work with `nael-mode'." t)
-(register-definition-prefixes "nael-eglot" '("nael-eglot-"))
+(autoload 'nael-eglot-managed "nael-eglot" "\
+Buffer-locally set up ElDoc and Eglot for Nael.
+
+Use ElDoc documentation strategy `compose' and add ElDoc documentation
+functions for goal and term goal." t)
+(autoload 'nael-eglot-server-initialized "nael-eglot" "\
+Buffer-locally correct Eglot's expectations on Lean LSP server.
+
+Since `lake serve' does not output anything, instruct Eglot to not wait
+for any output.
+
+(fn _)")
+(register-definition-prefixes "nael-eglot" '("nael-eglot-eldoc-"))
 
 
 ;;; Generated autoloads from nael-skeleton.el

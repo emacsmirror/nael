@@ -47,11 +47,9 @@
 ;; But at the time of writing (August 2025), `self-insert-command'
 ;; rules out automatic expansion of abbreviations that end in
 ;; non-word-constituent characters.  As a workaround, you can call
-;; function `nael-abbrev-special-init'.  It will add
-;; `nael-abbrev-special-expand' to the `post-self-insert-hook' which
-;; considers expansion for a suitably wider range of characters.
-;; (`nael-abbrev-special-init' is added to `abbrev-mode-hook' in
-;; `nael-mode'.)
+;; function `nael-init-abbrev'.  It will add `nael-abbrev-expand' to
+;; the `post-self-insert-hook' which considers expansion for a
+;; suitably wider range of characters.
 
 ;;; Code:
 
@@ -59,7 +57,8 @@
 
 (require 'nael-skeleton)
 
-(defun nael-abbrev-special-expand ()
+;;;###autoload
+(defun nael-abbrev-expand ()
   "Expand symbol-including abbreviation before point."
   (and abbrev-mode
        (string-match-p "[^][)(}{><|[:word:]-]"
@@ -68,12 +67,14 @@
             (unless (expand-abbrev)
               (goto-char pt)))))
 
-(defun nael-abbrev-special-init ()
-  "Expand symbol-including abbreviations when adequate character inserted."
-  (interactive)
-  (add-hook 'post-self-insert-hook
-            #'nael-abbrev-special-expand
-            nil t))
+(defun nael-abbrev-config ()
+  "Configure `abbrev-mode' for `nael-mode'.
+
+Buffer-locally sets `local-abbrev-table' and adds `nael-abbrev-expand'
+to `post-self-insert-hook' so that symbol-including abbreviations are
+expanded whenever suitable characters are inserted."
+  (setq-local local-abbrev-table nael-abbrev-table)
+  (add-hook 'post-self-insert-hook #'nael-abbrev-expand nil t))
 
 (define-abbrev-table 'nael-abbrev-table-only-singletons
   '(("\\\\" "\\" nil :system t)

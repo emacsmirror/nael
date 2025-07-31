@@ -9,8 +9,6 @@
 
 ;;; Generated autoloads from nael-lsp.el
 
-(autoload 'nael-lsp-init "nael-lsp" "\
-Prepare `lsp-mode' to work with `nael-mode'." t)
 (register-definition-prefixes "nael-lsp" '("nael-lsp-"))
 
 

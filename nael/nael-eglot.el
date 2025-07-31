@@ -132,6 +132,7 @@ Extra.html#Lean.Lsp.PlainTermGoal"
                 cb #'plist-get #'eglot--format-markup))
   t)
 
+;;;###autoload
 (defun nael-eglot-managed ()
   "Buffer-locally set up ElDoc and Eglot for Nael.
 
@@ -145,6 +146,7 @@ functions for goal and term goal."
   (add-hook 'eldoc-documentation-functions
             #'nael-eglot-eldoc-term-goal -80 'local))
 
+;;;###autoload
 (defun nael-eglot-server-initialized (_)
   "Buffer-locally correct Eglot's expectations on Lean LSP server.
 
@@ -155,15 +157,6 @@ for any output."
 
 (add-to-list 'eglot-server-programs
              (list 'nael-mode "lake" "serve"))
-
-;;;###autoload
-(defun nael-eglot-init ()
-  "Prepare `eglot' to work with `nael-mode'."
-  (interactive)
-  (add-hook 'eglot-server-initialized-hook
-            #'nael-eglot-server-initialized nil 'local)
-  (add-hook 'eglot-managed-mode-hook
-            #'nael-eglot-managed nil 'local))
 
 (add-hook 'nael-mode-hook
           #'nael-eglot-init

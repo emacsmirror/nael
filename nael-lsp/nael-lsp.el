@@ -86,13 +86,6 @@ functions for proof goal."
   (add-hook 'eldoc-documentation-functions
             #'nael-lsp-eldoc-term-goal -80 'local))
 
-;;;###autoload
-(defun nael-lsp-init ()
-  "Prepare `lsp-mode' to work with `nael-mode'."
-  (interactive)
-  (add-hook 'lsp-managed-mode-hook
-            #'nael-lsp-managed nil 'local))
-
 (add-hook 'nael-mode-hook
           #'nael-lsp-init
           ;; Users may (add-hook 'nael-mode-hook #'lsp) which will

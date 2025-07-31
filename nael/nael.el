@@ -50,7 +50,9 @@
 (require 'rx)
 (require 'seq)
 
-(require 'nael-abbrev)
+(require 'nael-autoloads)
+
+(declare-function lsp "lsp-mode" (&optional arg))
 
 (defgroup nael nil
   "Major mode for Lean."
@@ -257,6 +259,8 @@
           '(3 font-lock-comment-face t))))
   "Defaults for `font-lock-mode' used by `nael-mode'.")
 
+;;;; Auxiliary Functions and Commands:
+
 (defun nael-comment-insert ()
   "`comment-insert-comment-function' for `nael-mode'."
   (interactive)
@@ -340,15 +344,51 @@
   (list (list nil nael-syntax-definition 4))
   "`imenu-generic-expression' for `nael-mode'.")
 
+;;;; Initializors:
+
+;; Our goal is to avoid loading `nael-abbrev' / `abbrev', `nael-eglot'
+;; / `eglot' and `nael-lsp' / `lsp', until the user calls one of their
+;; autoloaded commands.  We are lucky that all `post-self-insert-hook'
+;; is strictly loaded and that `eglot-server-initialized-hook',
+;; `eglot-managed-mode-hook' as well as `lsp-managed-mode-hook' are
+;; all initialized to nil, in usual Emacs manner.  Thus, it's fine to
+;; call `add-hook' on them, even if they have not been defined as
+;; variables yet.
+
+(defun nael-abbrev-init ()
+  "Initialize `abbrev-mode' for `nael-mode'.
+
+Expand symbol-including abbreviations when adequate character inserted."
+  (interactive)
+  (add-hook 'abbrev-mode-hook #'nael-abbrev-config nil 'local))
+
+(defun nael-eglot-init ()
+  "Initialize `eglot' for `nael-mode'."
+  (interactive)
+  (add-hook 'eglot-server-initialized-hook
+            #'nael-eglot-server-initialized nil 'local)
+  (add-hook 'eglot-managed-mode-hook
+            #'nael-eglot-managed nil 'local))
+
+(defun nael-lsp-init ()
+  "Initialize `lsp-mode' for `nael-mode'.
+
+Note that if you call `lsp-mode' inside a buffer majored by `nael-mode',
+it is unguardedly assumed that you have `nael-lsp' package installed and
+that either you have `nael-lsp' loaded, or `nael-lsp-autoloads', or at
+least evaluated an autoload statement for `nael-lsp-managed'."
+  (interactive)
+  (add-hook 'lsp-managed-mode-hook #'nael-lsp-managed nil 'local))
+
+;;;; Mode:
+
 (defcustom nael-mode-hook nil
   "Hook run when entering `nael-mode'.
 
 If both `nael-eglot-init' and `eglot-ensure' are members, they should
 appear in that order.  If both `nael-lsp-init' and `lsp' are members,
 they should appear in that order."
-  :options '( abbrev-mode eglot-ensure imenu-add-menubar-index
-              nael-eglot-init nael-lsp-init
-              lsp)
+  :options '(abbrev-mode eglot-ensure imenu-add-menubar-index lsp)
   :type 'hook
   :group 'nael)
 
@@ -356,19 +396,18 @@ they should appear in that order."
   "<remap> <display-local-help>" #'eldoc-doc-buffer
   "C-c a" #'abbrev-mode
   "C-c c" #'project-compile
-  "C-c e" #'eglot)
+  "C-c e" #'eglot
+  "C-c l" #'lsp)
 
 ;;;###autoload
 (define-derived-mode nael-mode prog-mode "Nael"
   "Major mode for Lean.
 
 \\{nael-mode-map}"
-  :abbrev-table nael-abbrev-table
-  ;; Abbreviations: (The commentary of `nael-abbrev' explains in depth
-  ;; why this workaround is needed.)
-  (add-hook 'abbrev-mode-hook
-            #'nael-abbrev-special-init
-            nil t)
+  ;; Initialization:
+  (nael-abbrev-init)
+  (nael-eglot-init)
+  (nael-lsp-init)
   ;; Navigation:
   (setq-local add-log-current-defun-function
               #'nael-navigation-defun-name)
