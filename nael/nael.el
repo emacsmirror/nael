@@ -41,7 +41,7 @@
 
 ;;; Commentary:
 
-;; `nael-mode' is a major mode for in Lean version 4.
+;; `nael-mode' is a major mode for Lean.
 
 ;;; Code:
 
@@ -50,18 +50,7 @@
 (require 'rx)
 (require 'seq)
 
-;; For following external functions no feature needs to be loaded:
-;;
-;; - `abbrev-mode' from core `abbrev' is strictly loaded in core
-;;   `loadup'.
-;; - `eglot-ensure' from core `eglot' is autoloaded.
-
-;; Following features are not strictly loaded here in order to leave
-;; it up to users:
-(autoload 'lsp "lsp-mode" nil t) ;; lsp
-(autoload 'nael-abbrev-special-init "nael-abbrev" nil t) ;; nael
-(autoload 'nael-eglot-init "nael-eglot" nil t) ;; nael
-(autoload 'nael-lsp-init "nael-lsp" nil t) ;; nael-lsp
+(require 'nael-abbrev)
 
 (defgroup nael nil
   "Major mode for Lean."
@@ -275,15 +264,54 @@
                       (looking-at-p "[[:blank:]]*$"))
       (progn
         ;; Respect users who set `comment-start' to "--".
-        (insert (or comment-start " "))
+        (insert comment-start " ")
         ;; Respect users who set `comment-end' to "".
         (unless (length= comment-end 0)
           (save-excursion
             (insert " " comment-end))))
     (end-of-line)
-    (unless (looking-back "[[:blank:]]")
+    (unless (looking-back "[[:blank:]]" (1- (point)))
       (insert " "))
     (insert "-- ")))
+
+(defun nael-fill-paragraph (&optional justify)
+  "Fill comment paragraph at point."
+  (interactive)
+  (when (save-excursion (nth 4 (syntax-ppss (point))))
+    (let* ((com-beg (save-excursion
+                      (re-search-backward "[/-]-" nil t)
+                      (match-beginning 0)))
+           (multi (eq (char-after com-beg) ?/)))
+      (if multi
+          (let* ((par-beg (save-excursion
+                            (re-search-backward paragraph-start nil t)
+                            (match-beginning 0)))
+                 (beg (max com-beg par-beg))
+                 (com-end (if multi "-/" "$"))
+                 (com-end (save-excursion
+                            ;; If cursor is at -|/, then move to |-/,
+                            ;; so that `re-search-forward' can locate
+                            ;; comment ending.
+                            (and (eq (char-before) ?-)
+                                 (eq (char-after) ?/)
+                                 (backward-char))
+                            (re-search-forward com-end nil t)
+                            (match-end 0)))
+                 (par-end (save-excursion
+                            (search-forward paragraph-separate nil t)
+                            (match-end 0)))
+                 (end (min com-end par-end)))
+            (fill-region beg end justify))
+        ;; `fill-comment-paragraph' fills prefixed comments well, when
+        ;; configured correctly.
+        (let ((comment-start "--") (comment-end ""))
+          ;; For some reason, "" is used as fill-prefix by
+          ;; `fill-comment-paragraph' when point is at --|.  Avoid
+          ;; this misbehavior by moving point forward one char.
+          (and (not (eolp))
+               (looking-back "--" (max (- (point) 2) (point-min)))
+               (forward-char))
+          (fill-comment-paragraph justify))))))
 
 ;; TODO: Both `nael-navigation-defun-beginning' and
 ;; `nael-navigation-defun-name' currently lack support for `mutual'
@@ -348,6 +376,13 @@ they should appear in that order."
               #'nael-navigation-defun-beginning)
   (setq-local end-of-defun-function
               #'nael-navigation-defun-end)
+  ;; Paragraphs and filling:
+  (setq-local paragraph-start
+              "[[:blank:]]*$")
+  (setq-local paragraph-separate
+              "[[:blank:]]*$")
+  (setq-local fill-paragraph-function
+              #'nael-fill-paragraph)
   ;; Comments:
   (setq-local comment-end
               "-/")
@@ -357,8 +392,7 @@ they should appear in that order."
               #'nael-comment-insert)
   (setq-local comment-padding
               1)
-  ;; (Comments may be nested.)
-  (setq-local comment-quote-nested
+  (setq-local comment-quote-nested ;; Comments may be nested.
               nil)
   (setq-local comment-start
               "/-")

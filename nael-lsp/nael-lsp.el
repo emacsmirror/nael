@@ -10,7 +10,7 @@
 
 ;;; Commentary:
 
-;; This file configures lsp-mode to work with Nael.
+;; This file configures `lsp-mode' for `nael-mode'.
 
 ;;; Code:
 
@@ -21,7 +21,7 @@
 (require 'nael)
 
 (defgroup nael-lsp nil
-  "lsp-mode configured to work with Nael."
+  "`lsp-mode' configured for `nael-mode'."
   :group 'nael
   :group 'lsp
   :prefix "nael-lsp-")
@@ -34,7 +34,8 @@
   :language-id "nael"
   :major-modes '(nael-mode)
   :new-connection (lsp-stdio-connection '("lake" "serve"))
-  :semantic-tokens-faces-overrides '(:types (("leanSorryLike" . font-lock-warning-face)))
+  :semantic-tokens-faces-overrides
+  '(:types (("leanSorryLike" . font-lock-warning-face)))
   :server-id 'nael))
 
 ;; We could introduce the following interfaces so that we can use

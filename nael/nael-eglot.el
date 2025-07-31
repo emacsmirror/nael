@@ -12,7 +12,7 @@
 
 ;;; Commentary:
 
-;; This file configures Eglot and ElDoc to work with Nael.  Not only
+;; This file configures `eglot' and `eldoc' for `nael-mode'.  Not only
 ;; but in particular, it defines the function `nael-eglot-managed'
 ;; which is meant to be locally hooked onto `eglot-managed-mode-hook'
 ;; in Nael buffers.  When called, it teaches Eglot about some LSP
@@ -27,7 +27,7 @@
 (require 'nael)
 
 (defgroup nael-eglot nil
-  "Eglot and ElDoc configured to work with Nael."
+  "`eglot' and `eldoc' configured for `nael-mode'."
   :group 'nael
   :group 'eglot
   :prefix "nael-eglot-")
