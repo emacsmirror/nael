@@ -15,6 +15,7 @@ Major mode for Lean.
 \\{nael-mode-map}
 
 (fn)" t)
+(add-to-list 'auto-mode-alist (cons "\\.lean\\'" 'nael-mode))
 (register-definition-prefixes "nael" '("nael-"))
 
 
@@ -39,7 +40,7 @@ Since `lake serve' does not output anything, instruct Eglot to not wait
 for any output.
 
 (fn _)")
-(register-definition-prefixes "nael-eglot" '("nael-eglot-eldoc-"))
+(register-definition-prefixes "nael-eglot" '("nael-eglot-"))
 
 
 ;;; Generated autoloads from nael-skeleton.el

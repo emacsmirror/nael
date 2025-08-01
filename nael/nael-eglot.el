@@ -42,6 +42,15 @@
   "Name of buffer that is reused in order to fontify Nael code."
   :group 'nael-eglot)
 
+(defclass nael-eglot-lsp-server (eglot-lsp-server)
+  ;; Reminder of slots inherited from superclass (exluding slots from
+  ;; supersuperclass): project-nickname languages capabilities
+  ;; server-info shutdown-requested project progress-reporters
+  ;; inhibit-autoreconnect file-watches managed-buffers
+  ;; saved-initargs.
+  nil
+  :documentation "Eglot LSP server subclass for `nael-mode'.")
+
 (defun nael-eglot-eldoc-fontify (string)
   "Apply Nael font-lock rules to STRING."
   (with-current-buffer
@@ -155,16 +164,13 @@ for any output."
   (setq-local eglot-sync-connect
               nil))
 
-(add-to-list 'eglot-server-programs
-             (list 'nael-mode "lake" "serve"))
+(defcustom nael-eglot-contact (list "lake" "serve")
+  "Contact for Eglot server program for `nael-mode'.
 
-(add-hook 'nael-mode-hook
-          #'nael-eglot-init
-          ;; Users may (add-hook 'nael-mode-hook #'eglot-ensure) which
-          ;; will default to zero depth. By choosing -80 here,
-          ;; `nael-eglot-init' would then be invoked prior to
-          ;; `eglot-ensure'.
-          -80)
+See `eglot-server-programs' for requirements of CONTACT."
+  :type '(choice (repeat string :tag "(PROGRAM [ARGS...])")
+                 (sexp :tag "Other"))
+  :group 'nael-eglot)
 
 (provide 'nael-eglot)
 

@@ -27,7 +27,7 @@
   :prefix "nael-lsp-")
 
 (add-to-list 'lsp-language-id-configuration
-             '(nael-mode . "nael"))
+             (cons 'nael-mode "nael"))
 
 (lsp-register-client
  (make-lsp-client
@@ -85,13 +85,6 @@ functions for proof goal."
             #'nael-lsp-eldoc-goal -90 'local)
   (add-hook 'eldoc-documentation-functions
             #'nael-lsp-eldoc-term-goal -80 'local))
-
-(add-hook 'nael-mode-hook
-          #'nael-lsp-init
-          ;; Users may (add-hook 'nael-mode-hook #'lsp) which will
-          ;; default to zero depth. By choosing -80 here,
-          ;; `nael-lsp-init' would then be invoked prior to `lsp'.
-          -80)
 
 (provide 'nael-lsp)
 

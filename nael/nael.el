@@ -365,6 +365,17 @@ Expand symbol-including abbreviations when adequate character inserted."
 (defun nael-eglot-init ()
   "Initialize `eglot' for `nael-mode'."
   (interactive)
+  ;; We want to add an entry to `eglot-server-programs' but we want to
+  ;; avoid stricly loading `eglot' here.  Unfortunately, Eglot doesn't
+  ;; offer any hook that'd be run before it accesses
+  ;; `eglot-server-programs'.  We have no choice but
+  ;; `with-eval-after-load'.
+  (with-eval-after-load 'eglot
+    (require 'nael-eglot)
+    (add-to-list 'eglot-server-programs
+                 (cons 'nael-mode
+                       (lambda (&optional interactive project)
+                         nael-eglot-contact))))
   (add-hook 'eglot-server-initialized-hook
             #'nael-eglot-server-initialized nil 'local)
   (add-hook 'eglot-managed-mode-hook
@@ -458,6 +469,7 @@ they should appear in that order."
   (setq-local next-error-function
               #'flymake-goto-next-error))
 
+;;;###autoload
 (add-to-list 'auto-mode-alist (cons "\\.lean\\'" 'nael-mode))
 
 (modify-coding-system-alist 'file "\\.lean\\'" 'utf-8)
