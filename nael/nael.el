@@ -405,10 +405,10 @@ they should appear in that order."
 
 (defvar-keymap nael-mode-map
   "<remap> <display-local-help>" #'eldoc-doc-buffer
-  "C-c a" #'abbrev-mode
-  "C-c c" #'project-compile
-  "C-c e" #'eglot
-  "C-c l" #'lsp)
+  "C-c C-a" #'abbrev-mode
+  "C-c C-c" #'project-compile
+  "C-c C-e" #'eglot
+  "C-c C-l" #'lsp)
 
 ;;;###autoload
 (define-derived-mode nael-mode prog-mode "Nael"
