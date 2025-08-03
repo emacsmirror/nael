@@ -1,0 +1,9 @@
+This repository contains three packages for GNU Emacs:
+
+- ~nael~ :: Defines ~nael-mode~ and integrates it into Emacs built-in
+  facilities, like Abbrev (for abbreviations), Eglot (for Language
+  Server Protocol) and Skeleton (for templates).
+
+- ~nael-lsp~ :: Integrates ~nael-mode~ into ~lsp-mode~.
+
+- ~nael-markdown~ :: Integrates ~nael-mode~ into ~markdown-mode~.
