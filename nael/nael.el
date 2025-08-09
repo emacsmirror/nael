@@ -371,11 +371,7 @@ Expand symbol-including abbreviations when adequate character inserted."
   ;; `eglot-server-programs'.  We have no choice but
   ;; `with-eval-after-load'.
   (with-eval-after-load 'eglot
-    (require 'nael-eglot)
-    (add-to-list 'eglot-server-programs
-                 (cons 'nael-mode
-                       (lambda (&optional interactive project)
-                         nael-eglot-contact))))
+    (require 'nael-eglot))
   (add-hook 'eglot-server-initialized-hook
             #'nael-eglot-server-initialized nil 'local)
   (add-hook 'eglot-managed-mode-hook

@@ -172,6 +172,11 @@ See `eglot-server-programs' for requirements of CONTACT."
                  (sexp :tag "Other"))
   :group 'nael-eglot)
 
+(add-to-list 'eglot-server-programs
+             (cons 'nael-mode
+                   (lambda (&optional interactive project)
+                     nael-eglot-contact)))
+
 (provide 'nael-eglot)
 
 ;;; nael-eglot.el ends here
