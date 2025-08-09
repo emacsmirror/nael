@@ -389,6 +389,11 @@ it is unguardedly assumed that you have `nael-lsp' package installed and
 that either you have `nael-lsp' loaded, or `nael-lsp-autoloads', or at
 least evaluated an autoload statement for `nael-lsp-managed'."
   (interactive)
+  ;; The `lsp-language-id-configuration' variable needs to be modified
+  ;; so early, that hooks don't work.  We have no choice but
+  ;; `with-eval-after-load'.
+  (with-eval-after-load 'lsp-mode
+    (require 'nael-lsp))
   (add-hook 'lsp-managed-mode-hook #'nael-lsp-managed nil 'local))
 
 ;;;; Mode:
