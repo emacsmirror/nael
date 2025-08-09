@@ -57,7 +57,6 @@
 
 (require 'nael-skeleton)
 
-;;;###autoload
 (defun nael-abbrev-expand ()
   "Expand symbol-including abbreviation before point."
   (and abbrev-mode
@@ -67,6 +66,7 @@
             (unless (expand-abbrev)
               (goto-char pt)))))
 
+;;;###autoload
 (defun nael-abbrev-config ()
   "Configure `abbrev-mode' for `nael-mode'.
 

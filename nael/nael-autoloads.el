@@ -21,8 +21,12 @@ Major mode for Lean.
 
 ;;; Generated autoloads from nael-abbrev.el
 
-(autoload 'nael-abbrev-expand "nael-abbrev" "\
-Expand symbol-including abbreviation before point.")
+(autoload 'nael-abbrev-config "nael-abbrev" "\
+Configure `abbrev-mode' for `nael-mode'.
+
+Buffer-locally sets `local-abbrev-table' and adds `nael-abbrev-expand'
+to `post-self-insert-hook' so that symbol-including abbreviations are
+expanded whenever suitable characters are inserted.")
 (register-definition-prefixes "nael-abbrev" '("nael-abbrev-"))
 
 
