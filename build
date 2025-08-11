@@ -262,6 +262,8 @@ This command is inspired by `quail-show-key'.\"
       (message \"No character after point and no usable region\")
     (if noregion
         (setq beg (point) end (1+ (point)))
+      ;; Because (interactive \"r\") fails when no mark has ever been
+      ;; set in the current buffer, we set the region bounds manually.
       (setq beg (region-beginning) end (region-end)))
     (if-let* ((query (buffer-substring-no-properties beg end))
               (tables (abbrev--active-tables))
