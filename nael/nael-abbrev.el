@@ -54,6 +54,7 @@
 ;;; Code:
 
 (require 'abbrev)
+(require 'cl-lib) ;; for `cl-pushnew'
 
 (require 'nael-skeleton)
 
@@ -1947,6 +1948,94 @@ being placed between the left and the right part."
   :regexp "\\(\\\\[][)(}{><|[:word:]-]+\\)"
   :parents (list nael-abbrev-table-only-singletons
                  nael-abbrev-table-only-skeletons))
+
+(defface nael-abbrev-help-point
+  '((t :box 1))
+  "Face of character where point would be positioned after expansion."
+  :group 'nael-abbrev)
+
+(defface nael-abbrev-help-abbrev
+  '((t :inherit help-key-binding))
+  "Face of abbreviation."
+  :group 'nael-abbrev)
+
+(defun nael-abbrev-help--lookup (query tables pairs)
+  "Accumulate PAIRS matching QUERY in TABLES."
+  (if-let* ((table (pop tables)))
+      (progn
+        (mapatoms
+         (lambda (sym)
+           (when-let*
+               ((expansion
+                 (or (when-let* ((val (symbol-value sym))
+                                 ((equal query val)))
+                       val)
+                     (when-let* ((fun (symbol-function sym)))
+                       (with-temp-buffer
+                         (funcall fun)
+                         (set-text-properties (point-min) (point-max)
+                                              nil)
+                         (when (member
+                                query
+                                (list (buffer-substring
+                                       (point-min) (point))
+                                      (buffer-substring
+                                       (point) (point-max))
+                                      (buffer-substring
+                                       (point-min) (point-max))))
+                           (unless (eobp)
+                             (put-text-property
+                              (point) (1+ (point))
+                              'face 'nael-abbrev-help-point))
+                           (buffer-substring (point-min)
+                                             (point-max)))))))
+                (abbrev (symbol-name sym))
+                ((not (string-empty-p abbrev))))
+             (push (cons (propertize abbrev
+                                     'face 'nael-abbrev-help-abbrev)
+                         expansion)
+                   pairs)))
+         table)
+        (nael-abbrev-help--lookup
+         query (append (abbrev-table-get table :parents) tables)
+         pairs))
+    pairs))
+
+(defun nael-abbrev-help (&optional beg end)
+  "Echo abbreviations for region (from BEG to END) or character at point.
+
+When region is usable (`use-region-p'), act on string in region.  When
+there is a character after point, act on in it as string.
+
+Reverse lookup this query string in all active abbrev
+tables (`abbrev--active-tables') and echo all abbreviations with a
+matching expansion.  For abbrevs based on functions, e.g. Skeletons, the
+function will be called before matching the query against the resulting
+expansion to the left of point, to its right, or the whole expansion.
+
+This command is inspired by `quail-show-key'."
+  (interactive)
+  (if-let* ((noregion (not (use-region-p))) ((eobp)))
+      (message "No character after point and no usable region")
+    (if noregion
+        (setq beg (point) end (1+ (point)))
+      (setq beg (region-beginning) end (region-end)))
+    (if-let* ((query (buffer-substring-no-properties beg end))
+              (tables (abbrev--active-tables))
+              (pairs (nael-abbrev-help--lookup query tables nil))
+              (max (apply #'max (mapcar (lambda (pair)
+                                          (string-width (car pair)))
+                                        pairs))))
+        (message (string-join
+                  (mapcar (lambda (pair)
+                            (format (concat "%-"
+                                            (number-to-string max)
+                                            "s abbreviates %s")
+                                    (car pair)
+                                    (cdr pair)))
+                          pairs)
+                  "\n"))
+      (message "No abbreviation known for `%s'" query))))
 
 (provide 'nael-abbrev)
 
