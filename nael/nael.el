@@ -438,7 +438,8 @@ they should appear in that order."
   "C-c C-a" #'abbrev-mode
   "C-c C-c" #'project-compile
   "C-c C-e" #'eglot
-  "C-c C-l" #'lsp)
+  "C-c C-l" #'lsp
+  "C-c C-k" #'nael-abbrev-help)
 
 ;;;###autoload
 (define-derived-mode nael-mode prog-mode "Nael"
