@@ -344,7 +344,7 @@
   (list (list nil nael-syntax-definition 4))
   "`imenu-generic-expression' for `nael-mode'.")
 
-;;;; Initializors:
+;;;; Preparation:
 
 ;; Our goal is to avoid loading `nael-abbrev' / `abbrev', `nael-eglot'
 ;; / `eglot' and `nael-lsp' / `lsp', until the user calls one of their
@@ -355,50 +355,79 @@
 ;; call `add-hook' on them, even if they have not been defined as
 ;; variables yet.
 
-(defun nael-abbrev-init ()
-  "Initialize `abbrev-mode' for `nael-mode'.
+;; We could introduce a hook, with all of
+;; `nael-prepare-{abbrev,eglot,lsp}' being default members of it,
+;; which we could run in the beginning of the definition-body of
+;; `nael-mode'.  As mentioned, though, it's uncommon in Emacs to have
+;; hooks initialized with non-nil values and some common functions
+;; like `add-hook' rely on this practice.  Thus, we use boolean flags
+;; instead.
+
+(defcustom nael-prepare-abbrev t
+  "Whether `abbrev-mode' should be prepared for `nael-mode'."
+  :type 'boolean
+  :group 'nael)
+
+(defun nael-prepare-abbrev ()
+  "Prepare `abbrev-mode' for `nael-mode'.
 
 Expand symbol-including abbreviations when adequate character inserted."
   (interactive)
-  (add-hook 'abbrev-mode-hook #'nael-abbrev-config nil 'local))
+  (when nael-prepare-abbrev
+    (add-hook 'abbrev-mode-hook
+              #'nael-abbrev-configure nil 'local)))
 
-(defun nael-eglot-init ()
-  "Initialize `eglot' for `nael-mode'."
+(defcustom nael-prepare-eglot t
+  "Whether `eglot' should be prepared for `nael-mode'."
+  :type 'boolean
+  :group 'nael)
+
+(defun nael-prepare-eglot ()
+  "Prepare `eglot' for `nael-mode'."
   (interactive)
-  ;; We want to add an entry to `eglot-server-programs' but we want to
-  ;; avoid stricly loading `eglot' here.  Unfortunately, Eglot doesn't
-  ;; offer any hook that'd be run before it accesses
-  ;; `eglot-server-programs'.  We have no choice but
-  ;; `with-eval-after-load'.
-  (with-eval-after-load 'eglot
-    (require 'nael-eglot))
-  (add-hook 'eglot-server-initialized-hook
-            #'nael-eglot-server-initialized nil 'local)
-  (add-hook 'eglot-managed-mode-hook
-            #'nael-eglot-managed nil 'local))
+  (when nael-prepare-eglot
+    ;; We want to add an entry to `eglot-server-programs' but we want
+    ;; to avoid stricly loading `eglot' here.  Unfortunately, Eglot
+    ;; doesn't offer any hook that'd be run before it accesses
+    ;; `eglot-server-programs'.  We have no choice but
+    ;; `with-eval-after-load'.
+    (with-eval-after-load 'eglot
+      (require 'nael-eglot))
+    (add-hook 'eglot-server-initialized-hook
+              #'nael-eglot-configure-when-initialized nil 'local)
+    (add-hook 'eglot-managed-mode-hook
+              #'nael-eglot-configure-when-managed nil 'local)))
 
-(defun nael-lsp-init ()
-  "Initialize `lsp-mode' for `nael-mode'.
+(defcustom nael-prepare-lsp t
+  "Whether `lsp-mode' should be prepared for `nael-mode'."
+  :type 'boolean
+  :group 'nael)
+
+(defun nael-prepare-lsp ()
+  "Prepare `lsp-mode' for `nael-mode'.
 
 Note that if you call `lsp-mode' inside a buffer majored by `nael-mode',
 it is unguardedly assumed that you have `nael-lsp' package installed and
 that either you have `nael-lsp' loaded, or `nael-lsp-autoloads', or at
-least evaluated an autoload statement for `nael-lsp-managed'."
+least evaluated an autoload statement for
+`nael-lsp-configure-when-managed'."
   (interactive)
-  ;; The `lsp-language-id-configuration' variable needs to be modified
-  ;; so early, that hooks don't work.  We have no choice but
-  ;; `with-eval-after-load'.
-  (with-eval-after-load 'lsp-mode
-    (require 'nael-lsp))
-  (add-hook 'lsp-managed-mode-hook #'nael-lsp-managed nil 'local))
+  (when nael-prepare-lsp
+    ;; The `lsp-language-id-configuration' variable needs to be
+    ;; modified so early, that hooks don't work.  We have no choice
+    ;; but `with-eval-after-load'.
+    (with-eval-after-load 'lsp-mode
+      (require 'nael-lsp))
+    (add-hook 'lsp-managed-mode-hook
+              #'nael-lsp-configure-when-managed nil 'local)))
 
 ;;;; Mode:
 
 (defcustom nael-mode-hook nil
   "Hook run when entering `nael-mode'.
 
-If both `nael-eglot-init' and `eglot-ensure' are members, they should
-appear in that order.  If both `nael-lsp-init' and `lsp' are members,
+If both `nael-prepare-eglot' and `eglot-ensure' are members, they should
+appear in that order.  If both `nael-prepare-lsp' and `lsp' are members,
 they should appear in that order."
   :options '(abbrev-mode eglot-ensure imenu-add-menubar-index lsp)
   :type 'hook
@@ -416,10 +445,10 @@ they should appear in that order."
   "Major mode for Lean.
 
 \\{nael-mode-map}"
-  ;; Initialization:
-  (nael-abbrev-init)
-  (nael-eglot-init)
-  (nael-lsp-init)
+  ;; Preparations:
+  (nael-prepare-abbrev)
+  (nael-prepare-eglot)
+  (nael-prepare-lsp)
   ;; Navigation:
   (setq-local add-log-current-defun-function
               #'nael-navigation-defun-name)

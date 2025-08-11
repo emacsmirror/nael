@@ -13,12 +13,13 @@
 ;;; Commentary:
 
 ;; This file configures `eglot' and `eldoc' for `nael-mode'.  Not only
-;; but in particular, it defines the function `nael-eglot-managed'
-;; which is meant to be locally hooked onto `eglot-managed-mode-hook'
-;; in Nael buffers.  When called, it teaches Eglot about some LSP
-;; requests information (such as information about the proof goals at
-;; point) that are special to the Lean LSP server; and it teaches
-;; ElDoc how to display this information.
+;; but in particular, it defines the function
+;; `nael-eglot-configure-when-managed' which is meant to be locally
+;; hooked onto `eglot-managed-mode-hook' in Nael buffers.  When
+;; called, it teaches Eglot about some LSP requests information (such
+;; as information about the proof goals at point) that are special to
+;; the Lean LSP server; and it teaches ElDoc how to display this
+;; information.
 
 ;;; Code:
 
@@ -142,7 +143,7 @@ Extra.html#Lean.Lsp.PlainTermGoal"
   t)
 
 ;;;###autoload
-(defun nael-eglot-managed ()
+(defun nael-eglot-configure-when-managed ()
   "Buffer-locally set up ElDoc and Eglot for Nael.
 
 Use ElDoc documentation strategy `compose' and add ElDoc documentation
@@ -156,7 +157,7 @@ functions for goal and term goal."
             #'nael-eglot-eldoc-term-goal -80 'local))
 
 ;;;###autoload
-(defun nael-eglot-server-initialized (_)
+(defun nael-eglot-configure-when-initialized (_)
   "Buffer-locally correct Eglot's expectations on Lean LSP server.
 
 Since `lake serve' does not output anything, instruct Eglot to not wait

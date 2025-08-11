@@ -73,7 +73,7 @@ Extra.html#Lean.Lsp.PlainGoal"
    :error-handler #'ignore
    :mode 'tick))
 
-(defun nael-lsp-managed ()
+(defun nael-lsp-configure-when-managed ()
   "Buffer-locally set up ElDoc and lsp-mode for Nael.
 
 Use ElDoc documentation strategy `compose' and add ElDoc documentation

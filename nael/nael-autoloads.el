@@ -21,23 +21,39 @@ Major mode for Lean.
 
 ;;; Generated autoloads from nael-abbrev.el
 
-(autoload 'nael-abbrev-config "nael-abbrev" "\
+(autoload 'nael-abbrev-configure "nael-abbrev" "\
 Configure `abbrev-mode' for `nael-mode'.
 
-Buffer-locally sets `local-abbrev-table' and adds `nael-abbrev-expand'
-to `post-self-insert-hook' so that symbol-including abbreviations are
+Buffer-locally sets `local-abbrev-table' to
+`nael-abbrev-configure-table' and adds `nael-abbrev-expand' to
+`post-self-insert-hook' so that symbol-including abbreviations are
 expanded whenever suitable characters are inserted.")
+(autoload 'nael-abbrev-help "nael-abbrev" "\
+Echo abbreviations for region (from BEG to END) or character at point.
+
+When region is usable (`use-region-p'), act on string in region.  When
+there is a character after point, act on in it as string.
+
+Reverse lookup this query string in all active abbrev
+tables (`abbrev--active-tables') and echo all abbreviations with a
+matching expansion.  For abbrevs based on functions, e.g. Skeletons, the
+function will be called before matching the query against the resulting
+expansion to the left of point, to its right, or the whole expansion.
+
+This command is inspired by `quail-show-key'.
+
+(fn &optional BEG END)" t)
 (register-definition-prefixes "nael-abbrev" '("nael-abbrev-"))
 
 
 ;;; Generated autoloads from nael-eglot.el
 
-(autoload 'nael-eglot-managed "nael-eglot" "\
+(autoload 'nael-eglot-configure-when-managed "nael-eglot" "\
 Buffer-locally set up ElDoc and Eglot for Nael.
 
 Use ElDoc documentation strategy `compose' and add ElDoc documentation
 functions for goal and term goal." t)
-(autoload 'nael-eglot-server-initialized "nael-eglot" "\
+(autoload 'nael-eglot-configure-when-initialized "nael-eglot" "\
 Buffer-locally correct Eglot's expectations on Lean LSP server.
 
 Since `lake serve' does not output anything, instruct Eglot to not wait

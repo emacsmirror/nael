@@ -58,6 +58,12 @@
 
 (require 'nael-skeleton)
 
+(defgroup nael-abbrev nil
+  "`abbrev-mode' configured for `nael-mode'."
+  :group 'nael
+  :group 'abbrev-mode
+  :prefix "nael-abbrev-")
+
 (defun nael-abbrev-expand ()
   "Expand symbol-including abbreviation before point."
   (and abbrev-mode
@@ -67,14 +73,26 @@
             (unless (expand-abbrev)
               (goto-char pt)))))
 
+(defcustom nael-abbrev-configure-table nael-abbrev-table
+  "Abbrev table activated by `nael-abbrev-configure'.
+When nil, no Abbrev table will be activated."
+  :type '(choice (const nil :tag "Do not activate any Abbrev table")
+                 (sexp :tag "Activate an Abbrev table"))
+  :options '( nael-abbrev-table
+              nael-abbrev-table-only-singletons
+              nael-abbrev-table-only-skeletons)
+  :group 'nael-abbrev)
+
 ;;;###autoload
-(defun nael-abbrev-config ()
+(defun nael-abbrev-configure ()
   "Configure `abbrev-mode' for `nael-mode'.
 
-Buffer-locally sets `local-abbrev-table' and adds `nael-abbrev-expand'
-to `post-self-insert-hook' so that symbol-including abbreviations are
+Buffer-locally sets `local-abbrev-table' to
+`nael-abbrev-configure-table' and adds `nael-abbrev-expand' to
+`post-self-insert-hook' so that symbol-including abbreviations are
 expanded whenever suitable characters are inserted."
-  (setq-local local-abbrev-table nael-abbrev-table)
+  (when nael-abbrev-table
+    (setq-local local-abbrev-table nael-abbrev-table))
   (add-hook 'post-self-insert-hook #'nael-abbrev-expand nil t))
 
 (define-abbrev-table 'nael-abbrev-table-only-singletons
@@ -2001,6 +2019,7 @@ being placed between the left and the right part."
          pairs))
     pairs))
 
+;;;###autoload
 (defun nael-abbrev-help (&optional beg end)
   "Echo abbreviations for region (from BEG to END) or character at point.
 
