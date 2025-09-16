@@ -1,6 +1,6 @@
 ;;; nael-markdown.el --- Nael in Markdown  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2025 Mekeor Melire
+;; Copyright © 2025 Mekeor Melire
 
 ;; Author: Mekeor Melire <mekeor@posteo.de>
 ;; Keywords: languages

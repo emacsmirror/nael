@@ -1,6 +1,6 @@
 ;;; nael-lsp.el --- lsp-mode for Nael  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2025 Mekeor Melire
+;; Copyright © 2025 Mekeor Melire
 
 ;; Author: Mekeor Melire <mekeor@posteo.de>
 ;; Keywords: languages

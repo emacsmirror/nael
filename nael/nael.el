@@ -1,8 +1,9 @@
 ;;; nael.el --- Major mode for Lean  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2014 Microsoft Corp.
-;; Copyright (C) 2024 Free Software Foundation, Inc.
-;; Copyright (C) 2025 Mekeor Melire
+;; Copyright © 2013-2014 Microsoft Corp.
+;; Copyright © 2014-2015 Soonho Kong
+;; Copyright © 2024 Free Software Foundation, Inc.
+;; Copyright © 2025 Mekeor Melire
 
 ;; Author:
 ;;   Adam Topaz <topaz@ualberta.ca>

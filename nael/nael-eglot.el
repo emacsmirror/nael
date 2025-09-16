@@ -1,7 +1,7 @@
 ;;; nael-eglot.el --- Eglot for Nael  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 Free Software Foundation, Inc.
-;; Copyright (C) 2025 Mekeor Melire
+;; Copyright © 2024 Free Software Foundation, Inc.
+;; Copyright © 2025 Mekeor Melire
 
 ;; This is licensed under GNU General Public License (version 3 only),
 ;; see LICENSE.GPL3.
