@@ -33,15 +33,16 @@
 ;; URL: https://codeberg.org/mekeor/nael
 ;; Version: 0.3.0
 
-;; This file is NOT part of GNU Emacs.
-
-;; This code is effectively licensed under GNU General Public License
-;; version 3, see LICENSE.GPL3.  To be more precise, it's forked from
-;; code that has been licensed under Apache-2.0, see LICENSE.APACHE2.
+;; This is licensed under GNU General Public License (version 3 only),
+;; see LICENSE.GPL3.  To be precise, it is licensed under Apache-2.0,
+;; see LICENSE.APACHE2, and sublicensed under GPL3.
 
 ;;; Commentary:
 
 ;; `nael-mode' is a major mode for Lean.
+
+;; Nael is forked from Lean4-Mode:
+;; https://github.com/leanprover-community/lean4-mode
 
 ;;; Code:
 

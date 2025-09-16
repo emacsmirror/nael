@@ -4,6 +4,6 @@
   (bug-reference-url-format
    . "https://codeberg.org/mekeor/nael/issues/%s")
   (compile-command
-   . "./build")
+   . "./build.el")
   (sentence-end-double-space
    . t)))

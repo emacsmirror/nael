@@ -1,14 +1,10 @@
 ;;; nael-eglot.el --- Eglot for Nael  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2014 Microsoft Corp.
 ;; Copyright (C) 2024 Free Software Foundation, Inc.
 ;; Copyright (C) 2025 Mekeor Melire
 
-;; This file is NOT part of GNU Emacs.
-
-;; This code is effectively licensed under GNU General Public License
-;; version 3, see LICENSE.GPL3.  To be more precise, it's forked from
-;; code that has been licensed under Apache-2.0, see LICENSE.APACHE2.
+;; This is licensed under GNU General Public License (version 3 only),
+;; see LICENSE.GPL3.
 
 ;;; Commentary:
 
