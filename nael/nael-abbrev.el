@@ -45,8 +45,8 @@
 ;; But at the time of writing (August 2025), `self-insert-command'
 ;; rules out automatic expansion of abbreviations that end in
 ;; non-word-constituent characters.  As a workaround, you can call
-;; function `nael-init-abbrev'.  It will add `nael-abbrev-expand' to
-;; the `post-self-insert-hook' which considers expansion for a
+;; function `nael-abbrev-configure'.  It will add `nael-abbrev-expand'
+;; to the `post-self-insert-hook' which considers expansion for a
 ;; suitably wider range of characters.
 
 ;;; Code:
@@ -60,6 +60,7 @@
   "`abbrev-mode' configured for `nael-mode'."
   :group 'nael
   :group 'abbrev-mode
+  :link '(emacs-library-link :tag "Source Lisp File" "nael-abbrev.el")
   :prefix "nael-abbrev-")
 
 (defun nael-abbrev-expand ()
@@ -91,7 +92,7 @@ Buffer-locally sets `local-abbrev-table' to
 expanded whenever suitable characters are inserted."
   (when nael-abbrev-table
     (setq-local local-abbrev-table nael-abbrev-table))
-  (add-hook 'post-self-insert-hook #'nael-abbrev-expand nil t))
+  (add-hook 'post-self-insert-hook #'nael-abbrev-expand nil 'local))
 
 (define-abbrev-table 'nael-abbrev-table-only-singletons
   '(("\\\\" "\\" nil :system t)

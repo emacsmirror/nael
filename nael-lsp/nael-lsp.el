@@ -29,7 +29,12 @@
   "`lsp-mode' configured for `nael-mode'."
   :group 'nael
   :group 'lsp
+  :link '(emacs-library-link :tag "Source Lisp File" "nael-lsp.el")
   :prefix "nael-lsp-")
+
+(keymap-set nael-mode-map
+            "C-c C-l"
+            #'lsp)
 
 (add-to-list 'lsp-language-id-configuration
              (cons 'nael-mode "nael"))

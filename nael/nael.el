@@ -60,7 +60,6 @@
   "Major mode for Lean."
   :group 'languages
   :link '(emacs-library-link :tag "Source Lisp File" "nael.el")
-  :link '(info-link :tag "Info manual" "(nael) Top")
   :link '(url-link :tag "Website" "https://codeberg.org/mekeor/nael")
   :prefix "nael-"
   :tag "Nael")
@@ -440,7 +439,6 @@ they should appear in that order."
   "C-c C-a" #'abbrev-mode
   "C-c C-c" #'project-compile
   "C-c C-e" #'eglot
-  "C-c C-l" #'lsp
   "C-c C-k" #'nael-abbrev-help)
 
 ;;;###autoload

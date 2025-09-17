@@ -27,6 +27,7 @@
   "`eglot' and `eldoc' configured for `nael-mode'."
   :group 'nael
   :group 'eglot
+  :link '(emacs-library-link :tag "Source Lisp File" "nael-eglot.el")
   :prefix "nael-eglot-")
 
 (defface nael-eglot-eldoc-header

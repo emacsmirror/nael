@@ -1,11 +1,10 @@
-This repository contains three packages for GNU Emacs.
+This repository contains three packages for [[https://www.gnu.org/software/emacs/][GNU Emacs]] forked from
+[[https://github.com/leanprover-community/lean4-mode][Lean4-Mode]].
 
-- ~nael~ defines /Nael Mode/ and integrates it into Emacs built-in
-  facilities, like [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html][Abbrev]] (for abbreviations), [[https://www.gnu.org/software/emacs/manual/html_node/eglot/][Eglot]] (for Language
-  Server Protocol) and [[https://www.gnu.org/software/emacs/manual/html_node/autotype/][Skeleton]] (for templates).
+- ~nael~ defines ~nael-mode~, a major mode for [[https://lean-lang.org][Lean]], and integrates it
+  into Emacs' builtin facilities like [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html][Abbrev]] (abbreviations), [[https://www.gnu.org/software/emacs/manual/html_node/eglot/][Eglot]]
+  (LSP) and [[https://www.gnu.org/software/emacs/manual/html_node/autotype/][Skeleton]] (templates).
 
 - ~nael-lsp~ integrates ~nael-mode~ into [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]].
 
 - ~nael-markdown~ integrates ~nael-mode~ into [[https://jblevins.org/projects/markdown-mode/][Markdown Mode]].
-
-Nael is forked from [[https://github.com/leanprover-community/lean4-mode][Lean4-Mode]].
