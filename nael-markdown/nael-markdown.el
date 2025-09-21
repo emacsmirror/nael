@@ -8,7 +8,7 @@
 ;; Package-Requires: ((emacs "29.1") (markdown-mode "2"))
 ;; SPDX-License-Identifier: GPL-3.0-only
 ;; URL: https://codeberg.org/mekeor/nael
-;; Version: 0.4.0
+;; Version: 0.4.1
 
 ;;; Commentary:
 
