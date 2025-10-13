@@ -138,16 +138,6 @@ Keys may include `$CURSOR'.")
             (unless (expand-abbrev)
               (goto-char pt)))))
 
-(defcustom nael-abbrev-configure-table nael-abbrev-table
-  \"Abbrev table activated by `nael-abbrev-configure'.
-When nil, no Abbrev table will be activated.\"
-  :type '(choice (const nil :tag \"Do not activate any Abbrev table\")
-                 (sexp :tag \"Activate an Abbrev table\"))
-  :options '( nael-abbrev-table
-              nael-abbrev-table-only-singletons
-              nael-abbrev-table-only-skeletons)
-  :group 'nael-abbrev)
-
 ;;;###autoload
 (defun nael-abbrev-configure ()
   \"Configure `abbrev-mode' for `nael-mode'.
@@ -187,6 +177,16 @@ being placed between the left and the right part.\"
   :regexp %S
   :parents (list nael-abbrev-table-only-singletons
                  nael-abbrev-table-only-skeletons))
+
+(defcustom nael-abbrev-configure-table nael-abbrev-table
+  \"Abbrev table activated by `nael-abbrev-configure'.
+When nil, no Abbrev table will be activated.\"
+  :type '(choice (const nil :tag \"Do not activate any Abbrev table\")
+                 (sexp :tag \"Activate an Abbrev table\"))
+  :options '( nael-abbrev-table
+              nael-abbrev-table-only-singletons
+              nael-abbrev-table-only-skeletons)
+  :group 'nael-abbrev)
 
 (defface nael-abbrev-help-point
   '((t :box 1))
