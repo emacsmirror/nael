@@ -24,6 +24,7 @@
 (require 'lsp-mode)
 
 (require 'nael)
+(require 'nael-eglot)
 
 (defgroup nael-lsp nil
   "`lsp-mode' configured for `nael-mode'."
