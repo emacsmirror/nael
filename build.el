@@ -118,7 +118,6 @@ Keys may include `$CURSOR'.")
 ;;; Code:
 
 (require 'abbrev)
-(require 'cl-lib) ;; for `cl-pushnew'
 
 (require 'nael-skeleton)
 

@@ -52,7 +52,6 @@
 ;;; Code:
 
 (require 'abbrev)
-(require 'cl-lib) ;; for `cl-pushnew'
 
 (require 'nael-skeleton)
 
