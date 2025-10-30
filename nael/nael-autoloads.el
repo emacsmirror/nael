@@ -21,13 +21,6 @@ Major mode for Lean.
 
 ;;; Generated autoloads from nael-abbrev.el
 
-(autoload 'nael-abbrev-configure "nael-abbrev" "\
-Configure `abbrev-mode' for `nael-mode'.
-
-Buffer-locally sets `local-abbrev-table' to
-`nael-abbrev-configure-table' and adds `nael-abbrev-expand' to
-`post-self-insert-hook' so that symbol-including abbreviations are
-expanded whenever suitable characters are inserted.")
 (autoload 'nael-abbrev-help "nael-abbrev" "\
 Echo abbreviations for region (from BEG to END) or character at point.
 
@@ -43,6 +36,13 @@ expansion to the left of point, to its right, or the whole expansion.
 This command is inspired by `quail-show-key'.
 
 (fn &optional BEG END)" t)
+(autoload 'nael-abbrev-configure "nael-abbrev" "\
+Configure `abbrev-mode' for `nael-mode'.
+
+Buffer-locally sets `local-abbrev-table' to
+`nael-abbrev-configure-table' and adds `nael-abbrev-expand' to
+`post-self-insert-hook' so that symbol-including abbreviations are
+expanded whenever suitable characters are inserted.")
 (register-definition-prefixes "nael-abbrev" '("nael-abbrev-"))
 
 

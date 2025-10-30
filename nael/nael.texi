@@ -45,13 +45,11 @@ The @samp{nael-lsp} package depends on @uref{https://github.com/emacs-lsp/lsp-mo
 @strong{Install Lean} version 4.  You can follow the official “@uref{https://lean-lang.org/install/manual/, manual}” instructions because V@. S@. Code is not needed.
 
 @item
-@strong{Install Nael} packages.  For example, clone the Git repository that contains the packages.
+@strong{Install Nael} packages.  For example, clone the Git repository that contains the packages and add the path of desired packages to @code{load-path} variable in your Emacs user initialisation file:
 
 @example
 git clone https://codeberg.org/mekeor/nael ~/path/to/nael
 @end example
-
-Then, in your Emacs user initialisation file, add the path of desired packages to @code{load-path} variable.
 
 @lisp
 (add-to-list 'load-path "~/path/to/nael/nael")
@@ -112,6 +110,9 @@ To enable abbreviations automatically, configure @code{nael-mode-hook}.  To enab
 
 @item
 @samp{C-c C-k} (@code{nael-abbrev-help}) will tell you how the abbreviation for the active region or character at point.
+
+@item
+Note that Nael's Abbrev tables use the @samp{:regexp} property which @uref{https://github.com/minad/cape/discussions/158#discussioncomment-14687758, is} neither compatible with Company nor Cape.  For completion at point, @samp{nael-abbrev} defines @code{nael-abbrev-capf} which is buffer-locally added to @code{completion-at-point-functions} whenever Abbrev mode is enabled inside Nael.  To ditch this CAPF, set the @code{nael-abbrev-capf} variable to @samp{nil}.
 @end itemize
 
 Emacs commands beyond Nael:

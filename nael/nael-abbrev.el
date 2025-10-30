@@ -52,6 +52,7 @@
 ;;; Code:
 
 (require 'abbrev)
+(require 'cl-lib)
 
 (require 'nael-skeleton)
 
@@ -62,26 +63,7 @@
   :link '(emacs-library-link :tag "Source Lisp File" "nael-abbrev.el")
   :prefix "nael-abbrev-")
 
-(defun nael-abbrev-expand ()
-  "Expand symbol-including abbreviation before point."
-  (and abbrev-mode
-       (string-match-p "[^][)(}{><|[:word:]-]"
-                       (char-to-string last-command-event))
-       (let ((pt (point))) (backward-char)
-            (unless (expand-abbrev)
-              (goto-char pt)))))
-
-;;;###autoload
-(defun nael-abbrev-configure ()
-  "Configure `abbrev-mode' for `nael-mode'.
-
-Buffer-locally sets `local-abbrev-table' to
-`nael-abbrev-configure-table' and adds `nael-abbrev-expand' to
-`post-self-insert-hook' so that symbol-including abbreviations are
-expanded whenever suitable characters are inserted."
-  (when nael-abbrev-table
-    (setq-local local-abbrev-table nael-abbrev-table))
-  (add-hook 'post-self-insert-hook #'nael-abbrev-expand nil 'local))
+(defconst nael-abbrev-regexp "\\(\\\\[ -#&-+.-:<-?A-~-]+\\)")
 
 (define-abbrev-table 'nael-abbrev-table-only-singletons
   '(("\\\\" "\\" nil :system t)
@@ -1920,7 +1902,7 @@ expanded whenever suitable characters are inserted."
 
 All abbreviations expand to single strings.  During expansion, point is
 reserved at the end of expansion."
-  :regexp "\\(\\\\[][)(}{><|[:word:]-]+\\)")
+  :regexp nael-abbrev-regexp)
 
 (define-abbrev-table 'nael-abbrev-table-only-skeletons
   '(("\\{}" "" nael-skeleton-7b7d :system t)
@@ -1951,7 +1933,7 @@ reserved at the end of expansion."
 All abbreviations expand to two strings with point being placed between
 the left and the right part.  The name is derived from `skeleton', a
 built-in Emacs package used to implement this class of abbreviations."
-  :regexp "\\(\\\\[][)(}{><|[:word:]-]+\\)")
+  :regexp nael-abbrev-regexp)
 
 (define-abbrev-table 'nael-abbrev-table
   nil
@@ -1960,7 +1942,7 @@ built-in Emacs package used to implement this class of abbreviations."
 It includes both singleton abbreviations that expand to single strings,
 as well as Skeleton abbreviations that expand to two strings, with point
 being placed between the left and the right part."
-  :regexp "\\(\\\\[][)(}{><|[:word:]-]+\\)"
+  :regexp nael-abbrev-regexp
   :parents (list nael-abbrev-table-only-singletons
                  nael-abbrev-table-only-skeletons))
 
@@ -1974,57 +1956,129 @@ When nil, no Abbrev table will be activated."
               nael-abbrev-table-only-skeletons)
   :group 'nael-abbrev)
 
-(defface nael-abbrev-help-point
-  '((t :box 1))
+;;;; Completion at point function (CAPF):
+
+(defcustom nael-abbrev-capf t
+  "If non-nil, `nael-abbrev-capf' CAPF will be set up buffer-locally."
+  :type 'boolean
+  :group 'nael-abbrev)
+
+(defun nael-abbrev-capf-exit (_string status)
+  "Exit CAPF by expanding the abbrev unless completion might continue."
+  (unless (eq status 'exact)
+    (expand-abbrev)))
+
+(defun nael-abbrev-capf-annotation (abbrev)
+  "Annotate ABBREV with its expansion."
+  (truncate-string-to-width (abbrev-expansion abbrev) 30 0 nil t))
+
+(defvar nael-abbrev-capf-properties
+  (list :annotation-function #'nael-abbrev-capf-annotation
+        :category 'nael-abbrev
+        :exclusive 'no
+        :exit-function #'nael-abbrev-capf-exit)
+  "Completion properties for `nael-abbrev-capf'
+
+See `completion-at-point-functions'.")
+
+(defvar nael-abbrev-capf-cache nil
+  "Cache used to speed up `nael-abbrev-capf'.")
+
+(defun nael-abbrev-capf-reset ()
+  "Wipe cache of `nael-abbrev-capf', forcing recollection of abbreviations."
+  (interactive)
+  (setq nael-abbrev-capf-cache nil))
+
+(defun nael-abbrev-table-ancestors (tables)
+  "List of TABLES and their recursive ancestors."
+  (when tables
+    (let (ancestors)
+      (while-let ((table (pop tables)))
+        (dolist (parent (cons table
+                              (abbrev-table-get table :parents)))
+          (cl-pushnew parent ancestors)))
+      ancestors)))
+
+(defun nael-abbrev-capf-collect ()
+  "From active Abbrev tables, collect all abbreviations.
+
+Returns an obarray whose symbol names are abbreviations.
+
+Since CAPFs should be cheap to compute, this uses a cache.  The keys is
+just the list of active tables given per `abbrev--active-tables',
+compared with `equal'.  This should be fine because Abbrev tables are
+not expected to be modified frequently.  If needed, the cache can be
+reset with `nael-abbrev-capf-reset'."
+  (let ((tbls (abbrev--active-tables)))
+    (or (alist-get tbls nael-abbrev-capf-cache nil nil #'equal)
+        (setf (alist-get tbls nael-abbrev-capf-cache nil nil #'equal)
+              (let ((abbrevs (obarray-make)))
+                (dolist (tbl (nael-abbrev-table-ancestors tbls))
+                  (mapatoms (lambda (abbrev)
+                              (intern (symbol-name abbrev) abbrevs))
+                            tbl))
+                abbrevs)))))
+
+(defun nael-abbrev-capf ()
+  "Complete Nael abbreviation at point.
+
+If the text before point matches `nael-abbrev-regexp', provide
+completion at point."
+  (save-match-data
+    (when (looking-back nael-abbrev-regexp (line-beginning-position))
+      (append (list (match-beginning 0)
+                    (match-end 0)
+                    (nael-abbrev-capf-collect))
+              nael-abbrev-capf-properties))))
+
+;;;; Help at point:
+
+(defface nael-abbrev-help-point '((t :box 1))
   "Face of character where point would be positioned after expansion."
   :group 'nael-abbrev)
 
-(defface nael-abbrev-help-abbrev
-  '((t :inherit help-key-binding))
+(defface nael-abbrev-help-abbrev '((t :inherit help-key-binding))
   "Face of abbreviation."
   :group 'nael-abbrev)
 
-(defun nael-abbrev-help--lookup (query tables pairs)
-  "Accumulate PAIRS matching QUERY in TABLES."
-  (if-let* ((table (pop tables)))
-      (progn
-        (mapatoms
-         (lambda (sym)
-           (when-let*
-               ((expansion
-                 (or (when-let* ((val (symbol-value sym))
-                                 ((equal query val)))
-                       val)
-                     (when-let* ((fun (symbol-function sym)))
-                       (with-temp-buffer
-                         (funcall fun)
-                         (set-text-properties (point-min) (point-max)
-                                              nil)
-                         (when (member
-                                query
-                                (list (buffer-substring
-                                       (point-min) (point))
-                                      (buffer-substring
-                                       (point) (point-max))
-                                      (buffer-substring
-                                       (point-min) (point-max))))
-                           (unless (eobp)
-                             (put-text-property
-                              (point) (1+ (point))
-                              'face 'nael-abbrev-help-point))
-                           (buffer-substring (point-min)
-                                             (point-max)))))))
-                (abbrev (symbol-name sym))
-                ((not (string-empty-p abbrev))))
-             (push (cons (propertize abbrev
-                                     'face 'nael-abbrev-help-abbrev)
-                         expansion)
-                   pairs)))
-         table)
-        (nael-abbrev-help--lookup
-         query (append (abbrev-table-get table :parents) tables)
-         pairs))
-    pairs))
+(defun nael-abbrev-help-lookup (tables query)
+  "Accumulate pairs of abbrevs and expansions matching QUERY in TABLES."
+  (let (matches)
+    (dolist (table tables)
+      (mapatoms
+       (lambda (sym)
+         (when-let*
+             ((expansion
+               (or (when-let* ((val (symbol-value sym))
+                               ((equal query val)))
+                     val)
+                   (when-let* ((fun (symbol-function sym)))
+                     (with-temp-buffer
+                       (funcall fun)
+                       (set-text-properties (point-min) (point-max)
+                                            nil)
+                       (when (member
+                              query
+                              (list (buffer-substring (point-min)
+                                                      (point))
+                                    (buffer-substring (point)
+                                                      (point-max))
+                                    (buffer-substring (point-min)
+                                                      (point-max))))
+                         (unless (eobp)
+                           (put-text-property
+                            (point) (1+ (point)) 'face
+                            'nael-abbrev-help-point))
+                         (buffer-substring (point-min)
+                                           (point-max)))))))
+              (abbrev (symbol-name sym))
+              ((not (string-empty-p abbrev))))
+           (push (cons (propertize abbrev
+                                   'face 'nael-abbrev-help-abbrev)
+                       expansion)
+                 matches)))
+       table))
+    matches))
 
 ;;;###autoload
 (defun nael-abbrev-help (&optional beg end)
@@ -2049,21 +2103,51 @@ This command is inspired by `quail-show-key'."
       ;; set in the current buffer, we set the region bounds manually.
       (setq beg (region-beginning) end (region-end)))
     (if-let* ((query (buffer-substring-no-properties beg end))
-              (tables (abbrev--active-tables))
-              (pairs (nael-abbrev-help--lookup query tables nil))
+              (tables (nael-abbrev-table-ancestors
+                       (abbrev--active-tables)))
+              (pairs (nael-abbrev-help-lookup tables query))
               (max (apply #'max (mapcar (lambda (pair)
                                           (string-width (car pair)))
                                         pairs))))
         (message (string-join
                   (mapcar (lambda (pair)
-                            (format (concat "%-"
-                                            (number-to-string max)
-                                            "s abbreviates %s")
-                                    (car pair)
-                                    (cdr pair)))
+                            (concat (string-pad (car pair) max)
+                                    " abbreviates " (cdr pair)))
                           pairs)
-                  "\n"))
-      (message "No abbreviation known for `%s'" query))))
+                  "
+"))
+      (message "No abbreviation known for `%s'"
+               ;; Avoid newlines in echo area, when either character
+               ;; at point is newline or multi-line region is active.
+               (string-replace "
+" "\n" query)))))
+
+;;;; Expansion and Configuration:
+
+(defun nael-abbrev-expand ()
+  "Expand symbol-including abbreviation before point."
+  (and abbrev-mode
+       (string-match-p "[^ -#&-+.-:<-?A-~-]"
+                       (char-to-string last-command-event))
+       (let ((pt (point))) (backward-char)
+            (unless (expand-abbrev)
+              (goto-char pt)))))
+
+;;;###autoload
+(defun nael-abbrev-configure ()
+  "Configure `abbrev-mode' for `nael-mode'.
+
+Buffer-locally sets `local-abbrev-table' to
+`nael-abbrev-configure-table' and adds `nael-abbrev-expand' to
+`post-self-insert-hook' so that symbol-including abbreviations are
+expanded whenever suitable characters are inserted."
+  (when nael-abbrev-table
+    (setq-local local-abbrev-table nael-abbrev-table))
+  (add-hook 'post-self-insert-hook
+            #'nael-abbrev-expand nil 'local)
+  (when nael-abbrev-capf
+    (add-hook 'completion-at-point-functions
+              #'nael-abbrev-capf nil 'local)))
 
 (provide 'nael-abbrev)
 

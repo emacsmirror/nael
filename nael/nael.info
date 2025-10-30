@@ -59,12 +59,10 @@ File: nael.info,  Node: Setup,  Next: Usage,  Prev: Top,  Up: Top
      S.  Code is not needed.
 
   2. *Install Nael* packages.  For example, clone the Git repository
-     that contains the packages.
+     that contains the packages and add the path of desired packages to
+     ‘load-path’ variable in your Emacs user initialisation file:
 
           git clone https://codeberg.org/mekeor/nael ~/path/to/nael
-
-     Then, in your Emacs user initialisation file, add the path of
-     desired packages to ‘load-path’ variable.
 
           (add-to-list 'load-path "~/path/to/nael/nael")
           ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
@@ -119,6 +117,14 @@ Language Server Protocol (LSP):
    • ‘C-c C-k’ (‘nael-abbrev-help’) will tell you how the abbreviation
      for the active region or character at point.
 
+   • Note that Nael's Abbrev tables use the ‘:regexp’ property which is
+     (https://github.com/minad/cape/discussions/158#discussioncomment-14687758)
+     neither compatible with Company nor Cape.  For completion at point,
+     ‘nael-abbrev’ defines ‘nael-abbrev-capf’ which is buffer-locally
+     added to ‘completion-at-point-functions’ whenever Abbrev mode is
+     enabled inside Nael.  To ditch this CAPF, set the
+     ‘nael-abbrev-capf’ variable to ‘nil’.
+
    Emacs commands beyond Nael:
 
    • ‘C-c C-c’ or equally ‘C-x p c’ (‘project-compile’) suggests ‘lake
@@ -149,8 +155,8 @@ GPL-3.0.
 Tag Table:
 Node: Top192
 Node: Setup1953
-Node: Usage3592
-Node: License and Maintenance4958
+Node: Usage3582
+Node: License and Maintenance5438
 
 End Tag Table
 

@@ -21,13 +21,11 @@ The =nael-lsp= package depends on [[https://github.com/emacs-lsp/lsp-mode][lsp-m
 
 1. *Install Lean* version 4.  You can follow the official “[[https://lean-lang.org/install/manual/][manual]]” instructions because V. S. Code is not needed.
 
-2. *Install Nael* packages.  For example, clone the Git repository that contains the packages.
+2. *Install Nael* packages.  For example, clone the Git repository that contains the packages and add the path of desired packages to ~load-path~ variable in your Emacs user initialisation file:
 
    #+begin_src shell
    git clone https://codeberg.org/mekeor/nael ~/path/to/nael
    #+end_src
-
-   Then, in your Emacs user initialisation file, add the path of desired packages to ~load-path~ variable.
 
    #+begin_src emacs-lisp
    (add-to-list 'load-path "~/path/to/nael/nael")
@@ -76,6 +74,8 @@ Abbreviations:
 - To enable abbreviations automatically, configure ~nael-mode-hook~.  To enable them interactively, type =C-c C-a= (~abbrev-mode~).
 
 - =C-c C-k= (~nael-abbrev-help~) will tell you how the abbreviation for the active region or character at point.
+
+- Note that Nael's Abbrev tables use the =:regexp= property which [[https://github.com/minad/cape/discussions/158#discussioncomment-14687758][is]] neither compatible with Company nor Cape.  For completion at point, =nael-abbrev= defines ~nael-abbrev-capf~ which is buffer-locally added to ~completion-at-point-functions~ whenever Abbrev mode is enabled inside Nael.  To ditch this CAPF, set the ~nael-abbrev-capf~ variable to =nil=.
 
 Emacs commands beyond Nael:
 
