@@ -1,0 +1,160 @@
+This is nael.info, produced by makeinfo version 7.1 from nael.texi.
+
+INFO-DIR-SECTION Emacs misc features
+START-INFO-DIR-ENTRY
+* Nael: (nael).         Major mode for Lean.
+END-INFO-DIR-ENTRY
+
+
+File: nael.info,  Node: Top,  Next: Setup,  Up: (dir)
+
+Nael — An Emacs major mode for Lean
+***********************************
+
+‘nael’, ‘nael-lsp’ and ‘nael-markdown’ are packages extending GNU Emacs
+(https://www.gnu.org/software/emacs/) for editing Lean
+(https://lean-lang.org) sources.  Nael is a radically refactored fork of
+Lean4-Mode (https://github.com/leanprover-community/lean4-mode) with
+focus on simplicity, modularity and integration into Emacs' core.  It's
+still at an early stage of development.
+
+   The ‘nael’ package defines the major mode.  In a modular, unobtrusive
+way, it defines simple and complex abbreviations per Abbrev
+(https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html)
+and Skeleton
+(https://www.gnu.org/software/emacs/manual/html_node/autotype/)
+respectively.  It teaches Emacs' built-in LSP
+(https://microsoft.github.io/language-server-protocol/ Language Server
+Protocol) client Eglot
+(https://www.gnu.org/software/emacs/manual/html_node/eglot/) about
+Lean-specific LSP-extensions
+(https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean)
+and tells ElDoc
+(https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html)
+to display that information, similar to the “info view
+(https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview)”
+in vscode-lean
+(https://marketplace.visualstudio.com/items?itemName=leanprover.lean4)
+that many are familiar with.
+
+   The ‘nael-lsp’ package depends on lsp-mode
+(https://github.com/emacs-lsp/lsp-mode), an external package providing
+another LSP client, and teaches it about the Lean-specific
+LSP-extensions.
+
+* Menu:
+
+* Setup::
+* Usage::
+* License and Maintenance::
+
+
+File: nael.info,  Node: Setup,  Next: Usage,  Prev: Top,  Up: Top
+
+1 Setup
+*******
+
+  1. *Install Lean* version 4.  You can follow the official “manual
+     (https://lean-lang.org/install/manual/)” instructions because V.
+     S.  Code is not needed.
+
+  2. *Install Nael* packages.  For example, clone the Git repository
+     that contains the packages.
+
+          git clone https://codeberg.org/mekeor/nael ~/path/to/nael
+
+     Then, in your Emacs user initialisation file, add the path of
+     desired packages to ‘load-path’ variable.
+
+          (add-to-list 'load-path "~/path/to/nael/nael")
+          ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
+          ;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
+
+  3. Optionally, install Nael manuals.  This is so you can read the
+     readme/manual from within Emacs.
+
+          (require 'info)
+          (info-initialize)
+          (add-to-list 'Info-directory-list "~/path/to/nael/nael"))
+
+  4. *Load Nael* features.  You can either load the features eagerly
+     whenever Emacs is started, or load them lazily, i.e.  defer the
+     actual loading to the first time a Lean source file is opened.
+
+          ;; Option 1, eager loading:
+          (require 'nael)
+          ;; (require 'nael-lsp)
+          ;; (require 'nael-markdown)
+
+          ;; Option 2, lazy loading:
+          (require 'nael-autoloads)
+          ;; (require 'nael-lsp-autoloads)
+
+  5. Optionally, configure Nael.  For example, enables abbreviations as
+     well as LSP automatically:
+
+          (add-hook 'nael-mode-hook #'abbrev-mode)
+          (add-hook 'nael-mode-hook #'eglot-ensure)
+
+
+File: nael.info,  Node: Usage,  Next: License and Maintenance,  Prev: Setup,  Up: Top
+
+2 Usage
+*******
+
+Language Server Protocol (LSP):
+
+   • To start an LSP client automatically, configure ‘nael-mode-hook’.
+     To start one interactively, type ‘C-c C-e’ (‘eglot’), or, if you
+     have installed ‘nael-lsp’, ‘C-c C-l’ (‘lsp’).
+
+   • ‘C-h .’ (‘eldoc-doc-buffer’) displays the ElDoc documentation
+     buffer showing tactic state and expected goal at point.
+
+   Abbreviations:
+
+   • To enable abbreviations automatically, configure ‘nael-mode-hook’.
+     To enable them interactively, type ‘C-c C-a’ (‘abbrev-mode’).
+
+   • ‘C-c C-k’ (‘nael-abbrev-help’) will tell you how the abbreviation
+     for the active region or character at point.
+
+   Emacs commands beyond Nael:
+
+   • ‘C-c C-c’ or equally ‘C-x p c’ (‘project-compile’) suggests ‘lake
+     build’ as command to build the current project.
+   • ‘M-g i’ (‘imenu’) jumps to a interactively chosen definition in
+     current buffer.
+   • ‘M-;’ (‘comment-dwim’) will toggle active region as comment or, if
+     no region is active, create a comment at end of line.
+   • ‘M-q’ (‘prog-fill-reindent-defun’) will fill the string- or
+     comment-paragraph at point, or reindent the point-surrounding code.
+
+
+File: nael.info,  Node: License and Maintenance,  Prev: Usage,  Up: Top
+
+3 License and Maintenance
+*************************
+
+Nael is effectively licensed under GNU GPL version 3 only.  More
+precisely, it is licensed under Apache-2.0 and sublicensed under
+GPL-3.0.
+
+   Nael is maintained by _Mekeor Melire_ (mekeor@posteo.de
+<mailto:mekeor@posteo.de>) on Codeberg
+(https://codeberg.org/mekeor/nael).
+
+
+
+Tag Table:
+Node: Top192
+Node: Setup1953
+Node: Usage3592
+Node: License and Maintenance4958
+
+End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

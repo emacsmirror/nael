@@ -15,6 +15,8 @@
 ;; Configure `markdown-mode' to leverage `nael-mode' for `lean'
 ;; labeled source blocks.
 
+;; Uhh, this is ridiculous...
+
 ;;; Code:
 
 (require 'markdown-mode)
