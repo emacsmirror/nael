@@ -54,6 +54,7 @@
 
 (require 'nael-autoloads)
 
+;; `lsp' will be listed among `:options' for `nael-mode-hook'.
 (declare-function lsp "lsp-mode" (&optional arg))
 
 (defgroup nael nil
@@ -349,8 +350,8 @@
 
 ;; Our goal is to avoid loading `nael-abbrev' / `abbrev', `nael-eglot'
 ;; / `eglot' and `nael-lsp' / `lsp', until the user calls one of their
-;; autoloaded commands.  We are lucky that all `post-self-insert-hook'
-;; is strictly loaded and that `eglot-server-initialized-hook',
+;; autoloaded commands.  We are lucky that `post-self-insert-hook' is
+;; strictly loaded and that `eglot-server-initialized-hook',
 ;; `eglot-managed-mode-hook' as well as `lsp-managed-mode-hook' are
 ;; all initialized to nil, in usual Emacs manner.  Thus, it's fine to
 ;; call `add-hook' on them, even if they have not been defined as
@@ -425,11 +426,7 @@ least evaluated an autoload statement for
 ;;;; Mode:
 
 (defcustom nael-mode-hook nil
-  "Hook run when entering `nael-mode'.
-
-If both `nael-prepare-eglot' and `eglot-ensure' are members, they should
-appear in that order.  If both `nael-prepare-lsp' and `lsp' are members,
-they should appear in that order."
+  "Hook run when entering `nael-mode'."
   :options '(abbrev-mode eglot-ensure imenu-add-menubar-index lsp)
   :type 'hook
   :group 'nael)
