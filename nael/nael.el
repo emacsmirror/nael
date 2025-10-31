@@ -56,6 +56,7 @@
 
 ;; `lsp' will be listed among `:options' for `nael-mode-hook'.
 (declare-function lsp "lsp-mode" (&optional arg))
+(declare-function nael-lsp-configure-when-managed "nael-lsp" ())
 
 (defgroup nael nil
   "Major mode for Lean."

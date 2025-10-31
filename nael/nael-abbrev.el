@@ -1967,7 +1967,7 @@ being placed between the left and the right part."
 (defcustom nael-abbrev-configure-table nael-abbrev-table
   "Abbrev table activated by `nael-abbrev-configure'.
 When nil, no Abbrev table will be activated."
-  :type '(choice (const nil :tag "Do not activate any Abbrev table")
+  :type '(choice (const :tag "Do not activate any Abbrev table" nil)
                  (sexp :tag "Activate an Abbrev table"))
   :options '( nael-abbrev-table
               nael-abbrev-table-only-singletons

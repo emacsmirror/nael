@@ -35,10 +35,8 @@
   "Face for section-headers of Nael-specific ElDoc documentations."
   :group 'nael-eglot)
 
-(defcustom nael-eglot-eldoc-fontify-buffer
-  "*Nael Eglot ElDoc Fontify*"
-  "Name of buffer that is reused in order to fontify Nael code."
-  :group 'nael-eglot)
+(defvar nael-eglot-eldoc-fontify-buffer "*Nael Eglot ElDoc Fontify*"
+  "Name of buffer that is reused in order to fontify Nael code.")
 
 (defclass nael-eglot-lsp-server (eglot-lsp-server)
   ;; Reminder of slots inherited from superclass (exluding slots from
@@ -166,13 +164,13 @@ for any output."
   "Contact for Eglot server program for `nael-mode'.
 
 See `eglot-server-programs' for requirements of CONTACT."
-  :type '(choice (repeat string :tag "(PROGRAM [ARGS...])")
+  :type '(choice (repeat :tag "(PROGRAM [ARGS...])" string)
                  (sexp :tag "Other"))
   :group 'nael-eglot)
 
 (add-to-list 'eglot-server-programs
              (cons 'nael-mode
-                   (lambda (&optional interactive project)
+                   (lambda (&optional _interactive _project)
                      nael-eglot-contact)))
 
 (provide 'nael-eglot)
