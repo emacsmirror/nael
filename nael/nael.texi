@@ -63,7 +63,7 @@ Optionally, install Nael manuals.  This is so you can read the readme/manual fro
 @lisp
 (require 'info)
 (info-initialize)
-(add-to-list 'Info-directory-list "~/path/to/nael/nael"))
+(add-to-list 'Info-directory-list "~/path/to/nael/nael")
 @end lisp
 
 @item

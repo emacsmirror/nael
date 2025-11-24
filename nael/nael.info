@@ -73,7 +73,7 @@ File: nael.info,  Node: Setup,  Next: Usage,  Prev: Top,  Up: Top
 
           (require 'info)
           (info-initialize)
-          (add-to-list 'Info-directory-list "~/path/to/nael/nael"))
+          (add-to-list 'Info-directory-list "~/path/to/nael/nael")
 
   4. *Load Nael* features.  You can either load the features eagerly
      whenever Emacs is started, or load them lazily, i.e.  defer the
@@ -155,8 +155,8 @@ GPL-3.0.
 Tag Table:
 Node: Top192
 Node: Setup1953
-Node: Usage3582
-Node: License and Maintenance5438
+Node: Usage3581
+Node: License and Maintenance5437
 
 End Tag Table
 

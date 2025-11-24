@@ -34,7 +34,7 @@ The =nael-lsp= package depends on [[https://github.com/emacs-lsp/lsp-mode][lsp-m
    #+begin_src emacs-lisp
    (require 'info)
    (info-initialize)
-   (add-to-list 'Info-directory-list "~/path/to/nael/nael"))
+   (add-to-list 'Info-directory-list "~/path/to/nael/nael")
    #+end_src
 
 4. *Load Nael* features.  You can either load the features eagerly whenever Emacs is started, or load them lazily, i.e. defer the actual loading to the first time a Lean source file is opened.
