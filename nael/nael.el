@@ -52,10 +52,15 @@
 (require 'rx)
 (require 'seq)
 
-(require 'nael-autoloads)
-
-;; `lsp' will be listed among `:options' for `nael-mode-hook'.
+;; Avoid strict loading of optional features, files or dependencies.
+(defvar lsp-managed-mode-hook)
+(declare-function flymake-goto-next-error "flymake"
+                  (&optional n filter interactive))
 (declare-function lsp "lsp-mode" (&optional arg))
+(declare-function nael-abbrev-configure "nael-abbrev" ())
+(declare-function nael-eglot-configure-when-initialized "nael-eglot"
+                  (_))
+(declare-function nael-eglot-configure-when-managed "nael-eglot" ())
 (declare-function nael-lsp-configure-when-managed "nael-lsp" ())
 
 (defgroup nael nil

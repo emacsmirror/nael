@@ -453,14 +453,6 @@ expanded whenever suitable characters are inserted.\"
        "\n"))
     "Local Variables")))
 
-;;;; Generate `**/*-autoloads.el'
-
-(dolist (dir (file-expand-wildcards "nael*"))
-  (message dir)
-  (loaddefs-generate
-   dir
-   (file-name-concat dir (concat dir "-autoloads.el"))))
-
 ;;;; Generate Texinfo and Info manuals and copy readme to repo-root
 
 (require 'ox-texinfo)
