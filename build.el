@@ -491,3 +491,7 @@ expanded whenever suitable characters are inserted.\"
   (write-file "../README.org"))
 
 ;;; build ends here
+
+;; Local Variables:
+;; no-byte-compile: t
+;; End:
