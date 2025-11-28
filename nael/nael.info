@@ -6,7 +6,7 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
 
-File: nael.info,  Node: Top,  Next: Setup,  Up: (dir)
+File: nael.info,  Node: Top,  Next: Installation,  Up: (dir)
 
 Nael — An Emacs major mode for Lean
 ***********************************
@@ -44,58 +44,72 @@ LSP-extensions.
 
 * Menu:
 
-* Setup::
+* Installation::
 * Usage::
 * License and Maintenance::
 
-
-File: nael.info,  Node: Setup,  Next: Usage,  Prev: Top,  Up: Top
+-- The Detailed Node Listing --
 
-1 Setup
-*******
+Installation
 
-  1. *Install Lean* version 4.  You can follow the official “manual
-     (https://lean-lang.org/install/manual/)” instructions because V.
-     S.  Code is not needed.
+* Via manual git clone and load-path::
+* Via use-package and vc::
 
-  2. *Install Nael* packages.  For example, clone the Git repository
-     that contains the packages and add the path of desired packages to
-     ‘load-path’ variable in your Emacs user initialisation file:
-
-          git clone https://codeberg.org/mekeor/nael ~/path/to/nael
-
-          (add-to-list 'load-path "~/path/to/nael/nael")
-          ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
-          ;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
-
-  3. Optionally, install Nael manuals.  This is so you can read the
-     readme/manual from within Emacs.
-
-          (require 'info)
-          (info-initialize)
-          (add-to-list 'Info-directory-list "~/path/to/nael/nael")
-
-  4. *Load Nael* features.  You can either load the features eagerly
-     whenever Emacs is started, or load them lazily, i.e.  defer the
-     actual loading to the first time a Lean source file is opened.
-
-          ;; Option 1, eager loading:
-          (require 'nael)
-          ;; (require 'nael-lsp)
-          ;; (require 'nael-markdown)
-
-          ;; Option 2, lazy loading:
-          (require 'nael-autoloads)
-          ;; (require 'nael-lsp-autoloads)
-
-  5. Optionally, configure Nael.  For example, enables abbreviations as
-     well as LSP automatically:
-
-          (add-hook 'nael-mode-hook #'abbrev-mode)
-          (add-hook 'nael-mode-hook #'eglot-ensure)
 
 
-File: nael.info,  Node: Usage,  Next: License and Maintenance,  Prev: Setup,  Up: Top
+File: nael.info,  Node: Installation,  Next: Usage,  Prev: Top,  Up: Top
+
+1 Installation
+**************
+
+*Install (https://lean-lang.org/install/manual/) Lean* version 4.
+
+* Menu:
+
+* Via manual git clone and load-path::
+* Via use-package and vc::
+
+
+File: nael.info,  Node: Via manual git clone and load-path,  Next: Via use-package and vc,  Up: Installation
+
+1.1 Via manual ‘git clone’ and ‘load-path’
+==========================================
+
+Clone the Git repository.
+
+     git clone https://codeberg.org/mekeor/nael ~/path/to/nael
+
+   In your Emacs initialization file, add entries to the ‘load-path’
+variable:
+
+     (add-to-list 'load-path "~/path/to/nael/nael")
+     ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
+     ;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
+
+   And load Nael:
+
+     (require 'nael)
+     ;; (require 'nael-lsp)
+     ;; (require 'nael-markdown)
+
+   Optionally, configure Nael.
+
+
+File: nael.info,  Node: Via use-package and vc,  Prev: Via manual git clone and load-path,  Up: Installation
+
+1.2 Via ‘use-package’ and ‘:vc’
+===============================
+
+     (use-package nael
+       :vc ( :url "https://codeberg.org/mekeor/nael.git"
+             :lisp-dir "nael"))
+
+   (Unfortunately, Emacs' built-in ‘package-vc’ will byte-compile the
+Elisp source files of all packages inside Nael's Git repository.  Please
+ignore the resulting compilation warnings.)
+
+
+File: nael.info,  Node: Usage,  Next: License and Maintenance,  Prev: Installation,  Up: Top
 
 2 Usage
 *******
@@ -154,9 +168,11 @@ GPL-3.0.
 
 Tag Table:
 Node: Top192
-Node: Setup1953
-Node: Usage3581
-Node: License and Maintenance5437
+Node: Installation2082
+Node: Via manual git clone and load-path2332
+Node: Via use-package and vc3024
+Node: Usage3514
+Node: License and Maintenance5377
 
 End Tag Table
 
