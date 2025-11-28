@@ -429,6 +429,28 @@ least evaluated an autoload statement for
     (add-hook 'lsp-managed-mode-hook
               #'nael-lsp-configure-when-managed nil 'local)))
 
+;; Let's use the same interface (a configure-function, a
+;; prepare-option and -function) for Flymake too because we don't load
+;; or invoke it in `nael-mode' itself.
+
+(defun nael-flymake-configure ()
+  "Use Flymake to jump to errors."
+  (interactive)
+  (setq-local next-error-function
+              #'flymake-goto-next-error))
+
+(defcustom nael-prepare-flymake t
+  "Whether `flymake-mode' should be prepared for `nael-mode'."
+  :type 'boolean
+  :group 'nael)
+
+(defun nael-prepare-flymake ()
+  "Prepare `flymake-mode' for `nael-mode'."
+  (interactive)
+  (when nael-prepare-flymake
+    (add-hook 'flymake-mode-hook
+              #'nael-flymake-configure nil 'local)))
+
 ;;;; Mode:
 
 (defcustom nael-mode-hook nil
@@ -500,8 +522,7 @@ least evaluated an autoload statement for
   (setq-local imenu-generic-expression
               nael-imenu-generic-expression)
   ;; Flymake:
-  (setq-local next-error-function
-              #'flymake-goto-next-error))
+  (nael-flymake-configure))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist (cons "\\.lean\\'" 'nael-mode))
