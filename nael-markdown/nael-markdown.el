@@ -21,6 +21,7 @@
 
 (require 'markdown-mode)
 
+;;;###autoload
 (add-to-list 'markdown-code-lang-modes
              (cons "lean" 'nael-mode))
 

@@ -33,6 +33,7 @@
   :link '(emacs-library-link :tag "Source Lisp File" "nael-lsp.el")
   :prefix "nael-lsp-")
 
+;;;###autoload
 (keymap-set nael-mode-map
             "C-c C-l"
             #'lsp)
@@ -84,6 +85,7 @@ Extra.html#Lean.Lsp.PlainGoal"
    :error-handler #'ignore
    :mode 'tick))
 
+;;;###autoload
 (defun nael-lsp-configure-when-managed ()
   "Buffer-locally set up ElDoc and lsp-mode for Nael.
 

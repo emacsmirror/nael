@@ -11,9 +11,9 @@
 #+export_file_name: nael.texi
 #+options: toc:nil
 
-=nael=, =nael-lsp= and =nael-markdown= are packages extending [[https://www.gnu.org/software/emacs/][GNU Emacs]] for editing [[https://lean-lang.org][Lean]] sources.  Nael is a radically refactored fork of [[https://github.com/leanprover-community/lean4-mode][Lean4-Mode]] with focus on simplicity, modularity and integration into Emacs' core.  It's still at an early stage of development.
+~nael~, ~nael-lsp~ and ~nael-markdown~ are packages extending [[https://www.gnu.org/software/emacs/][GNU Emacs]] for editing [[https://lean-lang.org][Lean]] sources.  Nael is a radically refactored fork of [[https://github.com/leanprover-community/lean4-mode][Lean4-Mode]] with focus on simplicity, modularity and integration into Emacs' core.  It's still at an early stage of development.
 
-The =nael= package defines the major mode.  In a modular, unobtrusive way, it defines simple and complex abbreviations per [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html][Abbrev]] and [[https://www.gnu.org/software/emacs/manual/html_node/autotype/][Skeleton]] respectively.  It teaches Emacs' built-in [[https://microsoft.github.io/language-server-protocol/ Language Server Protocol][LSP]] client [[https://www.gnu.org/software/emacs/manual/html_node/eglot/][Eglot]] about [[https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean][Lean-specific LSP-extensions]] and tells [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html][ElDoc]] to display that information, similar to the “[[https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview][info view]]” in [[https://marketplace.visualstudio.com/items?itemName=leanprover.lean4][vscode-lean]] that many are familiar with.
+The ~nael~ package defines the major mode.  In a modular, unobtrusive way, it defines simple and complex abbreviations per [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html][Abbrev]] and [[https://www.gnu.org/software/emacs/manual/html_node/autotype/][Skeleton]] respectively.  It teaches Emacs' built-in [[https://microsoft.github.io/language-server-protocol/ Language Server Protocol][LSP]] client [[https://www.gnu.org/software/emacs/manual/html_node/eglot/][Eglot]] about [[https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean][Lean-specific LSP-extensions]] and tells [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html][ElDoc]] to display that information, similar to the “[[https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview][info view]]” in [[https://marketplace.visualstudio.com/items?itemName=leanprover.lean4][vscode-lean]] that many are familiar with.
 
 The =nael-lsp= package depends on [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]], an external package providing another LSP client, and teaches it about the Lean-specific LSP-extensions.
 
@@ -49,11 +49,27 @@ Optionally, configure Nael.
 
 ** Via ~use-package~ and =:vc=
 
+Since version 30, Emacs has the =:vc= keyword for ~use-package~ built-in which enables users to install packages using packages using ~package-vc~, i.e. via version control systems like Git. You can use it as follows to install Nael:
+
 #+begin_src emacs-lisp
 (use-package nael
   :vc ( :url "https://codeberg.org/mekeor/nael.git"
         :lisp-dir "nael"))
+
+;; Optional:
+
+(use-package nael-markdown
+  :after markdown-mode
+  :vc ( :url "https://codeberg.org/mekeor/nael.git"
+        :lisp-dir "nael-markdown"))
+
+(use-package nael-lsp
+  :after nael
+  :vc ( :url "https://codeberg.org/mekeor/nael.git"
+        :lisp-dir "nael-lsp"))
 #+end_src
+
+Because each package has autoload-cookies on relevant expressions, and because ~use-package~ will load each package's =*-autoloads.el= file that is generated at installation, you don't need to specify load-triggeres like =:mode= or =:defer t=.
 
 (Unfortunately, Emacs' built-in ~package-vc~ will byte-compile the Elisp source files of all packages inside Nael's Git repository. Please ignore the resulting compilation warnings.)
 
@@ -61,7 +77,7 @@ Optionally, configure Nael.
 
 Language Server Protocol (LSP):
 
-- To start an LSP client automatically, configure =nael-mode-hook=.  To start one interactively, type =C-c C-e= (~eglot~), or, if you have installed =nael-lsp=, =C-c C-l= (~lsp~).
+- To start an LSP client automatically, configure ~nael-mode-hook~.  To start one interactively, type =C-c C-e= (~eglot~), or, if you have installed ~nael-lsp~, =C-c C-l= (~lsp~).
 
 - =C-h .= (~eldoc-doc-buffer~) displays the ElDoc documentation buffer showing tactic state and expected goal at point.
 
@@ -71,7 +87,7 @@ Abbreviations:
 
 - =C-c C-k= (~nael-abbrev-help~) will tell you how the abbreviation for the active region or character at point.
 
-- Note that Nael's Abbrev tables use the =:regexp= property which [[https://github.com/minad/cape/discussions/158#discussioncomment-14687758][is]] neither compatible with Company nor Cape.  For completion at point, =nael-abbrev= defines ~nael-abbrev-capf~ which is buffer-locally added to ~completion-at-point-functions~ whenever Abbrev mode is enabled inside Nael.  To ditch this CAPF, set the ~nael-abbrev-capf~ variable to =nil=.
+- Note that Nael's Abbrev tables use the =:regexp= property which [[https://github.com/minad/cape/discussions/158#discussioncomment-14687758][is]] neither compatible with Company nor Cape.  For completion at point, ~nael-abbrev~ defines ~nael-abbrev-capf~ which is buffer-locally added to ~completion-at-point-functions~ whenever Abbrev mode is enabled inside Nael.  To ditch this CAPF, set the ~nael-abbrev-capf~ variable to =nil=.
 
 Emacs commands beyond Nael:
 

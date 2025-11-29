@@ -23,9 +23,9 @@
 @node Top
 @top Nael — An Emacs major mode for Lean
 
-@samp{nael}, @samp{nael-lsp} and @samp{nael-markdown} are packages extending @uref{https://www.gnu.org/software/emacs/, GNU Emacs} for editing @uref{https://lean-lang.org, Lean} sources.  Nael is a radically refactored fork of @uref{https://github.com/leanprover-community/lean4-mode, Lean4-Mode} with focus on simplicity, modularity and integration into Emacs' core.  It's still at an early stage of development.
+@code{nael}, @code{nael-lsp} and @code{nael-markdown} are packages extending @uref{https://www.gnu.org/software/emacs/, GNU Emacs} for editing @uref{https://lean-lang.org, Lean} sources.  Nael is a radically refactored fork of @uref{https://github.com/leanprover-community/lean4-mode, Lean4-Mode} with focus on simplicity, modularity and integration into Emacs' core.  It's still at an early stage of development.
 
-The @samp{nael} package defines the major mode.  In a modular, unobtrusive way, it defines simple and complex abbreviations per @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html, Abbrev} and @uref{https://www.gnu.org/software/emacs/manual/html_node/autotype/, Skeleton} respectively.  It teaches Emacs' built-in @uref{https://microsoft.github.io/language-server-protocol/ Language Server Protocol, LSP} client @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot} about @uref{https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean, Lean-specific LSP-extensions} and tells @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html, ElDoc} to display that information, similar to the “@uref{https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview, info view}” in @uref{https://marketplace.visualstudio.com/items?itemName=leanprover.lean4, vscode-lean} that many are familiar with.
+The @code{nael} package defines the major mode.  In a modular, unobtrusive way, it defines simple and complex abbreviations per @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html, Abbrev} and @uref{https://www.gnu.org/software/emacs/manual/html_node/autotype/, Skeleton} respectively.  It teaches Emacs' built-in @uref{https://microsoft.github.io/language-server-protocol/ Language Server Protocol, LSP} client @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot} about @uref{https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean, Lean-specific LSP-extensions} and tells @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html, ElDoc} to display that information, similar to the “@uref{https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview, info view}” in @uref{https://marketplace.visualstudio.com/items?itemName=leanprover.lean4, vscode-lean} that many are familiar with.
 
 The @samp{nael-lsp} package depends on @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode}, an external package providing another LSP client, and teaches it about the Lean-specific LSP-extensions.
 
@@ -87,11 +87,27 @@ Optionally, configure Nael.
 @node Via @code{use-package} and @samp{vc}
 @section Via @code{use-package} and @samp{:vc}
 
+Since version 30, Emacs has the @samp{:vc} keyword for @code{use-package} built-in which enables users to install packages using packages using @code{package-vc}, i.e. via version control systems like Git. You can use it as follows to install Nael:
+
 @lisp
 (use-package nael
   :vc ( :url "https://codeberg.org/mekeor/nael.git"
         :lisp-dir "nael"))
+
+;; Optional:
+
+(use-package nael-markdown
+  :after markdown-mode
+  :vc ( :url "https://codeberg.org/mekeor/nael.git"
+        :lisp-dir "nael-markdown"))
+
+(use-package nael-lsp
+  :after nael
+  :vc ( :url "https://codeberg.org/mekeor/nael.git"
+        :lisp-dir "nael-lsp"))
 @end lisp
+
+Because each package has autoload-cookies on relevant expressions, and because @code{use-package} will load each package's @samp{*-autoloads.el} file that is generated at installation, you don't need to specify load-triggeres like @samp{:mode} or @samp{:defer t}.
 
 (Unfortunately, Emacs' built-in @code{package-vc} will byte-compile the Elisp source files of all packages inside Nael's Git repository. Please ignore the resulting compilation warnings.)
 
@@ -102,7 +118,7 @@ Language Server Protocol (LSP):
 
 @itemize
 @item
-To start an LSP client automatically, configure @samp{nael-mode-hook}.  To start one interactively, type @samp{C-c C-e} (@code{eglot}), or, if you have installed @samp{nael-lsp}, @samp{C-c C-l} (@code{lsp}).
+To start an LSP client automatically, configure @code{nael-mode-hook}.  To start one interactively, type @samp{C-c C-e} (@code{eglot}), or, if you have installed @code{nael-lsp}, @samp{C-c C-l} (@code{lsp}).
 
 @item
 @samp{C-h .} (@code{eldoc-doc-buffer}) displays the ElDoc documentation buffer showing tactic state and expected goal at point.
@@ -118,7 +134,7 @@ To enable abbreviations automatically, configure @code{nael-mode-hook}.  To enab
 @samp{C-c C-k} (@code{nael-abbrev-help}) will tell you how the abbreviation for the active region or character at point.
 
 @item
-Note that Nael's Abbrev tables use the @samp{:regexp} property which @uref{https://github.com/minad/cape/discussions/158#discussioncomment-14687758, is} neither compatible with Company nor Cape.  For completion at point, @samp{nael-abbrev} defines @code{nael-abbrev-capf} which is buffer-locally added to @code{completion-at-point-functions} whenever Abbrev mode is enabled inside Nael.  To ditch this CAPF, set the @code{nael-abbrev-capf} variable to @samp{nil}.
+Note that Nael's Abbrev tables use the @samp{:regexp} property which @uref{https://github.com/minad/cape/discussions/158#discussioncomment-14687758, is} neither compatible with Company nor Cape.  For completion at point, @code{nael-abbrev} defines @code{nael-abbrev-capf} which is buffer-locally added to @code{completion-at-point-functions} whenever Abbrev mode is enabled inside Nael.  To ditch this CAPF, set the @code{nael-abbrev-capf} variable to @samp{nil}.
 @end itemize
 
 Emacs commands beyond Nael:
