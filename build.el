@@ -8,21 +8,30 @@
 
 ;;; Commentary:
 
-;; This file generates Emacs-Lisp source files based on data from the
-;; official Lean plugin for another editor.
+;; This file is supposed to be run as Elisp script, e.g. from shell
+;; via `./build.el'.  Its purpose is to generate other files,
+;; depending on passed command-line arguments:
 
-;; For editing the strings that include Elisp code, it's best to
-;; install the package `separedit', then type C-u M-x separedit-dwim
-;; RET emacs-lisp-mode RET.
+;; - Pass `abbreviations' to generate the Emacs-Lisp source files
+;;   `nael/nael-abbrev.el' and `nael/nael-skeleton.el' based on data
+;;   from the official Lean plugin for V. S. Code.
+;; - Pass `autoloads' to generate `*/*-autoloads.el' files.
+;; - Pass `compile' to generate `*/*.elc' files.
+;; - Pass `info' to generate `nael/nael.info' and `nael/nael.texi'.
+;; - Pass `root-readme' to copy `nael/README.org' to `./README.org'.
+
+;; If no command-line arguments are passed, the targets
+;; `abbreviations' and `root-readme' are attempted.
 
 ;;; Code:
 
 (defconst build-targets
   (or command-line-args-left
       (list
-       ;; "autoloads"
        "abbreviations"
-       "info"
+       ;; "autoloads"
+       ;; "compile"
+       ;; "info"
        "root-readme")))
 
 ;;;; Build target `autoloads':
@@ -73,14 +82,15 @@
 ;;;; Build target `abbreviations':
 
 (defconst build-abbrev-alist
-  (with-temp-buffer
-    (url-insert-file-contents
-     (concat "https://raw.githubusercontent.com"
-             "/leanprover/vscode-lean4/refs/heads/master"
-             "/lean4-unicode-input/src/abbreviations.json"))
-    (goto-char (point-min))
-    (let ((json-key-type 'string))
-      (json-read)))
+  (when (member "abbreviations" build-targets)
+    (with-temp-buffer
+      (url-insert-file-contents
+       (concat "https://raw.githubusercontent.com"
+               "/leanprover/vscode-lean4/refs/heads/master"
+               "/lean4-unicode-input/src/abbreviations.json"))
+      (goto-char (point-min))
+      (let ((json-key-type 'string))
+        (json-read))))
   "Raw abbreviations alist mapping strings to strings.
 
 Keys may include `$CURSOR'.")
@@ -112,6 +122,10 @@ Keys may include `$CURSOR'.")
 
 (defconst build-abbrev-regexp-table
   (rx (group "\\" (one-or-more (eval build-abbrev-regexp-char)))))
+
+;; For editing the strings that include Elisp code, it's best to
+;; install the package `separedit', then type C-u M-x separedit-dwim
+;; RET emacs-lisp-mode RET.
 
 (when (member "abbreviations" build-targets)
   (with-temp-file "nael/nael-abbrev.el"
