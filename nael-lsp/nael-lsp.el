@@ -77,7 +77,7 @@ Extra.html#Lean.Lsp.PlainGoal"
    :mode 'tick))
 
 (defun nael-lsp-eldoc-term-goal (cb &rest _)
-  "`PlainTermGoal' for `eldoc-documentation-functions'."
+  "`PlainTermGoal' for `eldoc-documentation-functions', using callback CB."
   (lsp-request-async
    "$/lean/plainTermGoal"
    (lsp--text-document-position-params)

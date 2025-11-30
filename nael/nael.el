@@ -288,7 +288,7 @@
     (insert "-- ")))
 
 (defun nael-fill-paragraph (&optional justify)
-  "Fill comment paragraph at point."
+  "Fill comment paragraph at point.  Maybe JUSTIFY."
   (interactive)
   (when (save-excursion (nth 4 (syntax-ppss (point))))
     (let* ((com-beg (save-excursion

@@ -247,12 +247,15 @@ When nil, no Abbrev table will be activated.\"
 ;;;; Completion at point function (CAPF):
 
 (defcustom nael-abbrev-capf t
-  \"If non-nil, `nael-abbrev-capf' CAPF will be set up buffer-locally.\"
+  \"Whether to set up function `nael-abbrev-capf' as CAPF buffer-locally.\"
   :type 'boolean
   :group 'nael-abbrev)
 
 (defun nael-abbrev-capf-exit (_string status)
-  \"Exit CAPF by expanding the abbrev unless completion might continue.\"
+  \"Exit CAPF by expanding the abbrev unless completion might continue.
+
+When STATUS is `exact', the user might continue the completion, so we
+should not exit.\"
   (unless (eq status 'exact)
     (expand-abbrev)))
 
@@ -265,15 +268,17 @@ When nil, no Abbrev table will be activated.\"
         :category 'nael-abbrev
         :exclusive 'no
         :exit-function #'nael-abbrev-capf-exit)
-  \"Completion properties for `nael-abbrev-capf'
+  \"Completion properties for function `nael-abbrev-capf'.
 
 See `completion-at-point-functions'.\")
 
 (defvar nael-abbrev-capf-cache nil
-  \"Cache used to speed up `nael-abbrev-capf'.\")
+  \"Cache used to speed up function `nael-abbrev-capf'.\")
 
 (defun nael-abbrev-capf-reset ()
-  \"Wipe cache of `nael-abbrev-capf', forcing recollection of abbreviations.\"
+  \"Wipe cache of function `nael-abbrev-capf'.
+
+As a consequence, this forces recollection of abbreviations later on.\"
   (interactive)
   (setq nael-abbrev-capf-cache nil))
 
