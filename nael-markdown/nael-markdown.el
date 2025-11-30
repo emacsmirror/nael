@@ -10,7 +10,7 @@
 ;;                    (nael "0.6.2"))
 ;; SPDX-License-Identifier: GPL-3.0-only
 ;; URL: https://codeberg.org/mekeor/nael
-;; Version: 0.6.1
+;; Version: 0.6.2
 
 ;;; Commentary:
 
