@@ -16,7 +16,8 @@
 ;;   `nael/nael-abbrev.el' and `nael/nael-skeleton.el' based on data
 ;;   from the official Lean plugin for V. S. Code.
 ;; - Pass `autoloads' to generate `*/*-autoloads.el' files.
-;; - Pass `compile' to generate `*/*.elc' files.
+;; - Pass `compile' to generate `*/*.elc' files.  (This currenlty only
+;;   succeeds for `nael' package.)
 ;; - Pass `info' to generate `nael/nael.info' and `nael/nael.texi'.
 ;; - Pass `root-readme' to copy `nael/README.org' to `./README.org'.
 
@@ -44,9 +45,16 @@
 
 ;;;; Build target `compile':
 
+;; TODO: Make dependencies `markdown-mode' and `lsp-mode' available.
 (when (member "compile" build-targets)
   (dolist (dir (file-expand-wildcards "nael*"))
-    (byte-recompile-directory dir 0 t)))
+    (let ((load-path
+           ;; Each package needs itself in `load-path'.  `nael-*'
+           ;; packages each need `nael' in `load-path' too.
+           (append (mapcar #'file-truename (list dir "nael"))
+                   load-path))
+          (dir (file-truename dir)))
+      (byte-recompile-directory dir 0 t))))
 
 ;;;; Build targets `info' and `root-readme':
 
