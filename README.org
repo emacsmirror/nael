@@ -139,7 +139,7 @@ Since version 30 from 2025, Emacs' popular ~use-package~ macro supports a =:vc= 
 Language Server Protocol (LSP):
 
 - =C-c C-e= (~eglot~) starts an LSP client.
-- When ~nael-lsp~ is installed: =C-c C-l= (~lsp~) starts an alternative LSP client.
+- When ~nael-lsp~ is autoloaded: =C-c C-l= (~lsp~) starts an alternative LSP client.
 - =C-h .= (~eldoc-doc-buffer~) displays the ElDoc documentation buffer showing tactic state and expected goal at point.
 
 Abbreviations:
