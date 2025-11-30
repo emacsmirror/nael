@@ -11,9 +11,9 @@ File: nael.info,  Node: Top,  Next: Installation,  Up: (dir)
 Nael — An Emacs major mode for Lean
 ***********************************
 
-‘nael’, ‘nael-lsp’ and ‘nael-markdown’ are packages extending GNU Emacs
+Nael is a set of packages extending GNU Emacs
 (https://www.gnu.org/software/emacs/) for editing Lean
-(https://lean-lang.org) sources.  Nael is a radically refactored fork of
+(https://lean-lang.org) sources.  It is a radically refactored fork of
 Lean4-Mode (https://github.com/leanprover-community/lean4-mode) with
 focus on simplicity, modularity and integration into Emacs' core.  It's
 still at an early stage of development.
@@ -37,10 +37,9 @@ in vscode-lean
 (https://marketplace.visualstudio.com/items?itemName=leanprover.lean4)
 that many are familiar with.
 
-   The ‘nael-lsp’ package depends on lsp-mode
-(https://github.com/emacs-lsp/lsp-mode), an external package providing
-another LSP client, and teaches it about the Lean-specific
-LSP-extensions.
+   If you want to use the external package lsp-mode
+(https://github.com/emacs-lsp/lsp-mode) as LSP client instead of Emacs
+built-in Eglot, the ‘nael-lsp’ package is for you.
 
 * Menu:
 
@@ -52,8 +51,13 @@ LSP-extensions.
 
 Installation
 
-* Via manual git clone and load-path::
-* Via use-package and vc::
+* Manual Installation::
+* Installation via package-vc::
+
+Installation via ‘package-vc’
+
+* Installation via package-vc-selected-packages::
+* Installation via use-package vc::
 
 
 
@@ -62,48 +66,107 @@ File: nael.info,  Node: Installation,  Next: Usage,  Prev: Top,  Up: Top
 1 Installation
 **************
 
-*Install (https://lean-lang.org/install/manual/) Lean* version 4.
+Nael's LSP-based features (via Eglot or lsp-mode), require Lean version
+4 to be installed (https://lean-lang.org/install/manual/).
+
+   If you prefer third-party lsp-mode over Emacs' built-in LSP-client
+Eglot, install ‘nael-lsp’.  You might need to install lsp-mode
+beforehand.
 
 * Menu:
 
-* Via manual git clone and load-path::
-* Via use-package and vc::
+* Manual Installation::
+* Installation via package-vc::
 
 
-File: nael.info,  Node: Via manual git clone and load-path,  Next: Via use-package and vc,  Up: Installation
+File: nael.info,  Node: Manual Installation,  Next: Installation via package-vc,  Up: Installation
 
-1.1 Via manual ‘git clone’ and ‘load-path’
-==========================================
+1.1 Manual Installation
+=======================
 
-Clone the Git repository.
+Clone the Git repository.  In your Emacs initialization file, add
+entries to the ‘load-path’ variable; load Nael; then optionally,
+configure it.
 
-     git clone https://codeberg.org/mekeor/nael ~/path/to/nael
-
-   In your Emacs initialization file, add entries to the ‘load-path’
-variable:
+     ;; git clone https://codeberg.org/mekeor/nael ~/path/to/nael
 
      (add-to-list 'load-path "~/path/to/nael/nael")
      ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
      ;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
 
-   And load Nael:
-
      (require 'nael)
      ;; (require 'nael-lsp)
      ;; (require 'nael-markdown)
 
-   Optionally, configure Nael.
+
+File: nael.info,  Node: Installation via package-vc,  Prev: Manual Installation,  Up: Installation
+
+1.2 Installation via ‘package-vc’
+=================================
+
+Since version 29 from 2023, Emacs ships with ‘package-vc’ which teaches
+the default package manager how to install packages from
+version-controlled source repositories.  Keep in mind to regularly
+upgrade thus installed packages with ‘package-vc-upgrade’ and
+‘package-vc-upgrade-all’ commands.
+
+   (Unfortunately, both ‘package-vc’ based approaches will byte-compile
+the Elisp source files of all packages inside Nael's Git repository.
+Just ignore the resulting compilation warnings.)
+
+* Menu:
+
+* Installation via package-vc-selected-packages::
+* Installation via use-package vc::
 
 
-File: nael.info,  Node: Via use-package and vc,  Prev: Via manual git clone and load-path,  Up: Installation
+File: nael.info,  Node: Installation via package-vc-selected-packages,  Next: Installation via use-package vc,  Up: Installation via package-vc
 
-1.2 Via ‘use-package’ and ‘:vc’
-===============================
+1.2.1 Installation via ‘package-vc-selected-packages’
+-----------------------------------------------------
 
-Since version 30, Emacs has the ‘:vc’ keyword for ‘use-package’ built-in
-which enables users to install packages using packages using
-‘package-vc’, i.e.  via version control systems like Git.  You can use
-it as follows to install Nael:
+In your Emacs session, load ‘package-vc’ and add entries to
+‘package-vc-selected-packages’.  Install the selected packages by typing
+‘M-x package-vc-install-selected-packages RET’.  Finally, make the
+package selection permanent in your Emacs initialization file too:
+
+     (require 'package-vc)
+
+     (add-to-list 'package-vc-selected-packages
+                  '(nael
+                    :url "https://codeberg.org/mekeor/nael.git"
+                    :lisp-dir "nael"))
+
+     ;; Optional:
+
+     ;; (add-to-list 'package-vc-selected-packages
+     ;;              '(nael-markdown
+     ;;                :url "https://codeberg.org/mekeor/nael.git"
+     ;;                :lisp-dir "nael-markdown"))
+
+     ;; (add-to-list 'package-vc-selected-packages
+     ;;              '(nael-lsp
+     ;;                :url "https://codeberg.org/mekeor/nael.git"
+     ;;                :lisp-dir "nael-lsp"))
+
+     ;; Call `package-vc-install-selected-packages' whenever modifying the
+     ;; list of selected package recipes.
+
+     (package-initialize)
+
+
+File: nael.info,  Node: Installation via use-package vc,  Prev: Installation via package-vc-selected-packages,  Up: Installation via package-vc
+
+1.2.2 Installation via ‘use-package’ ‘:vc’
+------------------------------------------
+
+Since version 30 from 2025, Emacs' popular ‘use-package’ macro features
+the ‘:vc’ keyword as interface to ‘package-vc’.
+
+   (Because each package has autoload-cookies on relevant expressions,
+and because ‘use-package’ will load each package's ‘*-autoloads.el’ file
+that is generated at installation, you don't need to specify
+load-triggers like ‘:mode’.)
 
      (use-package nael
        :vc ( :url "https://codeberg.org/mekeor/nael.git"
@@ -111,24 +174,15 @@ it as follows to install Nael:
 
      ;; Optional:
 
-     (use-package nael-markdown
-       :after markdown-mode
-       :vc ( :url "https://codeberg.org/mekeor/nael.git"
-             :lisp-dir "nael-markdown"))
+     ;; (use-package nael-markdown
+     ;;   :after markdown-mode
+     ;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
+     ;;         :lisp-dir "nael-markdown"))
 
-     (use-package nael-lsp
-       :after nael
-       :vc ( :url "https://codeberg.org/mekeor/nael.git"
-             :lisp-dir "nael-lsp"))
-
-   Because each package has autoload-cookies on relevant expressions,
-and because ‘use-package’ will load each package's ‘*-autoloads.el’ file
-that is generated at installation, you don't need to specify
-load-triggeres like ‘:mode’ or ‘:defer t’.
-
-   (Unfortunately, Emacs' built-in ‘package-vc’ will byte-compile the
-Elisp source files of all packages inside Nael's Git repository.  Please
-ignore the resulting compilation warnings.)
+     ;; (use-package nael-lsp
+     ;;   :after nael
+     ;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
+     ;;         :lisp-dir "nael-lsp"))
 
 
 File: nael.info,  Node: Usage,  Next: License and Maintenance,  Prev: Installation,  Up: Top
@@ -190,11 +244,13 @@ GPL-3.0.
 
 Tag Table:
 Node: Top192
-Node: Installation2082
-Node: Via manual git clone and load-path2332
-Node: Via use-package and vc3024
-Node: Usage4345
-Node: License and Maintenance6208
+Node: Installation2136
+Node: Manual Installation2591
+Node: Installation via package-vc3218
+Node: Installation via package-vc-selected-packages3990
+Node: Installation via use-package vc5303
+Node: Usage6380
+Node: License and Maintenance8243
 
 End Tag Table
 
