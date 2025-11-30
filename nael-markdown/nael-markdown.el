@@ -5,7 +5,9 @@
 ;; Author: Mekeor Melire <mekeor@posteo.de>
 ;; Keywords: languages
 ;; Maintainer: Mekeor Melire <mekeor@posteo.de>
-;; Package-Requires: ((emacs "29.1") (markdown-mode "2"))
+;; Package-Requires: ((emacs "29.1")
+;;                    (markdown-mode "2")
+;;                    (nael "0.6.2"))
 ;; SPDX-License-Identifier: GPL-3.0-only
 ;; URL: https://codeberg.org/mekeor/nael
 ;; Version: 0.6.1
