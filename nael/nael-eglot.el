@@ -38,15 +38,6 @@
 (defvar nael-eglot-eldoc-fontify-buffer "*Nael Eglot ElDoc Fontify*"
   "Name of buffer that is reused in order to fontify Nael code.")
 
-(defclass nael-eglot-lsp-server (eglot-lsp-server)
-  ;; Reminder of slots inherited from superclass (exluding slots from
-  ;; supersuperclass): project-nickname languages capabilities
-  ;; server-info shutdown-requested project progress-reporters
-  ;; inhibit-autoreconnect file-watches managed-buffers
-  ;; saved-initargs.
-  nil
-  :documentation "Eglot LSP server subclass for `nael-mode'.")
-
 (defun nael-eglot-eldoc-fontify (string)
   "Apply Nael font-lock rules to STRING."
   (with-current-buffer
