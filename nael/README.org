@@ -134,24 +134,32 @@ Since version 30 from 2025, Emacs' popular ~use-package~ macro supports a =:vc= 
 
 Language Server Protocol (LSP):
 
-- To start an LSP client automatically, configure ~nael-mode-hook~.  To start one interactively, type =C-c C-e= (~eglot~), or, if you have installed ~nael-lsp~, =C-c C-l= (~lsp~).
-
+- =C-c C-e= (~eglot~) starts an LSP client.
+- When ~nael-lsp~ is installed: =C-c C-l= (~lsp~) starts an alternative LSP client.
 - =C-h .= (~eldoc-doc-buffer~) displays the ElDoc documentation buffer showing tactic state and expected goal at point.
 
 Abbreviations:
 
-- To enable abbreviations automatically, configure ~nael-mode-hook~.  To enable them interactively, type =C-c C-a= (~abbrev-mode~).
-
-- =C-c C-k= (~nael-abbrev-help~) will tell you how the abbreviation for the active region or character at point.
-
-- Note that Nael's Abbrev tables use the =:regexp= property which [[https://github.com/minad/cape/discussions/158#discussioncomment-14687758][is]] neither compatible with Company nor Cape.  For completion at point, ~nael-abbrev~ defines ~nael-abbrev-capf~ which is buffer-locally added to ~completion-at-point-functions~ whenever Abbrev mode is enabled inside Nael.  To ditch this CAPF, set the ~nael-abbrev-capf~ variable to =nil=.
+- =C-c C-a= (~abbrev-mode~) enables abbreviations.
+- =C-c C-k= (~nael-abbrev-help~) echoes abbreviations that expand to the character at point, or, if active, to the selected region.
 
 Emacs commands beyond Nael:
 
-- =C-c C-c= or equally =C-x p c= (~project-compile~) suggests =lake build= as command to build the current project.
-- =M-g i= (~imenu~) jumps to a interactively chosen definition in current buffer.
-- =M-;= (~comment-dwim~) will toggle active region as comment or, if no region is active, create a comment at end of line.
-- =M-q= (~prog-fill-reindent-defun~) will fill the string- or comment-paragraph at point, or reindent the point-surrounding code.
+- =C-c C-c= (~project-compile~) suggests builds the current project, suggesting =lake build= as command.
+- =M-g i= (~imenu~) jumps to an interactively chosen definition in current buffer.
+- =M-;= (~comment-dwim~) toggles the active region as comment or, if no region is active, creates a comment at end of line.
+- =M-q= (~prog-fill-reindent-defun~) fills the string- or comment-paragraph at point, or reindents the point-surrounding code.
+
+* Configuration
+
+For key bindings, customize ~nael-mode-map~.  To automatically enable features (e.g. abbreviations, Eglot or lsp-mode) when Nael is started, customize ~nael-mode-hook~.  Here's an example:
+
+#+begin_src emacs-lisp
+(add-hook 'nael-mode-hook #'abbrev-mode)
+(add-hook 'nael-mode-hook #'eglot-ensure)
+#+end_src
+
+Nael's Abbrev tables use the =:regexp= property which is [[https://github.com/minad/cape/discussions/158#discussioncomment-14687758][incompatible]] with [[https://github.com/company-mode/company-mode][Company]]'s ~company-abbrev~ and [[https://github.com/minad/cape][Cape]]'s ~cape-abbrev~.  Instead, Nael supports completion-at-point natively via ~nael-abbrev-capf~.  This CAPF is buffer-locally added to ~completion-at-point-functions~ whenever Abbrev mode is enabled inside Nael.  To ditch this feature, set the ~nael-abbrev-capf~ variable to =nil=.
 
 * License and Maintenance
 
