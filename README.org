@@ -175,6 +175,9 @@ Development:
 - README: Provide installation instructions via package-vc-selected-packages and use-package :vc.
 - Add several autoload-cookies.  This allows for simpler use-package expressions.
 - README: Add changelog chapter.
+- nael, nael-abbrev:
+  - Rename nael-abbrev-table-only-singletons to nael-abbrev-singleton-table.
+  - Rename nael-abbrev-table-only-skeletons to nael-abbrev-skeleton-table.
 
 * License and Maintenance
 

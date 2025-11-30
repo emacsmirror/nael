@@ -163,10 +163,10 @@ Keys may include `$CURSOR'.")
 ;;      implement this class of abbreviations.
 ;;
 ;; As a consequence, this file defines three Abbrev tables.
-;; `nael-abbrev-table-only-singletons' and
-;; `nael-abbrev-table-only-skeletons' have self-explaining names.  The
-;; recommended Abbrev table for `nael-mode' is `nael-abbrev-table'
-;; which inherits elements from both aforementioned Abbrev tables.
+;; `nael-abbrev-singleton-table' and `nael-abbrev-skeleton-table' have
+;; self-explaining names.  The recommended Abbrev table for
+;; `nael-mode' is `nael-abbrev-table' which inherits elements from
+;; both aforementioned Abbrev tables.
 
 ;; One crucial challenge in the development of this file was that
 ;; `abbrev-mode' was originally designed for abbreviations that
@@ -198,7 +198,7 @@ Keys may include `$CURSOR'.")
 
 (defconst nael-abbrev-regexp %S)
 
-(define-abbrev-table 'nael-abbrev-table-only-singletons
+(define-abbrev-table 'nael-abbrev-singleton-table
   %s
   \"Abbrev table with singleton abbreviations for `nael-mode'.
 
@@ -206,7 +206,7 @@ All abbreviations expand to single strings.  During expansion, point is
 reserved at the end of expansion.\"
   :regexp nael-abbrev-regexp)
 
-(define-abbrev-table 'nael-abbrev-table-only-skeletons
+(define-abbrev-table 'nael-abbrev-skeleton-table
   %s
   \"Abbrev table with Skeleton abbreviations for `nael-mode'.
 
@@ -223,8 +223,8 @@ It includes both singleton abbreviations that expand to single strings,
 as well as Skeleton abbreviations that expand to two strings, with point
 being placed between the left and the right part.\"
   :regexp nael-abbrev-regexp
-  :parents (list nael-abbrev-table-only-singletons
-                 nael-abbrev-table-only-skeletons))
+  :parents (list nael-abbrev-singleton-table
+                 nael-abbrev-skeleton-table))
 
 (defcustom nael-abbrev-configure-table nael-abbrev-table
   \"Abbrev table activated by `nael-abbrev-configure'.
@@ -232,8 +232,8 @@ When nil, no Abbrev table will be activated.\"
   :type '(choice (const :tag \"Do not activate any Abbrev table\" nil)
                  (sexp :tag \"Activate an Abbrev table\"))
   :options '( nael-abbrev-table
-              nael-abbrev-table-only-singletons
-              nael-abbrev-table-only-skeletons)
+              nael-abbrev-singleton-table
+              nael-abbrev-skeleton-table)
   :group 'nael-abbrev)
 
 ;;;; Completion at point function (CAPF):
