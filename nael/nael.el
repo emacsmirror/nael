@@ -58,6 +58,7 @@
                   (&optional n filter interactive))
 (declare-function lsp "lsp-mode" (&optional arg))
 (declare-function nael-abbrev-configure "nael-abbrev" ())
+(declare-function nael-abbrev-help "nael-abbrev" (&optional beg end))
 (declare-function nael-eglot-configure-when-initialized "nael-eglot"
                   (_))
 (declare-function nael-eglot-configure-when-managed "nael-eglot" ())
