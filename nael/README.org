@@ -73,7 +73,7 @@ In your Emacs session, load ~package-vc~ and add entries to ~package-vc-selected
 
 *** Installation via ~use-package~ =:vc=
 
-Since version 30 from 2025, Emacs' popular ~use-package~ macro features the =:vc= keyword as interface to ~package-vc~.
+Since version 30 from 2025, Emacs' popular ~use-package~ macro supports a =:vc= keyword as interface to ~package-vc~.
 
 (Because each package has autoload-cookies on relevant expressions, and because ~use-package~ will load each package's =*-autoloads.el= file that is generated at installation, you don't need to specify load-triggers like =:mode=.)
 
