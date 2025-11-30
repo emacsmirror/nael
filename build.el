@@ -17,9 +17,6 @@
 
 ;;; Code:
 
-;; TODO: The regexp for abbrevs is already wrong.  It should be
-;; generated from data instead.
-
 ;;;; Fetch Upstream Abbreviations
 
 (defconst build-abbrev-alist
