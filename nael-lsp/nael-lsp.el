@@ -8,7 +8,7 @@
 ;; Package-Requires: ((emacs "29.1") (lsp-mode "9"))
 ;; SPDX-License-Identifier: GPL-3.0-only
 ;; URL: https://codeberg.org/mekeor/nael
-;; Version: 0.6.0
+;; Version: 0.6.1
 
 ;; This code is licensed under GNU General Public License version 3,
 ;; see LICENSE.GPL3.
