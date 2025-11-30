@@ -1,0 +1,291 @@
+\input texinfo    @c -*- texinfo -*-
+@c %**start of header
+@setfilename nael.info
+@settitle Nael — An Emacs major mode for Lean
+@documentencoding UTF-8
+@documentlanguage en
+@c %**end of header
+
+@dircategory Emacs misc features
+@direntry
+* Nael: (nael).         Major mode for Lean.
+@end direntry
+
+@finalout
+@titlepage
+@title Nael — An Emacs major mode for Lean
+@author Mekeor Melire
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top
+@top Nael — An Emacs major mode for Lean
+
+Nael is a set of packages extending @uref{https://www.gnu.org/software/emacs/, GNU Emacs} for editing @uref{https://lean-lang.org, Lean} sources.  It is a radically refactored fork of @uref{https://github.com/leanprover-community/lean4-mode, Lean4-Mode} with focus on simplicity, modularity and integration into Emacs' core.  It's still at an early stage of development.
+
+The @code{nael} package defines the major mode.  In a modular, unobtrusive way, it defines simple and complex abbreviations per @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html, Abbrev} and @uref{https://www.gnu.org/software/emacs/manual/html_node/autotype/, Skeleton} respectively.  It teaches Emacs' built-in @uref{https://microsoft.github.io/language-server-protocol/ Language Server Protocol, LSP} client @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot} about @uref{https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean, Lean-specific LSP-extensions} and tells @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html, ElDoc} to display that information, similar to the “@uref{https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview, info view}” in @uref{https://marketplace.visualstudio.com/items?itemName=leanprover.lean4, vscode-lean} that many are familiar with.
+
+If you want to use the external package @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode} as LSP client instead of Emacs built-in Eglot, the @code{nael-lsp} package is for you.
+
+@end ifnottex
+
+@menu
+* Installation::
+* Usage::
+* Configuration::
+* Changelog::
+* License and Maintenance::
+
+@detailmenu
+--- The Detailed Node Listing ---
+
+Installation
+
+* Manual Installation::
+* Installation via @code{package-vc}::
+
+Installation via @code{package-vc}
+
+* Installation via @code{package-vc-selected-packages}::
+* Installation via @code{use-package} @samp{vc}::
+
+Changelog
+
+* Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30. 
+* Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30. 
+
+@end detailmenu
+@end menu
+
+@node Installation
+@chapter Installation
+
+Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be @uref{https://lean-lang.org/install/manual/, installed}.
+
+If you prefer third-party lsp-mode over Emacs' built-in LSP-client Eglot, install @code{nael-lsp}.  You might need to install lsp-mode beforehand.
+
+@menu
+* Manual Installation::
+* Installation via @code{package-vc}::
+@end menu
+
+@node Manual Installation
+@section Manual Installation
+
+Clone the Git repository.  In your Emacs initialization file, add entries to the @code{load-path} variable; load Nael; then optionally, configure it.
+
+@lisp
+;; git clone https://codeberg.org/mekeor/nael ~/path/to/nael
+
+(add-to-list 'load-path "~/path/to/nael/nael")
+;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
+;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
+
+(require 'nael)
+;; (require 'nael-lsp)
+;; (require 'nael-markdown)
+@end lisp
+
+To lazy-load Nael, build the respective @samp{*-autoloads.el} files and load those from Emacs:
+@lisp
+;; cd ~/path/to/nael && ./build.el autoloads
+
+(require 'nael-autoloads)
+(require 'nael-lsp-autoloads)
+(require 'nael-markdown-autoloads)
+@end lisp
+
+To make this readme available to Emacs as Info manual, ensure GNU Texinfo is installed, build the Info file and point Emacs to it:
+
+@lisp
+;; cd ~/path/to/nael && ./build.el info
+
+(require 'info)
+(info-initialize)
+(add-to-list 'Info-directory-list "~/path/to/nael/nael")
+@end lisp
+
+@node Installation via @code{package-vc}
+@section Installation via @code{package-vc}
+
+Since version 29 from 2023, Emacs ships with @code{package-vc} which teaches the default package manager how to install packages from version-controlled source repositories.  Keep in mind to regularly upgrade thus installed packages with @code{package-vc-upgrade} and @code{package-vc-upgrade-all} commands.
+
+(Unfortunately, both @code{package-vc} based approaches will byte-compile the Elisp source files of all packages inside Nael's Git repository.  Just ignore the resulting compilation warnings.)
+
+@menu
+* Installation via @code{package-vc-selected-packages}::
+* Installation via @code{use-package} @samp{vc}::
+@end menu
+
+@node Installation via @code{package-vc-selected-packages}
+@subsection Installation via @code{package-vc-selected-packages}
+
+In your Emacs session, load @code{package-vc} and add entries to @code{package-vc-selected-packages}.  Install the selected packages by typing @samp{M-x package-vc-install-selected-packages RET}.  Finally, make the package selection permanent in your Emacs initialization file too.
+
+@code{package-vc} will generate @samp{nael-autoloads.el} automatically.  To lazy-load Nael, load the autoloads file.  For eager loading, load @samp{nael.el}.
+
+@lisp
+(require 'package-vc)
+
+(add-to-list 'package-vc-selected-packages
+             '(nael
+               :url "https://codeberg.org/mekeor/nael.git"
+               :doc "nael/README.org"
+               :lisp-dir "nael"))
+
+;; Optional:
+
+;; (add-to-list 'package-vc-selected-packages
+;;              '(nael-lsp
+;;                :url "https://codeberg.org/mekeor/nael.git"
+;;                :lisp-dir "nael-lsp"))
+
+;; (add-to-list 'package-vc-selected-packages
+;;              '(nael-markdown
+;;                :url "https://codeberg.org/mekeor/nael.git"
+;;                :lisp-dir "nael-markdown"))
+
+;; Call `package-vc-install-selected-packages' whenever modifying the
+;; list of selected package recipes.
+
+(package-initialize)
+
+;; Option 1, lazy loading:
+(require 'nael-autoloads)
+;; (require 'nael-lsp-autoloads)
+;; (require 'nael-markdown-autoloads)
+
+;; Option 2, eager loading:
+(require 'nael)
+;; (require 'nael-lsp)
+;; (require 'nael-markdown)
+
+;; Optionally, configure Nael.
+@end lisp
+
+@node Installation via @code{use-package} @samp{vc}
+@subsection Installation via @code{use-package} @samp{:vc}
+
+Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @samp{:vc} keyword as interface to @code{package-vc}.
+
+(Because each package has autoload-cookies on relevant expressions, and because @code{use-package} will load each package's @samp{*-autoloads.el} file that is generated at installation, you don't need to specify load-triggers like @samp{:mode}.  I.e. lazy-loading should work out of the box.)
+
+@lisp
+(use-package nael
+  :vc ( :url "https://codeberg.org/mekeor/nael.git"
+        :doc "nael/README.org"
+        :lisp-dir "nael"))
+
+;; Optional:
+
+;; (use-package nael-lsp
+;;   :after nael
+;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
+;;         :lisp-dir "nael-lsp"))
+
+;; (use-package nael-markdown
+;;   :after markdown-mode
+;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
+;;         :lisp-dir "nael-markdown"))
+@end lisp
+
+@node Usage
+@chapter Usage
+
+Language Server Protocol (LSP):
+
+@itemize
+@item
+@samp{C-c C-e} (@code{eglot}) starts an LSP client.
+@item
+When @code{nael-lsp} is autoloaded: @samp{C-c C-l} (@code{lsp}) starts an alternative LSP client.
+@item
+@samp{C-h .} (@code{eldoc-doc-buffer}) displays the ElDoc documentation buffer showing tactic state and expected goal at point.
+@end itemize
+
+Abbreviations:
+
+@itemize
+@item
+@samp{C-c C-a} (@code{abbrev-mode}) enables abbreviations.
+@item
+@samp{C-c C-k} (@code{nael-abbrev-help}) echoes abbreviations that expand to the character at point, or, if active, to the selected region.
+@end itemize
+
+Emacs commands beyond Nael:
+
+@itemize
+@item
+@samp{C-c C-c} (@code{project-compile}) suggests builds the current project, suggesting @samp{lake build} as command.
+@item
+@samp{M-g i} (@code{imenu}) jumps to an interactively chosen definition in current buffer.
+@item
+@samp{M-;} (@code{comment-dwim}) toggles the active region as comment or, if no region is active, creates a comment at end of line.
+@item
+@samp{M-q} (@code{prog-fill-reindent-defun}) fills the string- or comment-paragraph at point, or reindents the point-surrounding code.
+@end itemize
+
+@node Configuration
+@chapter Configuration
+
+For key bindings, customize @code{nael-mode-map}.  To automatically enable features (e.g. abbreviations, Eglot or lsp-mode) when Nael is started, customize @code{nael-mode-hook}.  Here's an example:
+
+@lisp
+(add-hook 'nael-mode-hook #'abbrev-mode)
+(add-hook 'nael-mode-hook #'eglot-ensure)
+@end lisp
+
+Nael's Abbrev tables use the @samp{:regexp} property which is @uref{https://github.com/minad/cape/discussions/158#discussioncomment-14687758, incompatible} with @uref{https://github.com/company-mode/company-mode, Company}'s @code{company-abbrev} and @uref{https://github.com/minad/cape, Cape}'s @code{cape-abbrev}.  Instead, Nael supports completion-at-point natively via @code{nael-abbrev-capf}.  This CAPF is buffer-locally added to @code{completion-at-point-functions} whenever Abbrev mode is enabled inside Nael.  To ditch this feature, set the @code{nael-abbrev-capf} variable to @samp{nil}.
+
+@node Changelog
+@chapter Changelog
+
+@menu
+* Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30. 
+* Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30. 
+@end menu
+
+@node Version 062 from 2025-11-30
+@section Version 0.6.2 from 2025-11-30
+
+@itemize
+@item
+Re-add readme as .texi and .info to repository because Nael might soon be added to Melpa which won't build Info manuals itself.
+@end itemize
+
+@node Version 060 from 2025-11-30
+@section Version 0.6.0 from 2025-11-30
+
+@itemize
+@item
+Remove .texi, .info, and -autoloads.el files from repository.  Thus, don't load autoloads-files from other Elisp sources.  This makes Nael compatible with package-vc.
+@item
+build.el: Only build files/targets passed as command-line arguments.  Valid arguments are abbreviations, autoloads, compile, info and root-readme.
+@item
+dir-locals.el: Remove an assignment of a non-core Emacs variable which lead to Emacs asking for confirmation.
+@item
+README: Provide installation instructions via package-vc-selected-packages and use-package :vc.
+@item
+Add several autoload-cookies.  This allows for simpler use-package expressions.
+@item
+README: Add changelog chapter.
+@item
+nael, nael-abbrev:
+@itemize
+@item
+Rename nael-abbrev-table-only-singletons to nael-abbrev-singleton-table.
+@item
+Rename nael-abbrev-table-only-skeletons to nael-abbrev-skeleton-table.
+@end itemize
+@end itemize
+
+@node License and Maintenance
+@chapter License and Maintenance
+
+Nael is effectively licensed under GNU GPL version 3 only.  More precisely, it is licensed under Apache-2.0 and sublicensed under GPL-3.0.
+
+Nael is maintained by @emph{Mekeor Melire} (@email{mailto:mekeor@@posteo.de, mekeor@@posteo.de}) on @uref{https://codeberg.org/mekeor/nael, Codeberg}.
+
+@bye

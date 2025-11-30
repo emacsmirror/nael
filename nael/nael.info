@@ -1,0 +1,365 @@
+This is nael.info, produced by makeinfo version 7.1 from nael.texi.
+
+INFO-DIR-SECTION Emacs misc features
+START-INFO-DIR-ENTRY
+* Nael: (nael).         Major mode for Lean.
+END-INFO-DIR-ENTRY
+
+
+File: nael.info,  Node: Top,  Next: Installation,  Up: (dir)
+
+Nael — An Emacs major mode for Lean
+***********************************
+
+Nael is a set of packages extending GNU Emacs
+(https://www.gnu.org/software/emacs/) for editing Lean
+(https://lean-lang.org) sources.  It is a radically refactored fork of
+Lean4-Mode (https://github.com/leanprover-community/lean4-mode) with
+focus on simplicity, modularity and integration into Emacs' core.  It's
+still at an early stage of development.
+
+   The ‘nael’ package defines the major mode.  In a modular, unobtrusive
+way, it defines simple and complex abbreviations per Abbrev
+(https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html)
+and Skeleton
+(https://www.gnu.org/software/emacs/manual/html_node/autotype/)
+respectively.  It teaches Emacs' built-in LSP
+(https://microsoft.github.io/language-server-protocol/ Language Server
+Protocol) client Eglot
+(https://www.gnu.org/software/emacs/manual/html_node/eglot/) about
+Lean-specific LSP-extensions
+(https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean)
+and tells ElDoc
+(https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html)
+to display that information, similar to the “info view
+(https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview)”
+in vscode-lean
+(https://marketplace.visualstudio.com/items?itemName=leanprover.lean4)
+that many are familiar with.
+
+   If you want to use the external package lsp-mode
+(https://github.com/emacs-lsp/lsp-mode) as LSP client instead of Emacs
+built-in Eglot, the ‘nael-lsp’ package is for you.
+
+* Menu:
+
+* Installation::
+* Usage::
+* Configuration::
+* Changelog::
+* License and Maintenance::
+
+-- The Detailed Node Listing --
+
+Installation
+
+* Manual Installation::
+* Installation via package-vc::
+
+Installation via ‘package-vc’
+
+* Installation via package-vc-selected-packages::
+* Installation via use-package vc::
+
+Changelog
+
+* Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30.
+* Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30.
+
+
+
+File: nael.info,  Node: Installation,  Next: Usage,  Prev: Top,  Up: Top
+
+1 Installation
+**************
+
+Nael's LSP-based features (via Eglot or lsp-mode), require Lean version
+4 to be installed (https://lean-lang.org/install/manual/).
+
+   If you prefer third-party lsp-mode over Emacs' built-in LSP-client
+Eglot, install ‘nael-lsp’.  You might need to install lsp-mode
+beforehand.
+
+* Menu:
+
+* Manual Installation::
+* Installation via package-vc::
+
+
+File: nael.info,  Node: Manual Installation,  Next: Installation via package-vc,  Up: Installation
+
+1.1 Manual Installation
+=======================
+
+Clone the Git repository.  In your Emacs initialization file, add
+entries to the ‘load-path’ variable; load Nael; then optionally,
+configure it.
+
+     ;; git clone https://codeberg.org/mekeor/nael ~/path/to/nael
+
+     (add-to-list 'load-path "~/path/to/nael/nael")
+     ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
+     ;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
+
+     (require 'nael)
+     ;; (require 'nael-lsp)
+     ;; (require 'nael-markdown)
+
+   To lazy-load Nael, build the respective ‘*-autoloads.el’ files and
+load those from Emacs:
+     ;; cd ~/path/to/nael && ./build.el autoloads
+
+     (require 'nael-autoloads)
+     (require 'nael-lsp-autoloads)
+     (require 'nael-markdown-autoloads)
+
+   To make this readme available to Emacs as Info manual, ensure GNU
+Texinfo is installed, build the Info file and point Emacs to it:
+
+     ;; cd ~/path/to/nael && ./build.el info
+
+     (require 'info)
+     (info-initialize)
+     (add-to-list 'Info-directory-list "~/path/to/nael/nael")
+
+
+File: nael.info,  Node: Installation via package-vc,  Prev: Manual Installation,  Up: Installation
+
+1.2 Installation via ‘package-vc’
+=================================
+
+Since version 29 from 2023, Emacs ships with ‘package-vc’ which teaches
+the default package manager how to install packages from
+version-controlled source repositories.  Keep in mind to regularly
+upgrade thus installed packages with ‘package-vc-upgrade’ and
+‘package-vc-upgrade-all’ commands.
+
+   (Unfortunately, both ‘package-vc’ based approaches will byte-compile
+the Elisp source files of all packages inside Nael's Git repository.
+Just ignore the resulting compilation warnings.)
+
+* Menu:
+
+* Installation via package-vc-selected-packages::
+* Installation via use-package vc::
+
+
+File: nael.info,  Node: Installation via package-vc-selected-packages,  Next: Installation via use-package vc,  Up: Installation via package-vc
+
+1.2.1 Installation via ‘package-vc-selected-packages’
+-----------------------------------------------------
+
+In your Emacs session, load ‘package-vc’ and add entries to
+‘package-vc-selected-packages’.  Install the selected packages by typing
+‘M-x package-vc-install-selected-packages RET’.  Finally, make the
+package selection permanent in your Emacs initialization file too.
+
+   ‘package-vc’ will generate ‘nael-autoloads.el’ automatically.  To
+lazy-load Nael, load the autoloads file.  For eager loading, load
+‘nael.el’.
+
+     (require 'package-vc)
+
+     (add-to-list 'package-vc-selected-packages
+                  '(nael
+                    :url "https://codeberg.org/mekeor/nael.git"
+                    :doc "nael/README.org"
+                    :lisp-dir "nael"))
+
+     ;; Optional:
+
+     ;; (add-to-list 'package-vc-selected-packages
+     ;;              '(nael-lsp
+     ;;                :url "https://codeberg.org/mekeor/nael.git"
+     ;;                :lisp-dir "nael-lsp"))
+
+     ;; (add-to-list 'package-vc-selected-packages
+     ;;              '(nael-markdown
+     ;;                :url "https://codeberg.org/mekeor/nael.git"
+     ;;                :lisp-dir "nael-markdown"))
+
+     ;; Call `package-vc-install-selected-packages' whenever modifying the
+     ;; list of selected package recipes.
+
+     (package-initialize)
+
+     ;; Option 1, lazy loading:
+     (require 'nael-autoloads)
+     ;; (require 'nael-lsp-autoloads)
+     ;; (require 'nael-markdown-autoloads)
+
+     ;; Option 2, eager loading:
+     (require 'nael)
+     ;; (require 'nael-lsp)
+     ;; (require 'nael-markdown)
+
+     ;; Optionally, configure Nael.
+
+
+File: nael.info,  Node: Installation via use-package vc,  Prev: Installation via package-vc-selected-packages,  Up: Installation via package-vc
+
+1.2.2 Installation via ‘use-package’ ‘:vc’
+------------------------------------------
+
+Since version 30 from 2025, Emacs' popular ‘use-package’ macro supports
+a ‘:vc’ keyword as interface to ‘package-vc’.
+
+   (Because each package has autoload-cookies on relevant expressions,
+and because ‘use-package’ will load each package's ‘*-autoloads.el’ file
+that is generated at installation, you don't need to specify
+load-triggers like ‘:mode’.  I.e.  lazy-loading should work out of the
+box.)
+
+     (use-package nael
+       :vc ( :url "https://codeberg.org/mekeor/nael.git"
+             :doc "nael/README.org"
+             :lisp-dir "nael"))
+
+     ;; Optional:
+
+     ;; (use-package nael-lsp
+     ;;   :after nael
+     ;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
+     ;;         :lisp-dir "nael-lsp"))
+
+     ;; (use-package nael-markdown
+     ;;   :after markdown-mode
+     ;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
+     ;;         :lisp-dir "nael-markdown"))
+
+
+File: nael.info,  Node: Usage,  Next: Configuration,  Prev: Installation,  Up: Top
+
+2 Usage
+*******
+
+Language Server Protocol (LSP):
+
+   • ‘C-c C-e’ (‘eglot’) starts an LSP client.
+   • When ‘nael-lsp’ is autoloaded: ‘C-c C-l’ (‘lsp’) starts an
+     alternative LSP client.
+   • ‘C-h .’ (‘eldoc-doc-buffer’) displays the ElDoc documentation
+     buffer showing tactic state and expected goal at point.
+
+   Abbreviations:
+
+   • ‘C-c C-a’ (‘abbrev-mode’) enables abbreviations.
+   • ‘C-c C-k’ (‘nael-abbrev-help’) echoes abbreviations that expand to
+     the character at point, or, if active, to the selected region.
+
+   Emacs commands beyond Nael:
+
+   • ‘C-c C-c’ (‘project-compile’) suggests builds the current project,
+     suggesting ‘lake build’ as command.
+   • ‘M-g i’ (‘imenu’) jumps to an interactively chosen definition in
+     current buffer.
+   • ‘M-;’ (‘comment-dwim’) toggles the active region as comment or, if
+     no region is active, creates a comment at end of line.
+   • ‘M-q’ (‘prog-fill-reindent-defun’) fills the string- or
+     comment-paragraph at point, or reindents the point-surrounding
+     code.
+
+
+File: nael.info,  Node: Configuration,  Next: Changelog,  Prev: Usage,  Up: Top
+
+3 Configuration
+***************
+
+For key bindings, customize ‘nael-mode-map’.  To automatically enable
+features (e.g.  abbreviations, Eglot or lsp-mode) when Nael is started,
+customize ‘nael-mode-hook’.  Here's an example:
+
+     (add-hook 'nael-mode-hook #'abbrev-mode)
+     (add-hook 'nael-mode-hook #'eglot-ensure)
+
+   Nael's Abbrev tables use the ‘:regexp’ property which is incompatible
+(https://github.com/minad/cape/discussions/158#discussioncomment-14687758)
+with Company (https://github.com/company-mode/company-mode)'s
+‘company-abbrev’ and Cape (https://github.com/minad/cape)'s
+‘cape-abbrev’.  Instead, Nael supports completion-at-point natively via
+‘nael-abbrev-capf’.  This CAPF is buffer-locally added to
+‘completion-at-point-functions’ whenever Abbrev mode is enabled inside
+Nael.  To ditch this feature, set the ‘nael-abbrev-capf’ variable to
+‘nil’.
+
+
+File: nael.info,  Node: Changelog,  Next: License and Maintenance,  Prev: Configuration,  Up: Top
+
+4 Changelog
+***********
+
+* Menu:
+
+* Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30.
+* Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30.
+
+
+File: nael.info,  Node: Version 062 from 2025-11-30,  Next: Version 060 from 2025-11-30,  Up: Changelog
+
+4.1 Version 0.6.2 from 2025-11-30
+=================================
+
+   • Re-add readme as .texi and .info to repository because Nael might
+     soon be added to Melpa which won't build Info manuals itself.
+
+
+File: nael.info,  Node: Version 060 from 2025-11-30,  Prev: Version 062 from 2025-11-30,  Up: Changelog
+
+4.2 Version 0.6.0 from 2025-11-30
+=================================
+
+   • Remove .texi, .info, and -autoloads.el files from repository.
+     Thus, don't load autoloads-files from other Elisp sources.  This
+     makes Nael compatible with package-vc.
+   • build.el: Only build files/targets passed as command-line
+     arguments.  Valid arguments are abbreviations, autoloads, compile,
+     info and root-readme.
+   • dir-locals.el: Remove an assignment of a non-core Emacs variable
+     which lead to Emacs asking for confirmation.
+   • README: Provide installation instructions via
+     package-vc-selected-packages and use-package :vc.
+   • Add several autoload-cookies.  This allows for simpler use-package
+     expressions.
+   • README: Add changelog chapter.
+   • nael, nael-abbrev:
+        • Rename nael-abbrev-table-only-singletons to
+          nael-abbrev-singleton-table.
+        • Rename nael-abbrev-table-only-skeletons to
+          nael-abbrev-skeleton-table.
+
+
+File: nael.info,  Node: License and Maintenance,  Prev: Changelog,  Up: Top
+
+5 License and Maintenance
+*************************
+
+Nael is effectively licensed under GNU GPL version 3 only.  More
+precisely, it is licensed under Apache-2.0 and sublicensed under
+GPL-3.0.
+
+   Nael is maintained by _Mekeor Melire_ (mekeor@posteo.de
+<mailto:mekeor@posteo.de>) on Codeberg
+(https://codeberg.org/mekeor/nael).
+
+
+
+Tag Table:
+Node: Top192
+Node: Installation2304
+Node: Manual Installation2759
+Node: Installation via package-vc3929
+Node: Installation via package-vc-selected-packages4701
+Node: Installation via use-package vc6514
+Node: Usage7673
+Node: Configuration8899
+Node: Changelog9884
+Node: Version 062 from 2025-11-3010144
+Node: Version 060 from 2025-11-3010461
+Node: License and Maintenance11559
+
+End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

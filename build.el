@@ -21,8 +21,8 @@
 ;; - Pass `info' to generate `nael/nael.info' and `nael/nael.texi'.
 ;; - Pass `root-readme' to copy `nael/README.org' to `./README.org'.
 
-;; If no command-line arguments are passed, the targets
-;; `abbreviations' and `root-readme' are attempted.
+;; If no command-line arguments are passed, the following defaults
+;; are targeted: `abbreviations', `info' and `root-readme'.
 
 ;;; Code:
 
@@ -32,7 +32,7 @@
        "abbreviations"
        ;; "autoloads"
        ;; "compile"
-       ;; "info"
+       "info"
        "root-readme")))
 
 ;;;; Build target `autoloads':

@@ -163,6 +163,10 @@ Nael's Abbrev tables use the =:regexp= property which is [[https://github.com/mi
 
 * Changelog
 
+** Version 0.6.2 from 2025-11-30
+
+- Re-add readme as .texi and .info to repository because Nael might soon be added to Melpa which won't build Info manuals itself.
+
 ** Version 0.6.0 from 2025-11-30
 
 - Remove .texi, .info, and -autoloads.el files from repository.  Thus, don't load autoloads-files from other Elisp sources.  This makes Nael compatible with package-vc.
