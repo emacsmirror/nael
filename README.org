@@ -165,6 +165,17 @@ For key bindings, customize ~nael-mode-map~.  To automatically enable features (
 
 Nael's Abbrev tables use the =:regexp= property which is [[https://github.com/minad/cape/discussions/158#discussioncomment-14687758][incompatible]] with [[https://github.com/company-mode/company-mode][Company]]'s ~company-abbrev~ and [[https://github.com/minad/cape][Cape]]'s ~cape-abbrev~.  Instead, Nael supports completion-at-point natively via ~nael-abbrev-capf~.  This CAPF is buffer-locally added to ~completion-at-point-functions~ whenever Abbrev mode is enabled inside Nael.  To ditch this feature, set the ~nael-abbrev-capf~ variable to =nil=.
 
+* Changelog
+
+Development:
+
+- Remove .texi, .info, and -autoloads.el files from repository.  Thus, don't load autoloads-files from other Elisp sources.  This makes Nael compatible with package-vc.
+- build.el: Only build files/targets passed as command-line arguments.  Valid arguments are abbreviations, autoloads, compile, info and root-readme.
+- dir-locals.el: Remove an assignment of a non-core Emacs variable which lead to Emacs asking for confirmation.
+- README: Provide installation instructions via package-vc-selected-packages and use-package :vc.
+- Add several autoload-cookies.  This allows for simpler use-package expressions.
+- README: Add changelog chapter.
+
 * License and Maintenance
 
 Nael is effectively licensed under GNU GPL version 3 only.  More precisely, it is licensed under Apache-2.0 and sublicensed under GPL-3.0.
