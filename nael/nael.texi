@@ -25,9 +25,7 @@
 
 Nael is a set of packages extending @uref{https://www.gnu.org/software/emacs/, GNU Emacs} for editing @uref{https://lean-lang.org, Lean} sources.  It is a radically refactored fork of @uref{https://github.com/leanprover-community/lean4-mode, Lean4-Mode} with focus on simplicity, modularity and integration into Emacs' core.  It's still at an early stage of development.
 
-The @code{nael} package defines the major mode.  In a modular, unobtrusive way, it defines simple and complex abbreviations per @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html, Abbrev} and @uref{https://www.gnu.org/software/emacs/manual/html_node/autotype/, Skeleton} respectively.  It teaches Emacs' built-in @uref{https://microsoft.github.io/language-server-protocol/ Language Server Protocol, LSP} client @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot} about @uref{https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean, Lean-specific LSP-extensions} and tells @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html, ElDoc} to display that information, similar to the “@uref{https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview, info view}” in @uref{https://marketplace.visualstudio.com/items?itemName=leanprover.lean4, vscode-lean} that many are familiar with.
-
-If you want to use the external package @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode} as LSP client instead of Emacs built-in Eglot, the @code{nael-lsp} package is for you.
+The @code{nael} package defines a major mode.  In a modular, unobtrusive way, it also defines simple and complex abbreviations per @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html, Abbrev} and @uref{https://www.gnu.org/software/emacs/manual/html_node/autotype/, Skeleton} respectively.  It teaches Emacs' built-in @uref{https://microsoft.github.io/language-server-protocol/ Language Server Protocol, LSP} client @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot} about @uref{https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean, Lean-specific LSP-extensions} and tells @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html, ElDoc} to display that information, similar to the “@uref{https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview, info view}” in @uref{https://marketplace.visualstudio.com/items?itemName=leanprover.lean4, vscode-lean} that many are familiar with.  For users who prefer the external package @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode} as LSP client over Eglot, there's the @code{nael-lsp} package.
 
 @end ifnottex
 
@@ -62,9 +60,7 @@ Changelog
 @node Installation
 @chapter Installation
 
-Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be @uref{https://lean-lang.org/install/manual/, installed}.
-
-If you prefer third-party lsp-mode over Emacs' built-in LSP-client Eglot, install @code{nael-lsp}.  You might need to install lsp-mode beforehand.
+Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be @uref{https://lean-lang.org/install/manual/, installed}.  If you want to use lsp-mode, you might need to install lsp-mode before @code{nael-lsp}.
 
 @menu
 * Manual Installation::
@@ -74,7 +70,7 @@ If you prefer third-party lsp-mode over Emacs' built-in LSP-client Eglot, instal
 @node Manual Installation
 @section Manual Installation
 
-Clone the Git repository.  In your Emacs initialization file, add entries to the @code{load-path} variable; load Nael; then optionally, configure it.
+Clone the Git repository.  In your Emacs initialization file, add Nael to @code{load-path} and load it.
 
 @lisp
 ;; git clone https://codeberg.org/mekeor/nael ~/path/to/nael
@@ -88,20 +84,19 @@ Clone the Git repository.  In your Emacs initialization file, add entries to the
 ;; (require 'nael-markdown)
 @end lisp
 
-To lazy-load Nael, build the respective @samp{*-autoloads.el} files and load those from Emacs:
+Instead of eagerly loading Nael, you can load @code{nael-autoloads} after building it:
+
 @lisp
 ;; cd ~/path/to/nael && ./build.el autoloads
 
 (require 'nael-autoloads)
-(require 'nael-lsp-autoloads)
-(require 'nael-markdown-autoloads)
+;; (require 'nael-lsp-autoloads)
+;; (require 'nael-markdown-autoloads)
 @end lisp
 
-To make this readme available to Emacs as Info manual, ensure GNU Texinfo is installed, build the Info file and point Emacs to it:
+To make this readme available to Emacs as Info manual, point Emacs to it:
 
 @lisp
-;; cd ~/path/to/nael && ./build.el info
-
 (require 'info)
 (info-initialize)
 (add-to-list 'Info-directory-list "~/path/to/nael/nael")
@@ -110,9 +105,7 @@ To make this readme available to Emacs as Info manual, ensure GNU Texinfo is ins
 @node Installation via @code{package-vc}
 @section Installation via @code{package-vc}
 
-Since version 29 from 2023, Emacs ships with @code{package-vc} which teaches the default package manager how to install packages from version-controlled source repositories.  Keep in mind to regularly upgrade thus installed packages with @code{package-vc-upgrade} and @code{package-vc-upgrade-all} commands.
-
-(Unfortunately, both @code{package-vc} based approaches will byte-compile the Elisp source files of all packages inside Nael's Git repository.  Just ignore the resulting compilation warnings.)
+Since version 29 from 2023, Emacs ships with @code{package-vc} which enables the built-in package manager @code{package} to install from version-controlled source repositories.  Keep in mind to regularly upgrade such packages with the command @code{package-vc-upgrade} or @code{package-vc-upgrade-all}.  (And please ignore the warnings that arise when @code{package-vc} attempts to byte-compile all Elisp source files in the repository instead of just the package-specific ones.)
 
 @menu
 * Installation via @code{package-vc-selected-packages}::
@@ -122,33 +115,23 @@ Since version 29 from 2023, Emacs ships with @code{package-vc} which teaches the
 @node Installation via @code{package-vc-selected-packages}
 @subsection Installation via @code{package-vc-selected-packages}
 
-In your Emacs session, load @code{package-vc} and add entries to @code{package-vc-selected-packages}.  Install the selected packages by typing @samp{M-x package-vc-install-selected-packages RET}.  Finally, make the package selection permanent in your Emacs initialization file too.
-
-@code{package-vc} will generate @samp{nael-autoloads.el} automatically.  To lazy-load Nael, load the autoloads file.  For eager loading, load @samp{nael.el}.
+In your Emacs session, select packages per @code{package-vc-selected-packages} variable and install them with @samp{M-x package-vc-install-selected-packages RET}.  Persist the package selection in your Emacs initialization file too. @code{package-vc} will generate @samp{nael-autoloads.el} automatically.  To lazy-load Nael, load the autoloads file.  For eager loading, load @samp{nael.el}.
 
 @lisp
 (require 'package-vc)
 
-(add-to-list 'package-vc-selected-packages
-             '(nael
-               :url "https://codeberg.org/mekeor/nael.git"
-               :doc "nael/README.org"
-               :lisp-dir "nael"))
-
-;; Optional:
-
-;; (add-to-list 'package-vc-selected-packages
-;;              '(nael-lsp
-;;                :url "https://codeberg.org/mekeor/nael.git"
-;;                :lisp-dir "nael-lsp"))
-
-;; (add-to-list 'package-vc-selected-packages
-;;              '(nael-markdown
-;;                :url "https://codeberg.org/mekeor/nael.git"
-;;                :lisp-dir "nael-markdown"))
-
-;; Call `package-vc-install-selected-packages' whenever modifying the
-;; list of selected package recipes.
+(setopt package-vc-selected-packages
+        '((nael
+           :url "https://codeberg.org/mekeor/nael.git"
+           :doc "nael/README.org"
+           :lisp-dir "nael")
+          ;; (nael-lsp
+          ;;  :url "https://codeberg.org/mekeor/nael.git"
+          ;;  :lisp-dir "nael-lsp")
+          ;; (nael-markdown
+          ;;  :url "https://codeberg.org/mekeor/nael.git"
+          ;;  :lisp-dir "nael-markdown")
+          ))
 
 (package-initialize)
 
@@ -161,24 +144,18 @@ In your Emacs session, load @code{package-vc} and add entries to @code{package-v
 (require 'nael)
 ;; (require 'nael-lsp)
 ;; (require 'nael-markdown)
-
-;; Optionally, configure Nael.
 @end lisp
 
 @node Installation via @code{use-package} @samp{vc}
 @subsection Installation via @code{use-package} @samp{:vc}
 
-Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @samp{:vc} keyword as interface to @code{package-vc}.
-
-(Because each package has autoload-cookies on relevant expressions, and because @code{use-package} will load each package's @samp{*-autoloads.el} file that is generated at installation, you don't need to specify load-triggers like @samp{:mode}.  I.e. lazy-loading should work out of the box.)
+Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @samp{:vc} keyword as interface to @code{package-vc}.  (Because each package has autoload-cookies on relevant expressions, and because @code{use-package} will load each package's @samp{*-autoloads.el} file that is generated at installation, you don't need to specify load-triggers like @samp{:mode}.  I.e. lazy-loading should work out of the box.)
 
 @lisp
 (use-package nael
   :vc ( :url "https://codeberg.org/mekeor/nael.git"
         :doc "nael/README.org"
         :lisp-dir "nael"))
-
-;; Optional:
 
 ;; (use-package nael-lsp
 ;;   :after nael
