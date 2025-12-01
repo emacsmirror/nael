@@ -86,31 +86,28 @@ File: nael.info,  Node: Manual Installation,  Next: Installation via package-vc,
 1.1 Manual Installation
 =======================
 
-Clone the Git repository.  In your Emacs initialization file, add Nael
-to ‘load-path’ and load it.
+First clone the Git repository, then, in your Emacs initialization file,
+add Nael to ‘load-path’ and load it.  For lazy loading the
+autoloads-file need to be build beforehand.
 
-     ;; git clone https://codeberg.org/mekeor/nael ~/path/to/nael
+     ;; git clone https://codeberg.org/mekeor/nael.git ~/path/to/nael
 
      (add-to-list 'load-path "~/path/to/nael/nael")
      ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
      ;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
 
+     ;; Option 1, eager loading:
      (require 'nael)
      ;; (require 'nael-lsp)
      ;; (require 'nael-markdown)
 
-   Instead of eagerly loading Nael, you can load ‘nael-autoloads’ after
-building it:
-
+     ;; Option 2, lazy loading:
      ;; cd ~/path/to/nael && ./build.el autoloads
-
-     (require 'nael-autoloads)
+     ;; (require 'nael-autoloads)
      ;; (require 'nael-lsp-autoloads)
      ;; (require 'nael-markdown-autoloads)
 
-   To make this readme available to Emacs as Info manual, point Emacs to
-it:
-
+     ;; Optionally, make readme available as info manual:
      (require 'info)
      (info-initialize)
      (add-to-list 'Info-directory-list "~/path/to/nael/nael")
@@ -144,22 +141,22 @@ In your Emacs session, select packages per
 ‘package-vc-selected-packages’ variable and install them with ‘M-x
 package-vc-install-selected-packages RET’.  Persist the package
 selection in your Emacs initialization file too.  ‘package-vc’ will
-generate ‘nael-autoloads.el’ automatically.  To lazy-load Nael, load the
-autoloads file.  For eager loading, load ‘nael.el’.
+generate the autoloads-file automatically.  To lazy-load Nael, load the
+autoloads-file.
 
      (require 'package-vc)
 
      (setopt package-vc-selected-packages
              '((nael
-                :url "https://codeberg.org/mekeor/nael.git"
                 :doc "nael/README.org"
-                :lisp-dir "nael")
-               ;; (nael-lsp
-               ;;  :url "https://codeberg.org/mekeor/nael.git"
-               ;;  :lisp-dir "nael-lsp")
-               ;; (nael-markdown
-               ;;  :url "https://codeberg.org/mekeor/nael.git"
-               ;;  :lisp-dir "nael-markdown")
+                :lisp-dir "nael"
+                :url "https://codeberg.org/mekeor/nael.git")
+            ;; (nael-lsp
+            ;;  :lisp-dir "nael-lsp"
+            ;;  :url "https://codeberg.org/mekeor/nael.git")
+            ;; (nael-markdown
+            ;;  :lisp-dir "nael-markdown"
+            ;;  :url "https://codeberg.org/mekeor/nael.git")
                ))
 
      (package-initialize)
@@ -170,7 +167,7 @@ autoloads file.  For eager loading, load ‘nael.el’.
      ;; (require 'nael-markdown-autoloads)
 
      ;; Option 2, eager loading:
-     (require 'nael)
+     ;; (require 'nael)
      ;; (require 'nael-lsp)
      ;; (require 'nael-markdown)
 
@@ -183,24 +180,24 @@ File: nael.info,  Node: Installation via use-package vc,  Prev: Installation via
 Since version 30 from 2025, Emacs' popular ‘use-package’ macro supports
 a ‘:vc’ keyword as interface to ‘package-vc’.  (Because each package has
 autoload-cookies on relevant expressions, and because ‘use-package’ will
-load each package's ‘*-autoloads.el’ file that is generated at
-installation, you don't need to specify load-triggers like ‘:mode’.
-I.e.  lazy-loading should work out of the box.)
+load the autoloads-file that is generated at installation, you don't
+need to specify load-triggers like ‘:mode’.  I.e.  lazy-loading should
+work out of the box.)
 
      (use-package nael
-       :vc ( :url "https://codeberg.org/mekeor/nael.git"
-             :doc "nael/README.org"
-             :lisp-dir "nael"))
+       :vc ( :doc "nael/README.org"
+             :lisp-dir "nael"
+             :url "https://codeberg.org/mekeor/nael.git"))
 
      ;; (use-package nael-lsp
      ;;   :after nael
-     ;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
-     ;;         :lisp-dir "nael-lsp"))
+     ;;   :vc ( :lisp-dir "nael-lsp"
+     ;;         :url "https://codeberg.org/mekeor/nael.git"))
 
      ;; (use-package nael-markdown
      ;;   :after markdown-mode
-     ;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
-     ;;         :lisp-dir "nael-markdown"))
+     ;;   :vc ( :lisp-dir "nael-markdown"
+     ;;         :url "https://codeberg.org/mekeor/nael.git"))
 
 
 File: nael.info,  Node: Usage,  Next: Configuration,  Prev: Installation,  Up: Top
@@ -322,15 +319,15 @@ Tag Table:
 Node: Top192
 Node: Installation2282
 Node: Manual Installation2675
-Node: Installation via package-vc3695
-Node: Installation via package-vc-selected-packages4442
-Node: Installation via use-package vc5895
-Node: Usage7031
-Node: Configuration8257
-Node: Changelog9242
-Node: Version 062 from 2025-11-309502
-Node: Version 060 from 2025-11-309819
-Node: License and Maintenance10917
+Node: Installation via package-vc3733
+Node: Installation via package-vc-selected-packages4480
+Node: Installation via use-package vc5873
+Node: Usage6988
+Node: Configuration8214
+Node: Changelog9199
+Node: Version 062 from 2025-11-309459
+Node: Version 060 from 2025-11-309776
+Node: License and Maintenance10874
 
 End Tag Table
 

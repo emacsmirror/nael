@@ -21,33 +21,27 @@ Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be 
 
 ** Manual Installation
 
-Clone the Git repository.  In your Emacs initialization file, add Nael to ~load-path~ and load it.
+First clone the Git repository, then, in your Emacs initialization file, add Nael to ~load-path~ and load it.  For lazy loading the autoloads-file need to be build beforehand.
 
 #+begin_src emacs-lisp
-;; git clone https://codeberg.org/mekeor/nael ~/path/to/nael
+;; git clone https://codeberg.org/mekeor/nael.git ~/path/to/nael
 
 (add-to-list 'load-path "~/path/to/nael/nael")
 ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
 ;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
 
+;; Option 1, eager loading:
 (require 'nael)
 ;; (require 'nael-lsp)
 ;; (require 'nael-markdown)
-#+end_src
 
-Instead of eagerly loading Nael, you can load ~nael-autoloads~ after building it:
-
-#+begin_src emacs-lisp
+;; Option 2, lazy loading:
 ;; cd ~/path/to/nael && ./build.el autoloads
-
-(require 'nael-autoloads)
+;; (require 'nael-autoloads)
 ;; (require 'nael-lsp-autoloads)
 ;; (require 'nael-markdown-autoloads)
-#+end_src
 
-To make this readme available to Emacs as Info manual, point Emacs to it:
-
-#+begin_src emacs-lisp
+;; Optionally, make readme available as info manual:
 (require 'info)
 (info-initialize)
 (add-to-list 'Info-directory-list "~/path/to/nael/nael")
@@ -59,22 +53,22 @@ Since version 29 from 2023, Emacs ships with ~package-vc~ which enables the buil
 
 *** Installation via ~package-vc-selected-packages~
 
-In your Emacs session, select packages per ~package-vc-selected-packages~ variable and install them with =M-x package-vc-install-selected-packages RET=.  Persist the package selection in your Emacs initialization file too. ~package-vc~ will generate =nael-autoloads.el= automatically.  To lazy-load Nael, load the autoloads file.  For eager loading, load =nael.el=.
+In your Emacs session, select packages per ~package-vc-selected-packages~ variable and install them with =M-x package-vc-install-selected-packages RET=.  Persist the package selection in your Emacs initialization file too.  ~package-vc~ will generate the autoloads-file automatically.  To lazy-load Nael, load the autoloads-file.
 
 #+begin_src emacs-lisp
 (require 'package-vc)
 
 (setopt package-vc-selected-packages
         '((nael
-           :url "https://codeberg.org/mekeor/nael.git"
            :doc "nael/README.org"
-           :lisp-dir "nael")
-          ;; (nael-lsp
-          ;;  :url "https://codeberg.org/mekeor/nael.git"
-          ;;  :lisp-dir "nael-lsp")
-          ;; (nael-markdown
-          ;;  :url "https://codeberg.org/mekeor/nael.git"
-          ;;  :lisp-dir "nael-markdown")
+           :lisp-dir "nael"
+           :url "https://codeberg.org/mekeor/nael.git")
+       ;; (nael-lsp
+       ;;  :lisp-dir "nael-lsp"
+       ;;  :url "https://codeberg.org/mekeor/nael.git")
+       ;; (nael-markdown
+       ;;  :lisp-dir "nael-markdown"
+       ;;  :url "https://codeberg.org/mekeor/nael.git")
           ))
 
 (package-initialize)
@@ -85,30 +79,30 @@ In your Emacs session, select packages per ~package-vc-selected-packages~ variab
 ;; (require 'nael-markdown-autoloads)
 
 ;; Option 2, eager loading:
-(require 'nael)
+;; (require 'nael)
 ;; (require 'nael-lsp)
 ;; (require 'nael-markdown)
 #+end_src
 
 *** Installation via ~use-package~ =:vc=
 
-Since version 30 from 2025, Emacs' popular ~use-package~ macro supports a =:vc= keyword as interface to ~package-vc~.  (Because each package has autoload-cookies on relevant expressions, and because ~use-package~ will load each package's =*-autoloads.el= file that is generated at installation, you don't need to specify load-triggers like =:mode=.  I.e. lazy-loading should work out of the box.)
+Since version 30 from 2025, Emacs' popular ~use-package~ macro supports a =:vc= keyword as interface to ~package-vc~.  (Because each package has autoload-cookies on relevant expressions, and because ~use-package~ will load the autoloads-file that is generated at installation, you don't need to specify load-triggers like =:mode=.  I.e. lazy-loading should work out of the box.)
 
 #+begin_src emacs-lisp
 (use-package nael
-  :vc ( :url "https://codeberg.org/mekeor/nael.git"
-        :doc "nael/README.org"
-        :lisp-dir "nael"))
+  :vc ( :doc "nael/README.org"
+        :lisp-dir "nael"
+        :url "https://codeberg.org/mekeor/nael.git"))
 
 ;; (use-package nael-lsp
 ;;   :after nael
-;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
-;;         :lisp-dir "nael-lsp"))
+;;   :vc ( :lisp-dir "nael-lsp"
+;;         :url "https://codeberg.org/mekeor/nael.git"))
 
 ;; (use-package nael-markdown
 ;;   :after markdown-mode
-;;   :vc ( :url "https://codeberg.org/mekeor/nael.git"
-;;         :lisp-dir "nael-markdown"))
+;;   :vc ( :lisp-dir "nael-markdown"
+;;         :url "https://codeberg.org/mekeor/nael.git"))
 #+end_src
 
 * Usage
