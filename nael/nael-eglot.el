@@ -3,6 +3,8 @@
 ;; Copyright © 2024 Free Software Foundation, Inc.
 ;; Copyright © 2025 Mekeor Melire
 
+;; SPDX-License-Identifier: GPL-3.0-only
+
 ;; This is licensed under GNU General Public License (version 3 only),
 ;; see LICENSE.GPL3.
 

@@ -3,6 +3,8 @@
 
 ;; Copyright © 2025 Mekeor Melire
 
+;; SPDX-License-Identifier: GPL-3.0-only
+
 ;; This is licensed under GNU General Public License (version 3 only),
 ;; see LICENSE.
 
@@ -142,6 +144,8 @@ Keys may include `$CURSOR'.")
       ";;; nael-abbrev.el --- Abbrev for Nael  -*- lexical-binding: t; -*-
 
 ;; Copyright © 2025 Mekeor Melire
+
+;; SPDX-License-Identifier: GPL-3.0-only
 
 ;; This is licensed under GNU General Public License (version 3 only),
 ;; see LICENSE.GPL3.
@@ -481,6 +485,8 @@ expanded whenever suitable characters are inserted.\"
       ";;; nael-skeleton.el --- Skeleton for Nael  -*- lexical-binding: t; -*-
 
 ;; Copyright © 2025 Mekeor Melire
+
+;; SPDX-License-Identifier: GPL-3.0-only
 
 ;; This is licensed under GNU General Public License (version 3 only),
 ;; see LICENSE.GPL3.
