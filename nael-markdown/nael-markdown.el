@@ -7,10 +7,10 @@
 ;; Maintainer: Mekeor Melire <mekeor@posteo.de>
 ;; Package-Requires: ((emacs "29.1")
 ;;                    (markdown-mode "2")
-;;                    (nael "0.6.3"))
+;;                    (nael "0.6.4"))
 ;; SPDX-License-Identifier: GPL-3.0-only
 ;; URL: https://codeberg.org/mekeor/nael
-;; Version: 0.6.3
+;; Version: 0.6.4
 
 ;;; Commentary:
 
