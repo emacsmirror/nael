@@ -207,24 +207,38 @@ File: nael.info,  Node: Usage,  Next: Configuration,  Prev: Installation,  Up: T
 
 Language Server Protocol (LSP):
 
-   • ‘C-c C-e’ (‘eglot’) starts an LSP client.
-   • When ‘nael-lsp’ is autoloaded: ‘C-c C-l’ (‘lsp’) starts an
-     alternative LSP client.
+   • ‘C-c C-e’ (‘eglot’) starts Eglot, the LSP client.
    • ‘C-h .’ (‘eldoc-doc-buffer’) displays the ElDoc documentation
      buffer showing tactic state and expected goal at point.
+   • ‘C-c C-l’ (‘lsp’) starts lsp-mode, an alternative LSP client.  The
+     key is only bound if ‘nael-lsp’ is autoloaded.
 
    Abbreviations:
 
    • ‘C-c C-a’ (‘abbrev-mode’) enables abbreviations.
    • ‘C-c C-k’ (‘nael-abbrev-help’) echoes abbreviations that expand to
      the character at point, or, if active, to the selected region.
+   • ‘C-x '’ (‘expand-abbrev’) expands the abbreviation before point
+     without any inserting any character.  (Usually, you'd insert a
+     space or newline to expand.)
 
-   Emacs commands beyond Nael:
+   Build:
 
-   • ‘C-c C-c’ (‘project-compile’) suggests builds the current project,
-     suggesting ‘lake build’ as command.
+   • ‘C-c C-c’ (‘project-compile’) prompts for a command to build the
+     current project.  It will suggest ‘lake build’ because Nael
+     configures the ‘compile-command’ variable.
+
+   Navigation:
+
+   • ‘M-a’ (‘forward-sentence’) go to beginning of current
+     sentence/block, or to previous one.
+   • ‘M-e’ (‘backward-sentence’) go to end of current sentence/block, or
+     to next one.
    • ‘M-g i’ (‘imenu’) jumps to an interactively chosen definition in
      current buffer.
+
+   Comments:
+
    • ‘M-;’ (‘comment-dwim’) toggles the active region as comment or, if
      no region is active, creates a comment at end of line.
    • ‘M-q’ (‘prog-fill-reindent-defun’) fills the string- or
@@ -237,9 +251,18 @@ File: nael.info,  Node: Configuration,  Next: Changelog,  Prev: Usage,  Up: Top
 3 Configuration
 ***************
 
-For key bindings, customize ‘nael-mode-map’.  To automatically enable
-features (e.g.  abbreviations, Eglot or lsp-mode) when Nael is started,
-customize ‘nael-mode-hook’.  Here's an example:
+To view the complete list of Nael's user option variables from within
+Emacs, customize the group ‘nael’ (and its child-groups) with ‘M-x
+customize-group RET nael RET’.  This chapter highlights and explains
+some user options by examples.
+
+   As an exception, Emacs customization groups cannot include keymaps.
+You can bind custom keys in ‘nael-mode-map’:
+
+     (keymap-set nael-mode-map "C-c ." #'highlight-symbol-at-point)
+
+   To automatically enable features (e.g.  abbreviations, Eglot or
+lsp-mode) when Nael is started, customize ‘nael-mode-hook’:
 
      (add-hook 'nael-mode-hook #'abbrev-mode)
      (add-hook 'nael-mode-hook #'eglot-ensure)
@@ -323,11 +346,11 @@ Node: Installation via package-vc3733
 Node: Installation via package-vc-selected-packages4480
 Node: Installation via use-package vc5873
 Node: Usage6988
-Node: Configuration8214
-Node: Changelog9199
-Node: Version 062 from 2025-11-309459
-Node: Version 060 from 2025-11-309776
-Node: License and Maintenance10874
+Node: Configuration8730
+Node: Changelog10084
+Node: Version 062 from 2025-11-3010344
+Node: Version 060 from 2025-11-3010661
+Node: License and Maintenance11759
 
 End Tag Table
 

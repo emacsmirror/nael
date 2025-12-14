@@ -169,11 +169,11 @@ Language Server Protocol (LSP):
 
 @itemize
 @item
-@samp{C-c C-e} (@code{eglot}) starts an LSP client.
-@item
-When @code{nael-lsp} is autoloaded: @samp{C-c C-l} (@code{lsp}) starts an alternative LSP client.
+@samp{C-c C-e} (@code{eglot}) starts Eglot, the LSP client.
 @item
 @samp{C-h .} (@code{eldoc-doc-buffer}) displays the ElDoc documentation buffer showing tactic state and expected goal at point.
+@item
+@samp{C-c C-l} (@code{lsp}) starts lsp-mode, an alternative LSP client. The key is only bound if @code{nael-lsp} is autoloaded.
 @end itemize
 
 Abbreviations:
@@ -183,15 +183,31 @@ Abbreviations:
 @samp{C-c C-a} (@code{abbrev-mode}) enables abbreviations.
 @item
 @samp{C-c C-k} (@code{nael-abbrev-help}) echoes abbreviations that expand to the character at point, or, if active, to the selected region.
+@item
+@samp{C-x '} (@code{expand-abbrev}) expands the abbreviation before point without any inserting any character. (Usually, you'd insert a space or newline to expand.)
 @end itemize
 
-Emacs commands beyond Nael:
+Build:
 
 @itemize
 @item
-@samp{C-c C-c} (@code{project-compile}) suggests builds the current project, suggesting @samp{lake build} as command.
+@samp{C-c C-c} (@code{project-compile}) prompts for a command to build the current project. It will suggest @samp{lake build} because Nael configures the @code{compile-command} variable.
+@end itemize
+
+Navigation:
+
+@itemize
+@item
+@samp{M-a} (@code{forward-sentence}) go to beginning of current sentence/block, or to previous one.
+@item
+@samp{M-e} (@code{backward-sentence}) go to end of current sentence/block, or to next one.
 @item
 @samp{M-g i} (@code{imenu}) jumps to an interactively chosen definition in current buffer.
+@end itemize
+
+Comments:
+
+@itemize
 @item
 @samp{M-;} (@code{comment-dwim}) toggles the active region as comment or, if no region is active, creates a comment at end of line.
 @item
@@ -201,7 +217,15 @@ Emacs commands beyond Nael:
 @node Configuration
 @chapter Configuration
 
-For key bindings, customize @code{nael-mode-map}.  To automatically enable features (e.g. abbreviations, Eglot or lsp-mode) when Nael is started, customize @code{nael-mode-hook}.  Here's an example:
+To view the complete list of Nael's user option variables from within Emacs, customize the group @code{nael} (and its child-groups) with @samp{M-x customize-group RET nael RET}.  This chapter highlights and explains some user options by examples.
+
+As an exception, Emacs customization groups cannot include keymaps.  You can bind custom keys in @code{nael-mode-map}:
+
+@lisp
+(keymap-set nael-mode-map "C-c ." #'highlight-symbol-at-point)
+@end lisp
+
+To automatically enable features (e.g. abbreviations, Eglot or lsp-mode) when Nael is started, customize @code{nael-mode-hook}:
 
 @lisp
 (add-hook 'nael-mode-hook #'abbrev-mode)
