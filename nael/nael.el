@@ -32,7 +32,7 @@
 ;; Package-Requires: ((emacs "29.1"))
 ;; SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
 ;; URL: https://codeberg.org/mekeor/nael
-;; Version: 0.6.4
+;; Version: 0.7.0
 
 ;; This is licensed under GNU General Public License (version 3 only),
 ;; see LICENSE.GPL3.  To be precise, it is licensed under Apache-2.0,

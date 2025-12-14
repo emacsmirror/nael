@@ -151,6 +151,10 @@ Nael's Abbrev tables use the =:regexp= property which is [[https://github.com/mi
 
 * Changelog
 
+** Version 0.7.0 from 2025-12-15
+
+- Remove the ~nael-markdown~ package.  Move its code into ~nael~ package instead.  (Wrapped into ~with-eval-after-load~.)
+
 ** Version 0.6.2 from 2025-11-30
 
 - Re-add readme as .texi and .info to repository because Nael might soon be added to Melpa which won't build Info manuals itself.
