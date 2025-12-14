@@ -88,7 +88,7 @@ File: nael.info,  Node: Manual Installation,  Next: Installation via package-vc,
 
 First clone the Git repository, then, in your Emacs initialization file,
 add Nael to ‘load-path’ and load it.  For lazy loading the
-autoloads-file need to be build beforehand.
+autoloads-file needs to be build beforehand.
 
      ;; git clone https://codeberg.org/mekeor/nael.git ~/path/to/nael
 
@@ -342,15 +342,15 @@ Tag Table:
 Node: Top192
 Node: Installation2282
 Node: Manual Installation2675
-Node: Installation via package-vc3733
-Node: Installation via package-vc-selected-packages4480
-Node: Installation via use-package vc5873
-Node: Usage6988
-Node: Configuration8730
-Node: Changelog10084
-Node: Version 062 from 2025-11-3010344
-Node: Version 060 from 2025-11-3010661
-Node: License and Maintenance11759
+Node: Installation via package-vc3734
+Node: Installation via package-vc-selected-packages4481
+Node: Installation via use-package vc5874
+Node: Usage6989
+Node: Configuration8731
+Node: Changelog10085
+Node: Version 062 from 2025-11-3010345
+Node: Version 060 from 2025-11-3010662
+Node: License and Maintenance11760
 
 End Tag Table
 

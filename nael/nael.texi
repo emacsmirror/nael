@@ -70,7 +70,7 @@ Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be 
 @node Manual Installation
 @section Manual Installation
 
-First clone the Git repository, then, in your Emacs initialization file, add Nael to @code{load-path} and load it.  For lazy loading the autoloads-file need to be build beforehand.
+First clone the Git repository, then, in your Emacs initialization file, add Nael to @code{load-path} and load it.  For lazy loading the autoloads-file needs to be build beforehand.
 
 @lisp
 ;; git clone https://codeberg.org/mekeor/nael.git ~/path/to/nael
