@@ -41,16 +41,17 @@ The @code{nael} package defines a major mode.  In a modular, unobtrusive way, it
 
 Installation
 
+* Installation from Melpa::
+* Installation from Sources::
+
+Installation from Sources
+
 * Manual Installation::
 * Installation via @code{package-vc}::
 
-Installation via @code{package-vc}
-
-* Installation via @code{package-vc-selected-packages}::
-* Installation via @code{use-package} @samp{vc}::
-
 Changelog
 
+* Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15. 
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30. 
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30. 
 
@@ -63,12 +64,44 @@ Changelog
 Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be @uref{https://lean-lang.org/install/manual/, installed}.  If you want to use lsp-mode, you might need to install lsp-mode before @code{nael-lsp}.
 
 @menu
+* Installation from Melpa::
+* Installation from Sources::
+@end menu
+
+@node Installation from Melpa
+@section Installation from Melpa
+
+@code{nael} is available on @uref{https://melpa.org/#/nael, Melpa} (and @uref{https://stable.melpa.org/#/nael, Melpa-Stable}) but @code{nael-lsp} not yet.  To install @code{nael} from Melpa, first add as package-archive in your Emacs initialization file.
+
+@lisp
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/")
+             'append)
+(package-initialize)
+@end lisp
+
+After typing @samp{M-x package-refresh-contents RET} which fetches Melpa's package recipes, choose one of the following approaches:
+
+@itemize
+@item
+Interactively: Type @samp{M-x package-install RET nael RET}.
+@item
+With ‘package selection’: Add @samp{(add-to-list 'package-selected-packages 'nael)} to your init file, evaluate it, and type @samp{M-x package-install-selected-packages RET}.
+@item
+With @code{use-package}: Add @samp{(use-package nael :ensure t)} or similar to your init file and evaluate it.
+@end itemize
+
+@node Installation from Sources
+@section Installation from Sources
+
+@menu
 * Manual Installation::
 * Installation via @code{package-vc}::
 @end menu
 
 @node Manual Installation
-@section Manual Installation
+@subsection Manual Installation
 
 First clone the Git repository, then, in your Emacs initialization file, add Nael to @code{load-path} and load it.  For lazy loading the autoloads-file needs to be build beforehand.
 
@@ -77,18 +110,15 @@ First clone the Git repository, then, in your Emacs initialization file, add Nae
 
 (add-to-list 'load-path "~/path/to/nael/nael")
 ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
-;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
 
 ;; Option 1, eager loading:
 (require 'nael)
 ;; (require 'nael-lsp)
-;; (require 'nael-markdown)
 
 ;; Option 2, lazy loading:
 ;; cd ~/path/to/nael && ./build.el autoloads
 ;; (require 'nael-autoloads)
 ;; (require 'nael-lsp-autoloads)
-;; (require 'nael-markdown-autoloads)
 
 ;; Optionally, make readme available as info manual:
 (require 'info)
@@ -97,17 +127,14 @@ First clone the Git repository, then, in your Emacs initialization file, add Nae
 @end lisp
 
 @node Installation via @code{package-vc}
-@section Installation via @code{package-vc}
+@subsection Installation via @code{package-vc}
 
 Since version 29 from 2023, Emacs ships with @code{package-vc} which enables the built-in package manager @code{package} to install from version-controlled source repositories.  Keep in mind to regularly upgrade such packages with the command @code{package-vc-upgrade} or @code{package-vc-upgrade-all}.  (And please ignore the warnings that arise when @code{package-vc} attempts to byte-compile all Elisp source files in the repository instead of just the package-specific ones.)
 
-@menu
-* Installation via @code{package-vc-selected-packages}::
-* Installation via @code{use-package} @samp{vc}::
-@end menu
+@enumerate
+@item
+@anchor{Installation via @code{package-vc-selected-packages}}Installation via @code{package-vc-selected-packages}
 
-@node Installation via @code{package-vc-selected-packages}
-@subsection Installation via @code{package-vc-selected-packages}
 
 In your Emacs session, select packages per @code{package-vc-selected-packages} variable and install them with @samp{M-x package-vc-install-selected-packages RET}.  Persist the package selection in your Emacs initialization file too.  @code{package-vc} will generate the autoloads-file automatically.  To lazy-load Nael, load the autoloads-file.
 
@@ -122,9 +149,6 @@ In your Emacs session, select packages per @code{package-vc-selected-packages} v
        ;; (nael-lsp
        ;;  :lisp-dir "nael-lsp"
        ;;  :url "https://codeberg.org/mekeor/nael.git")
-       ;; (nael-markdown
-       ;;  :lisp-dir "nael-markdown"
-       ;;  :url "https://codeberg.org/mekeor/nael.git")
           ))
 
 (package-initialize)
@@ -132,16 +156,15 @@ In your Emacs session, select packages per @code{package-vc-selected-packages} v
 ;; Option 1, lazy loading:
 (require 'nael-autoloads)
 ;; (require 'nael-lsp-autoloads)
-;; (require 'nael-markdown-autoloads)
 
 ;; Option 2, eager loading:
 ;; (require 'nael)
 ;; (require 'nael-lsp)
-;; (require 'nael-markdown)
 @end lisp
 
-@node Installation via @code{use-package} @samp{vc}
-@subsection Installation via @code{use-package} @samp{:vc}
+@item
+@anchor{Installation via @code{use-package} @samp{vc}}Installation via @code{use-package} @samp{:vc}
+
 
 Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @samp{:vc} keyword as interface to @code{package-vc}.  (Because each package has autoload-cookies on relevant expressions, and because @code{use-package} will load the autoloads-file that is generated at installation, you don't need to specify load-triggers like @samp{:mode}.  I.e. lazy-loading should work out of the box.)
 
@@ -155,12 +178,8 @@ Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @
 ;;   :after nael
 ;;   :vc ( :lisp-dir "nael-lsp"
 ;;         :url "https://codeberg.org/mekeor/nael.git"))
-
-;; (use-package nael-markdown
-;;   :after markdown-mode
-;;   :vc ( :lisp-dir "nael-markdown"
-;;         :url "https://codeberg.org/mekeor/nael.git"))
 @end lisp
+@end enumerate
 
 @node Usage
 @chapter Usage
@@ -173,7 +192,7 @@ Language Server Protocol (LSP):
 @item
 @samp{C-h .} (@code{eldoc-doc-buffer}) displays the ElDoc documentation buffer showing tactic state and expected goal at point.
 @item
-@samp{C-c C-l} (@code{lsp}) starts lsp-mode, an alternative LSP client. The key is only bound if @code{nael-lsp} is autoloaded.
+@samp{C-c C-l} (@code{lsp}) starts lsp-mode, an alternative LSP client.  The key is only bound if @code{nael-lsp} is autoloaded.
 @end itemize
 
 Abbreviations:
@@ -184,14 +203,14 @@ Abbreviations:
 @item
 @samp{C-c C-k} (@code{nael-abbrev-help}) echoes abbreviations that expand to the character at point, or, if active, to the selected region.
 @item
-@samp{C-x '} (@code{expand-abbrev}) expands the abbreviation before point without any inserting any character. (Usually, you'd insert a space or newline to expand.)
+@samp{C-x '} (@code{expand-abbrev}) expands the abbreviation before point without any inserting any character.  (Usually, you'd insert a space or newline to expand.)
 @end itemize
 
 Build:
 
 @itemize
 @item
-@samp{C-c C-c} (@code{project-compile}) prompts for a command to build the current project. It will suggest @samp{lake build} because Nael configures the @code{compile-command} variable.
+@samp{C-c C-c} (@code{project-compile}) prompts for a command to build the current project.  It will suggest @samp{lake build} because Nael configures the @code{compile-command} variable.
 @end itemize
 
 Navigation:
@@ -219,13 +238,13 @@ Comments:
 
 To view the complete list of Nael's user option variables from within Emacs, customize the group @code{nael} (and its child-groups) with @samp{M-x customize-group RET nael RET}.  This chapter highlights and explains some user options by examples.
 
-As an exception, Emacs customization groups cannot include keymaps.  You can bind custom keys in @code{nael-mode-map}:
+As an exception, Emacs customization groups cannot include keymaps.  You can bind custom keys in @code{nael-mode-map} like this:
 
 @lisp
 (keymap-set nael-mode-map "C-c ." #'highlight-symbol-at-point)
 @end lisp
 
-To automatically enable features (e.g. abbreviations, Eglot or lsp-mode) when Nael is started, customize @code{nael-mode-hook}:
+To automatically enable features (e.g. abbreviations, Eglot or lsp-mode) when Nael is started, customize @code{nael-mode-hook} as follows:
 
 @lisp
 (add-hook 'nael-mode-hook #'abbrev-mode)
@@ -238,9 +257,20 @@ Nael's Abbrev tables use the @samp{:regexp} property which is @uref{https://gith
 @chapter Changelog
 
 @menu
+* Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15. 
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30. 
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30. 
 @end menu
+
+@node Version 070 from 2025-12-15
+@section Version 0.7.0 from 2025-12-15
+
+@itemize
+@item
+Remove the @code{nael-markdown} package.  Move its code into @code{nael} package instead.  (Wrapped into @code{with-eval-after-load}.)
+@item
+@code{nael} is now on @uref{https://melpa.org/#/nael, Melpa} and @uref{https://stable.melpa.org/#/nael, Melpa-Stable}.  @code{nael-lsp} is not there yet.
+@end itemize
 
 @node Version 062 from 2025-11-30
 @section Version 0.6.2 from 2025-11-30

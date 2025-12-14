@@ -51,16 +51,17 @@ Eglot, there's the ‘nael-lsp’ package.
 
 Installation
 
+* Installation from Melpa::
+* Installation from Sources::
+
+Installation from Sources
+
 * Manual Installation::
 * Installation via package-vc::
 
-Installation via ‘package-vc’
-
-* Installation via package-vc-selected-packages::
-* Installation via use-package vc::
-
 Changelog
 
+* Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15.
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30.
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30.
 
@@ -77,14 +78,52 @@ to use lsp-mode, you might need to install lsp-mode before ‘nael-lsp’.
 
 * Menu:
 
+* Installation from Melpa::
+* Installation from Sources::
+
+
+File: nael.info,  Node: Installation from Melpa,  Next: Installation from Sources,  Up: Installation
+
+1.1 Installation from Melpa
+===========================
+
+‘nael’ is available on Melpa (https://melpa.org/#/nael) (and
+Melpa-Stable (https://stable.melpa.org/#/nael)) but ‘nael-lsp’ not yet.
+To install ‘nael’ from Melpa, first add as package-archive in your Emacs
+initialization file.
+
+     (require 'package)
+     (add-to-list 'package-archives
+                  '("melpa" . "https://melpa.org/packages/")
+                  'append)
+     (package-initialize)
+
+   After typing ‘M-x package-refresh-contents RET’ which fetches Melpa's
+package recipes, choose one of the following approaches:
+
+   • Interactively: Type ‘M-x package-install RET nael RET’.
+   • With ‘package selection’: Add ‘(add-to-list
+     'package-selected-packages 'nael)’ to your init file, evaluate it,
+     and type ‘M-x package-install-selected-packages RET’.
+   • With ‘use-package’: Add ‘(use-package nael :ensure t)’ or similar
+     to your init file and evaluate it.
+
+
+File: nael.info,  Node: Installation from Sources,  Prev: Installation from Melpa,  Up: Installation
+
+1.2 Installation from Sources
+=============================
+
+* Menu:
+
 * Manual Installation::
 * Installation via package-vc::
 
 
-File: nael.info,  Node: Manual Installation,  Next: Installation via package-vc,  Up: Installation
+File: nael.info,  Node: Manual Installation,  Next: Installation via package-vc,  Up: Installation from Sources
 
-1.1 Manual Installation
-=======================
+1.2.1 Manual Installation
+-------------------------
 
 First clone the Git repository, then, in your Emacs initialization file,
 add Nael to ‘load-path’ and load it.  For lazy loading the
@@ -94,18 +133,15 @@ autoloads-file needs to be build beforehand.
 
      (add-to-list 'load-path "~/path/to/nael/nael")
      ;; (add-to-list 'load-path "~/path/to/nael/nael-lsp")
-     ;; (add-to-list 'load-path "~/path/to/nael/nael-markdown")
 
      ;; Option 1, eager loading:
      (require 'nael)
      ;; (require 'nael-lsp)
-     ;; (require 'nael-markdown)
 
      ;; Option 2, lazy loading:
      ;; cd ~/path/to/nael && ./build.el autoloads
      ;; (require 'nael-autoloads)
      ;; (require 'nael-lsp-autoloads)
-     ;; (require 'nael-markdown-autoloads)
 
      ;; Optionally, make readme available as info manual:
      (require 'info)
@@ -113,10 +149,10 @@ autoloads-file needs to be build beforehand.
      (add-to-list 'Info-directory-list "~/path/to/nael/nael")
 
 
-File: nael.info,  Node: Installation via package-vc,  Prev: Manual Installation,  Up: Installation
+File: nael.info,  Node: Installation via package-vc,  Prev: Manual Installation,  Up: Installation from Sources
 
-1.2 Installation via ‘package-vc’
-=================================
+1.2.2 Installation via ‘package-vc’
+-----------------------------------
 
 Since version 29 from 2023, Emacs ships with ‘package-vc’ which enables
 the built-in package manager ‘package’ to install from
@@ -126,78 +162,55 @@ upgrade such packages with the command ‘package-vc-upgrade’ or
 when ‘package-vc’ attempts to byte-compile all Elisp source files in the
 repository instead of just the package-specific ones.)
 
-* Menu:
+  1. Installation via ‘package-vc-selected-packages’
 
-* Installation via package-vc-selected-packages::
-* Installation via use-package vc::
+     In your Emacs session, select packages per
+     ‘package-vc-selected-packages’ variable and install them with ‘M-x
+     package-vc-install-selected-packages RET’.  Persist the package
+     selection in your Emacs initialization file too.  ‘package-vc’ will
+     generate the autoloads-file automatically.  To lazy-load Nael, load
+     the autoloads-file.
 
-
-File: nael.info,  Node: Installation via package-vc-selected-packages,  Next: Installation via use-package vc,  Up: Installation via package-vc
+          (require 'package-vc)
 
-1.2.1 Installation via ‘package-vc-selected-packages’
------------------------------------------------------
+          (setopt package-vc-selected-packages
+                  '((nael
+                     :doc "nael/README.org"
+                     :lisp-dir "nael"
+                     :url "https://codeberg.org/mekeor/nael.git")
+                 ;; (nael-lsp
+                 ;;  :lisp-dir "nael-lsp"
+                 ;;  :url "https://codeberg.org/mekeor/nael.git")
+                    ))
 
-In your Emacs session, select packages per
-‘package-vc-selected-packages’ variable and install them with ‘M-x
-package-vc-install-selected-packages RET’.  Persist the package
-selection in your Emacs initialization file too.  ‘package-vc’ will
-generate the autoloads-file automatically.  To lazy-load Nael, load the
-autoloads-file.
+          (package-initialize)
 
-     (require 'package-vc)
+          ;; Option 1, lazy loading:
+          (require 'nael-autoloads)
+          ;; (require 'nael-lsp-autoloads)
 
-     (setopt package-vc-selected-packages
-             '((nael
-                :doc "nael/README.org"
-                :lisp-dir "nael"
-                :url "https://codeberg.org/mekeor/nael.git")
-            ;; (nael-lsp
-            ;;  :lisp-dir "nael-lsp"
-            ;;  :url "https://codeberg.org/mekeor/nael.git")
-            ;; (nael-markdown
-            ;;  :lisp-dir "nael-markdown"
-            ;;  :url "https://codeberg.org/mekeor/nael.git")
-               ))
+          ;; Option 2, eager loading:
+          ;; (require 'nael)
+          ;; (require 'nael-lsp)
 
-     (package-initialize)
+  2. Installation via ‘use-package’ ‘:vc’
 
-     ;; Option 1, lazy loading:
-     (require 'nael-autoloads)
-     ;; (require 'nael-lsp-autoloads)
-     ;; (require 'nael-markdown-autoloads)
+     Since version 30 from 2025, Emacs' popular ‘use-package’ macro
+     supports a ‘:vc’ keyword as interface to ‘package-vc’.  (Because
+     each package has autoload-cookies on relevant expressions, and
+     because ‘use-package’ will load the autoloads-file that is
+     generated at installation, you don't need to specify load-triggers
+     like ‘:mode’.  I.e.  lazy-loading should work out of the box.)
 
-     ;; Option 2, eager loading:
-     ;; (require 'nael)
-     ;; (require 'nael-lsp)
-     ;; (require 'nael-markdown)
+          (use-package nael
+            :vc ( :doc "nael/README.org"
+                  :lisp-dir "nael"
+                  :url "https://codeberg.org/mekeor/nael.git"))
 
-
-File: nael.info,  Node: Installation via use-package vc,  Prev: Installation via package-vc-selected-packages,  Up: Installation via package-vc
-
-1.2.2 Installation via ‘use-package’ ‘:vc’
-------------------------------------------
-
-Since version 30 from 2025, Emacs' popular ‘use-package’ macro supports
-a ‘:vc’ keyword as interface to ‘package-vc’.  (Because each package has
-autoload-cookies on relevant expressions, and because ‘use-package’ will
-load the autoloads-file that is generated at installation, you don't
-need to specify load-triggers like ‘:mode’.  I.e.  lazy-loading should
-work out of the box.)
-
-     (use-package nael
-       :vc ( :doc "nael/README.org"
-             :lisp-dir "nael"
-             :url "https://codeberg.org/mekeor/nael.git"))
-
-     ;; (use-package nael-lsp
-     ;;   :after nael
-     ;;   :vc ( :lisp-dir "nael-lsp"
-     ;;         :url "https://codeberg.org/mekeor/nael.git"))
-
-     ;; (use-package nael-markdown
-     ;;   :after markdown-mode
-     ;;   :vc ( :lisp-dir "nael-markdown"
-     ;;         :url "https://codeberg.org/mekeor/nael.git"))
+          ;; (use-package nael-lsp
+          ;;   :after nael
+          ;;   :vc ( :lisp-dir "nael-lsp"
+          ;;         :url "https://codeberg.org/mekeor/nael.git"))
 
 
 File: nael.info,  Node: Usage,  Next: Configuration,  Prev: Installation,  Up: Top
@@ -257,12 +270,12 @@ customize-group RET nael RET’.  This chapter highlights and explains
 some user options by examples.
 
    As an exception, Emacs customization groups cannot include keymaps.
-You can bind custom keys in ‘nael-mode-map’:
+You can bind custom keys in ‘nael-mode-map’ like this:
 
      (keymap-set nael-mode-map "C-c ." #'highlight-symbol-at-point)
 
    To automatically enable features (e.g.  abbreviations, Eglot or
-lsp-mode) when Nael is started, customize ‘nael-mode-hook’:
+lsp-mode) when Nael is started, customize ‘nael-mode-hook’ as follows:
 
      (add-hook 'nael-mode-hook #'abbrev-mode)
      (add-hook 'nael-mode-hook #'eglot-ensure)
@@ -285,13 +298,25 @@ File: nael.info,  Node: Changelog,  Next: License and Maintenance,  Prev: Config
 
 * Menu:
 
+* Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15.
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30.
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30.
 
 
-File: nael.info,  Node: Version 062 from 2025-11-30,  Next: Version 060 from 2025-11-30,  Up: Changelog
+File: nael.info,  Node: Version 070 from 2025-12-15,  Next: Version 062 from 2025-11-30,  Up: Changelog
 
-4.1 Version 0.6.2 from 2025-11-30
+4.1 Version 0.7.0 from 2025-12-15
+=================================
+
+   • Remove the ‘nael-markdown’ package.  Move its code into ‘nael’
+     package instead.  (Wrapped into ‘with-eval-after-load’.)
+   • ‘nael’ is now on Melpa (https://melpa.org/#/nael) and Melpa-Stable
+     (https://stable.melpa.org/#/nael).  ‘nael-lsp’ is not there yet.
+
+
+File: nael.info,  Node: Version 062 from 2025-11-30,  Next: Version 060 from 2025-11-30,  Prev: Version 070 from 2025-12-15,  Up: Changelog
+
+4.2 Version 0.6.2 from 2025-11-30
 =================================
 
    • Re-add readme as .texi and .info to repository because Nael might
@@ -300,7 +325,7 @@ File: nael.info,  Node: Version 062 from 2025-11-30,  Next: Version 060 from 202
 
 File: nael.info,  Node: Version 060 from 2025-11-30,  Prev: Version 062 from 2025-11-30,  Up: Changelog
 
-4.2 Version 0.6.0 from 2025-11-30
+4.3 Version 0.6.0 from 2025-11-30
 =================================
 
    • Remove .texi, .info, and -autoloads.el files from repository.
@@ -340,17 +365,20 @@ GPL-3.0.
 
 Tag Table:
 Node: Top192
-Node: Installation2282
-Node: Manual Installation2675
-Node: Installation via package-vc3734
-Node: Installation via package-vc-selected-packages4481
-Node: Installation via use-package vc5874
-Node: Usage6989
-Node: Configuration8731
-Node: Changelog10085
-Node: Version 062 from 2025-11-3010345
-Node: Version 060 from 2025-11-3010662
-Node: License and Maintenance11760
+Node: Installation2308
+Node: Installation from Melpa2703
+Node: Installation from Sources3797
+Node: Manual Installation4028
+Node: Installation via package-vc4964
+Ref: Installation via package-vc-selected-packages5637
+Ref: Installation via use-package vc6734
+Node: Usage7552
+Node: Configuration9294
+Node: Changelog10669
+Node: Version 070 from 2025-12-1510991
+Node: Version 062 from 2025-11-3011464
+Node: Version 060 from 2025-11-3011817
+Node: License and Maintenance12915
 
 End Tag Table
 
