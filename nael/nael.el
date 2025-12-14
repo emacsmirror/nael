@@ -525,10 +525,21 @@ least evaluated an autoload statement for
   ;; Flymake:
   (nael-flymake-configure))
 
-;;;###autoload
-(add-to-list 'auto-mode-alist (cons "\\.lean\\'" 'nael-mode))
-
+;; Lean language specification requires UTF-8 encoding.
 (modify-coding-system-alist 'file "\\.lean\\'" 'utf-8)
+
+;;;; Association:
+
+;;;###autoload
+(add-to-list 'auto-mode-alist
+             (cons "\\.lean\\'" 'nael-mode))
+
+;; If the code that requires `markdown-mode' grows, we will extract it
+;; into a new package that depends on it.  But a single expression is
+;; not worth a package.
+(with-eval-after-load 'markdown-mode
+  (add-to-list 'markdown-code-lang-modes
+               (cons "lean" 'nael-mode)))
 
 (provide 'nael)
 
