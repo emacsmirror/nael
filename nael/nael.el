@@ -534,6 +534,10 @@ least evaluated an autoload statement for
 (add-to-list 'auto-mode-alist
              (cons "\\.lean\\'" 'nael-mode))
 
+(with-eval-after-load 'org-src
+  (add-to-list 'org-src-lang-modes
+               (cons "lean" 'nael)))
+
 ;; If the code that requires `markdown-mode' grows, we will extract it
 ;; into a new package that depends on it.  But a single expression is
 ;; not worth a package.
