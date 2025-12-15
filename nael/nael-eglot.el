@@ -161,7 +161,6 @@ See `eglot-server-programs' for requirements of CONTACT."
                  (sexp :tag "Other"))
   :group 'nael-eglot)
 
-;;;###autoload
 (add-to-list 'eglot-server-programs
              (cons 'nael-mode
                    (lambda (&optional _interactive _project)
