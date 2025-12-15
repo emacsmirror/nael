@@ -89,24 +89,20 @@ File: nael.info,  Node: Installation from Melpa,  Next: Installation from Source
 
 ‘nael’ is available on Melpa (https://melpa.org/#/nael) (and
 Melpa-Stable (https://stable.melpa.org/#/nael)) but ‘nael-lsp’ not yet.
-To install ‘nael’ from Melpa, first add as package-archive in your Emacs
-initialization file.
+To install, first add the package-archive by adding this code to your
+Emacs initialization file and evaluating it interactively.
 
      (require 'package)
-     (add-to-list 'package-archives
-                  '("melpa" . "https://melpa.org/packages/")
-                  'append)
+     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
      (package-initialize)
 
-   After typing ‘M-x package-refresh-contents RET’ which fetches Melpa's
-package recipes, choose one of the following approaches:
-
-   • Interactively: Type ‘M-x package-install RET nael RET’.
-   • With ‘package selection’: Add ‘(add-to-list
-     'package-selected-packages 'nael)’ to your init file, evaluate it,
-     and type ‘M-x package-install-selected-packages RET’.
-   • With ‘use-package’: Add ‘(use-package nael :ensure t)’ or similar
-     to your init file and evaluate it.
+   Then type ‘M-x package-refresh-contents RET’.  Finally, choose one of
+the following approaches: To install interactively, type ‘M-x
+package-install RET nael RET’.  To install via package selection, add
+‘(setopt package-selected-packages '(nael))’ to your init file, evaluate
+it, and type ‘M-x package-install-selected-packages RET’.  To install
+via Use-Package, add ‘(use-package nael :ensure t)’ to your init file
+and evaluate it.
 
 
 File: nael.info,  Node: Installation from Sources,  Prev: Installation from Melpa,  Up: Installation
@@ -367,18 +363,18 @@ Tag Table:
 Node: Top192
 Node: Installation2308
 Node: Installation from Melpa2703
-Node: Installation from Sources3797
-Node: Manual Installation4028
-Node: Installation via package-vc4964
-Ref: Installation via package-vc-selected-packages5637
-Ref: Installation via use-package vc6734
-Node: Usage7552
-Node: Configuration9294
-Node: Changelog10669
-Node: Version 070 from 2025-12-1510991
-Node: Version 062 from 2025-11-3011464
-Node: Version 060 from 2025-11-3011817
-Node: License and Maintenance12915
+Node: Installation from Sources3724
+Node: Manual Installation3955
+Node: Installation via package-vc4891
+Ref: Installation via package-vc-selected-packages5564
+Ref: Installation via use-package vc6661
+Node: Usage7479
+Node: Configuration9221
+Node: Changelog10596
+Node: Version 070 from 2025-12-1510918
+Node: Version 062 from 2025-11-3011391
+Node: Version 060 from 2025-11-3011744
+Node: License and Maintenance12842
 
 End Tag Table
 
