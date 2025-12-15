@@ -5,10 +5,10 @@
 ;; Author: Mekeor Melire <mekeor@posteo.de>
 ;; Keywords: languages
 ;; Maintainer: Mekeor Melire <mekeor@posteo.de>
-;; Package-Requires: ((emacs "29.1") (lsp-mode "9") (nael "0.7.0"))
+;; Package-Requires: ((emacs "29.1") (lsp-mode "9") (nael "0.7.1"))
 ;; SPDX-License-Identifier: GPL-3.0-only
 ;; URL: https://codeberg.org/mekeor/nael
-;; Version: 0.7.0
+;; Version: 0.7.1
 
 ;; This code is licensed under GNU General Public License version 3,
 ;; see LICENSE.GPL3.
