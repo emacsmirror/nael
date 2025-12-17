@@ -23,16 +23,17 @@
 @node Top
 @top Nael — An Emacs major mode for Lean
 
-Nael is a set of packages extending @uref{https://www.gnu.org/software/emacs/, GNU Emacs} for editing @uref{https://lean-lang.org, Lean} sources.  It is a radically refactored fork of @uref{https://github.com/leanprover-community/lean4-mode, Lean4-Mode} with focus on simplicity, modularity and integration into Emacs' core.  It's still at an early stage of development.
+Nael is a set of packages that extend @uref{https://www.gnu.org/software/emacs/, GNU Emacs} for the @uref{https://lean-lang.org, Lean} language.  It is a radically refactored fork of @uref{https://github.com/leanprover-community/lean4-mode, Lean4-Mode} with focus on simplicity, modularity and integration into Emacs' core.
 
-The @code{nael} package defines a major mode.  In a modular, unobtrusive way, it also defines simple and complex abbreviations per @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html, Abbrev} and @uref{https://www.gnu.org/software/emacs/manual/html_node/autotype/, Skeleton} respectively.  It teaches Emacs' built-in @uref{https://microsoft.github.io/language-server-protocol/ Language Server Protocol, LSP} client @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot} about @uref{https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean, Lean-specific LSP-extensions} and tells @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html, ElDoc} to display that information, similar to the “@uref{https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview, info view}” in @uref{https://marketplace.visualstudio.com/items?itemName=leanprover.lean4, vscode-lean} that many are familiar with.  For users who prefer the external package @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode} as LSP client over Eglot, there's the @code{nael-lsp} package.
+The @code{nael} package defines the major mode.  It also introduces simple and two-sided abbreviations per @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html, Abbrev} and @uref{https://www.gnu.org/software/emacs/manual/html_node/autotype/, Skeleton} respectively.  It teaches Emacs' built-in @uref{https://microsoft.github.io/language-server-protocol/ Language Server Protocol, LSP} client @uref{https://www.gnu.org/software/emacs/manual/html_node/eglot/, Eglot} about @uref{https://github.com/leanprover/lean4/blob/master/src/Lean/Data/Lsp/Extra.lean, Lean-specific LSP-extensions} and tells @uref{https://www.gnu.org/software/emacs/manual/html_node/emacs/Programming-Language-Doc.html, ElDoc} to display that information, similar to the “@uref{https://github.com/leanprover/vscode-lean4/blob/master/vscode-lean4/manual/manual.md#infoview, info view}” in @uref{https://marketplace.visualstudio.com/items?itemName=leanprover.lean4, vscode-lean} that many are familiar with.  Similarly, the separate package @code{nael-lsp} may be installed when @uref{https://github.com/emacs-lsp/lsp-mode, lsp-mode} is preferred as LSP client.
 
 @end ifnottex
 
 @menu
-* Installation::
+* Get Started::
 * Usage::
 * Configuration::
+* Installation::
 * Changelog::
 * License and Maintenance::
 
@@ -57,6 +58,83 @@ Changelog
 
 @end detailmenu
 @end menu
+
+@node Get Started
+@chapter Get Started
+
+To install Nael the easy way, first set up @uref{https://melpa.org/#/getting-started, Melpa} as package-archive, then type @samp{M-x package-install RET nael RET}.  For more detailed instructions, consult the @emph{Installation} chapter below.
+
+@node Usage
+@chapter Usage
+
+Language Server Protocol (LSP):
+
+@itemize
+@item
+@samp{C-c C-e} (@code{eglot}) starts Eglot, the LSP client.
+@item
+@samp{C-h .} (@code{eldoc-doc-buffer}) displays the ElDoc documentation buffer showing tactic state and expected goal at point.
+@item
+@samp{C-c C-l} (@code{lsp}) starts lsp-mode, an alternative LSP client.  The key is only bound if @code{nael-lsp} is (auto)loaded.
+@end itemize
+
+Abbreviations:
+
+@itemize
+@item
+@samp{C-c C-a} (@code{abbrev-mode}) enables abbreviations.
+@item
+@samp{C-c C-k} (@code{nael-abbrev-help}) echoes abbreviations that expand to the character at point, or, if active, to the selected region.
+@item
+@samp{C-x '} (@code{expand-abbrev}) expands the abbreviation before point without any inserting any character.  (Usually, you'd insert a space or newline to expand.)
+@end itemize
+
+Build:
+
+@itemize
+@item
+@samp{C-c C-c} (@code{project-compile}) prompts for a command to build the current project.  It will suggest @samp{lake build} because Nael configures the @code{compile-command} variable.
+@end itemize
+
+Navigation:
+
+@itemize
+@item
+@samp{M-a} (@code{forward-sentence}) go to beginning of current sentence/block, or to previous one.
+@item
+@samp{M-e} (@code{backward-sentence}) go to end of current sentence/block, or to next one.
+@item
+@samp{M-g i} (@code{imenu}) jumps to an interactively chosen definition in current buffer.
+@end itemize
+
+Comments:
+
+@itemize
+@item
+@samp{M-;} (@code{comment-dwim}) toggles the active region as comment or, if no region is active, creates a comment at end of line.
+@item
+@samp{M-q} (@code{prog-fill-reindent-defun}) fills the string- or comment-paragraph at point, or reindents the point-surrounding code.
+@end itemize
+
+@node Configuration
+@chapter Configuration
+
+To view the complete list of Nael's user option variables from within Emacs, customize the group @code{nael} (and its child-groups) with @samp{M-x customize-group RET nael RET}.  This chapter highlights and elaborates on some of them.
+
+As an exception, Emacs customization groups cannot include keymaps.  You can bind custom keys in @code{nael-mode-map} like this:
+
+@lisp
+(keymap-set nael-mode-map "C-c ." #'highlight-symbol-at-point)
+@end lisp
+
+To automatically enable features (e.g. abbreviations, Eglot or lsp-mode) when Nael is started, customize @code{nael-mode-hook} as follows:
+
+@lisp
+(add-hook 'nael-mode-hook #'abbrev-mode)
+(add-hook 'nael-mode-hook #'eglot-ensure)
+@end lisp
+
+Nael's Abbrev tables use the @samp{:regexp} property which is @uref{https://github.com/minad/cape/discussions/158#discussioncomment-14687758, incompatible} with @uref{https://github.com/company-mode/company-mode, Company}'s @code{company-abbrev} and @uref{https://github.com/minad/cape, Cape}'s @code{cape-abbrev}.  Instead, Nael supports completion-at-point natively via @code{nael-abbrev-capf}.  This CAPF is buffer-locally added to @code{completion-at-point-functions} whenever Abbrev mode is enabled inside Nael.  To ditch this feature, set the @code{nael-abbrev-capf} variable to @samp{nil}.
 
 @node Installation
 @chapter Installation
@@ -169,78 +247,6 @@ Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @
 ;;         :url "https://codeberg.org/mekeor/nael.git"))
 @end lisp
 @end enumerate
-
-@node Usage
-@chapter Usage
-
-Language Server Protocol (LSP):
-
-@itemize
-@item
-@samp{C-c C-e} (@code{eglot}) starts Eglot, the LSP client.
-@item
-@samp{C-h .} (@code{eldoc-doc-buffer}) displays the ElDoc documentation buffer showing tactic state and expected goal at point.
-@item
-@samp{C-c C-l} (@code{lsp}) starts lsp-mode, an alternative LSP client.  The key is only bound if @code{nael-lsp} is autoloaded.
-@end itemize
-
-Abbreviations:
-
-@itemize
-@item
-@samp{C-c C-a} (@code{abbrev-mode}) enables abbreviations.
-@item
-@samp{C-c C-k} (@code{nael-abbrev-help}) echoes abbreviations that expand to the character at point, or, if active, to the selected region.
-@item
-@samp{C-x '} (@code{expand-abbrev}) expands the abbreviation before point without any inserting any character.  (Usually, you'd insert a space or newline to expand.)
-@end itemize
-
-Build:
-
-@itemize
-@item
-@samp{C-c C-c} (@code{project-compile}) prompts for a command to build the current project.  It will suggest @samp{lake build} because Nael configures the @code{compile-command} variable.
-@end itemize
-
-Navigation:
-
-@itemize
-@item
-@samp{M-a} (@code{forward-sentence}) go to beginning of current sentence/block, or to previous one.
-@item
-@samp{M-e} (@code{backward-sentence}) go to end of current sentence/block, or to next one.
-@item
-@samp{M-g i} (@code{imenu}) jumps to an interactively chosen definition in current buffer.
-@end itemize
-
-Comments:
-
-@itemize
-@item
-@samp{M-;} (@code{comment-dwim}) toggles the active region as comment or, if no region is active, creates a comment at end of line.
-@item
-@samp{M-q} (@code{prog-fill-reindent-defun}) fills the string- or comment-paragraph at point, or reindents the point-surrounding code.
-@end itemize
-
-@node Configuration
-@chapter Configuration
-
-To view the complete list of Nael's user option variables from within Emacs, customize the group @code{nael} (and its child-groups) with @samp{M-x customize-group RET nael RET}.  This chapter highlights and explains some user options by examples.
-
-As an exception, Emacs customization groups cannot include keymaps.  You can bind custom keys in @code{nael-mode-map} like this:
-
-@lisp
-(keymap-set nael-mode-map "C-c ." #'highlight-symbol-at-point)
-@end lisp
-
-To automatically enable features (e.g. abbreviations, Eglot or lsp-mode) when Nael is started, customize @code{nael-mode-hook} as follows:
-
-@lisp
-(add-hook 'nael-mode-hook #'abbrev-mode)
-(add-hook 'nael-mode-hook #'eglot-ensure)
-@end lisp
-
-Nael's Abbrev tables use the @samp{:regexp} property which is @uref{https://github.com/minad/cape/discussions/158#discussioncomment-14687758, incompatible} with @uref{https://github.com/company-mode/company-mode, Company}'s @code{company-abbrev} and @uref{https://github.com/minad/cape, Cape}'s @code{cape-abbrev}.  Instead, Nael supports completion-at-point natively via @code{nael-abbrev-capf}.  This CAPF is buffer-locally added to @code{completion-at-point-functions} whenever Abbrev mode is enabled inside Nael.  To ditch this feature, set the @code{nael-abbrev-capf} variable to @samp{nil}.
 
 @node Changelog
 @chapter Changelog
