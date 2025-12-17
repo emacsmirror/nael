@@ -139,7 +139,7 @@ Nael's Abbrev tables use the @samp{:regexp} property which is @uref{https://gith
 @node Installation
 @chapter Installation
 
-Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be @uref{https://lean-lang.org/install/manual/, installed}.  If you want to use lsp-mode, you might need to install lsp-mode before @code{nael-lsp}.
+Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be @uref{https://lean-lang.org/install/manual/, installed}.
 
 @menu
 * Installation from Melpa::
@@ -161,6 +161,8 @@ Then type @samp{M-x package-refresh-contents RET}.  Finally, choose one of the f
 
 @node Installation from Sources
 @section Installation from Sources
+
+When installing @code{nael-lsp} from sources, lsp-mode might not be pulled in and installed as dependency automatically, i.e. you might need to install it manually beforehand.
 
 @menu
 * Manual Installation::

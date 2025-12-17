@@ -162,8 +162,7 @@ File: nael.info,  Node: Installation,  Next: Changelog,  Prev: Configuration,  U
 **************
 
 Nael's LSP-based features (via Eglot or lsp-mode), require Lean version
-4 to be installed (https://lean-lang.org/install/manual/).  If you want
-to use lsp-mode, you might need to install lsp-mode before ‘nael-lsp’.
+4 to be installed (https://lean-lang.org/install/manual/).
 
 * Menu:
 
@@ -198,6 +197,10 @@ File: nael.info,  Node: Installation from Sources,  Prev: Installation from Melp
 
 4.2 Installation from Sources
 =============================
+
+When installing ‘nael-lsp’ from sources, lsp-mode might not be pulled in
+and installed as dependency automatically, i.e.  you might need to
+install it manually beforehand.
 
 * Menu:
 
@@ -376,17 +379,17 @@ Node: Get Started2245
 Node: Usage2582
 Node: Configuration4325
 Node: Installation5691
-Node: Installation from Melpa6100
-Node: Installation from Sources7121
-Node: Manual Installation7352
-Node: Installation via package-vc8288
-Ref: Installation via package-vc-selected-packages8961
-Ref: Installation via use-package vc10058
-Node: Changelog10876
-Node: Version 070 from 2025-12-1511197
-Node: Version 062 from 2025-11-3011670
-Node: Version 060 from 2025-11-3012023
-Node: License and Maintenance13121
+Node: Installation from Melpa6012
+Node: Installation from Sources7033
+Node: Manual Installation7441
+Node: Installation via package-vc8377
+Ref: Installation via package-vc-selected-packages9050
+Ref: Installation via use-package vc10147
+Node: Changelog10965
+Node: Version 070 from 2025-12-1511286
+Node: Version 062 from 2025-11-3011759
+Node: Version 060 from 2025-11-3012112
+Node: License and Maintenance13210
 
 End Tag Table
 

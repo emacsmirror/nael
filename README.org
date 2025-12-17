@@ -69,7 +69,7 @@ Nael's Abbrev tables use the =:regexp= property which is [[https://github.com/mi
 
 * Installation
 
-Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be [[https://lean-lang.org/install/manual/][installed]].  If you want to use lsp-mode, you might need to install lsp-mode before ~nael-lsp~.
+Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be [[https://lean-lang.org/install/manual/][installed]].
 
 ** Installation from Melpa
 
@@ -84,6 +84,8 @@ Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be 
 Then type =M-x package-refresh-contents RET=.  Finally, choose one of the following approaches:  To install interactively, type =M-x package-install RET nael RET=.  To install via package selection, add =(setopt package-selected-packages '(nael))= to your init file, evaluate it, and type =M-x package-install-selected-packages RET=.  To install via Use-Package, add =(use-package nael :ensure t)= to your init file and evaluate it.
 
 ** Installation from Sources
+
+When installing ~nael-lsp~ from sources, lsp-mode might not be pulled in and installed as dependency automatically, i.e. you might need to install it manually beforehand.
 
 *** Manual Installation
 
