@@ -1,4 +1,4 @@
-;;; nael-lsp.el --- lsp-mode for Nael  -*- lexical-binding: t; -*-
+;;; nael-lsp.el --- Nael and lsp-mode  -*- lexical-binding: t; -*-
 
 ;; Copyright © 2025 Mekeor Melire
 
