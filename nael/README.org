@@ -69,7 +69,7 @@ Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be 
 
 ** Installation from Melpa
 
-~nael~ is available on [[https://melpa.org/#/nael][Melpa]] (and [[https://stable.melpa.org/#/nael][Melpa-Stable]]) but ~nael-lsp~ not yet.  To install, first add the package-archive by adding this code to your Emacs initialization file and evaluating it interactively.
+~nael~ and ~nael-lsp~ packages are available on [[https://melpa.org/#/nael][Melpa]] (and [[https://stable.melpa.org/#/nael][Melpa-Stable]]).  To install, first add the package-archive by adding this code to your Emacs initialization file and evaluating it interactively.
 
 #+begin_src emacs-lisp
 (require 'package)
@@ -77,7 +77,7 @@ Nael's LSP-based features (via Eglot or lsp-mode), require Lean version 4 to be 
 (package-initialize)
 #+end_src
 
-Then type =M-x package-refresh-contents RET=.  Finally, choose one of the following approaches:  To install interactively, type =M-x package-install RET nael RET=.  To install via package selection, add =(setopt package-selected-packages '(nael))= to your init file, evaluate it, and type =M-x package-install-selected-packages RET=.  To install via Use-Package, add =(use-package nael :ensure t)= to your init file and evaluate it.
+Then type =M-x package-refresh-contents RET=.  Finally, choose one of the following approaches:  ⦿ To install interactively, type =M-x package-install RET nael RET=.  ⦿ To install via package selection, add =(setopt package-selected-packages '(nael))= to your init file, evaluate it, and type =M-x package-install-selected-packages RET=.  ⦿ To install via Use-Package, add =(use-package nael :ensure t)= to your init file and evaluate it.
 
 ** Installation from Sources
 
