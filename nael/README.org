@@ -161,9 +161,9 @@ Since version 30 from 2025, Emacs' popular ~use-package~ macro supports a =:vc= 
 ** Version 0.8.0 from 2026-12-16
 
 - Fix bugs related to automatic abbreviation expansion:
-- =\. SPC= correctly now expands to =· = with a space behind, all while the cursor is positioned at after the space character.
-- Adjacent abbreviations expand correctly, i.e. =\.\. SPC= expands to two middle dots and a space.
-- Two abbreviations have been dropped: "\" (backspace); and "+ " (plus and space).
+- Backslash-dot-space now correctly expands to middledot-space, all while the cursor is positioned after the space character.
+- Adjacent abbreviations expand correctly, i.e. backslash-dot-backslash expands the first abbreviation, resulting in middledot-backslash.
+- Two abbreviations have been dropped, namely backslash and plus-space.
 
 ** Version 0.7.0 from 2025-12-15
 

@@ -268,11 +268,11 @@ Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @
 @item
 Fix bugs related to automatic abbreviation expansion:
 @item
-@samp{\. SPC} correctly now expands to =· = with a space behind, all while the cursor is positioned at after the space character.
+Backslash-dot-space now correctly expands to middledot-space, all while the cursor is positioned after the space character.
 @item
-Adjacent abbreviations expand correctly, i.e. @samp{\.\. SPC} expands to two middle dots and a space.
+Adjacent abbreviations expand correctly, i.e. backslash-dot-backslash expands the first abbreviation, resulting in middledot-backslash.
 @item
-Two abbreviations have been dropped: "\" (backspace); and "+ " (plus and space).
+Two abbreviations have been dropped, namely backslash and plus-space.
 @end itemize
 
 @node Version 070 from 2025-12-15

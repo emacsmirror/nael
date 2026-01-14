@@ -322,12 +322,13 @@ File: nael.info,  Node: Version 080 from 2026-12-16,  Next: Version 070 from 202
 =================================
 
    • Fix bugs related to automatic abbreviation expansion:
-   • ‘\. SPC’ correctly now expands to =· = with a space behind, all
-     while the cursor is positioned at after the space character.
-   • Adjacent abbreviations expand correctly, i.e.  ‘\.\. SPC’ expands
-     to two middle dots and a space.
-   • Two abbreviations have been dropped: "\" (backspace); and "+ "
-     (plus and space).
+   • Backslash-dot-space now correctly expands to middledot-space, all
+     while the cursor is positioned after the space character.
+   • Adjacent abbreviations expand correctly, i.e.
+     backslash-dot-backslash expands the first abbreviation, resulting
+     in middledot-backslash.
+   • Two abbreviations have been dropped, namely backslash and
+     plus-space.
 
 
 File: nael.info,  Node: Version 070 from 2025-12-15,  Next: Version 062 from 2025-11-30,  Prev: Version 080 from 2026-12-16,  Up: Changelog
@@ -404,10 +405,10 @@ Ref: Installation via package-vc-selected-packages9127
 Ref: Installation via use-package vc10224
 Node: Changelog11042
 Node: Version 080 from 2026-12-1611425
-Node: Version 070 from 2025-12-1512012
-Node: Version 062 from 2025-11-3012521
-Node: Version 060 from 2025-11-3012874
-Node: License and Maintenance13972
+Node: Version 070 from 2025-12-1512034
+Node: Version 062 from 2025-11-3012543
+Node: Version 060 from 2025-11-3012896
+Node: License and Maintenance13994
 
 End Tag Table
 
