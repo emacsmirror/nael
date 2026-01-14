@@ -1,6 +1,6 @@
 ;;; nael-skeleton.el --- Skeleton for Nael  -*- lexical-binding: t; -*-
 
-;; Copyright © 2025 Mekeor Melire
+;; Copyright © 2026 Mekeor Melire
 
 ;; SPDX-License-Identifier: GPL-3.0-only
 
