@@ -65,11 +65,10 @@
   :link '(emacs-library-link :tag "Source Lisp File" "nael-abbrev.el")
   :prefix "nael-abbrev-")
 
-(defconst nael-abbrev-regexp "\\(\\\\[ -#&-+.-:<-?A-~-]+\\)")
+(defconst nael-abbrev-regexp "\\(\\\\[]-~!-#&-+.-:<-?A-[-]+\\)")
 
 (define-abbrev-table 'nael-abbrev-singleton-table
-  '(("\\\\" "\\" nil :system t)
-    ("\\a" "α" nil :system t)
+  '(("\\a" "α" nil :system t)
     ("\\b" "β" nil :system t)
     ("\\c" "χ" nil :system t)
     ("\\d" "↓" nil :system t)
@@ -1076,7 +1075,6 @@
     ("\\quot" "⧸" nil :system t)
     ("\\bigsolidus" "⧸" nil :system t)
     ("\\/" "⧸" nil :system t)
-    ("\\+ " "⊹" nil :system t)
     ("\\b+" "⊞" nil :system t)
     ("\\b-" "⊟" nil :system t)
     ("\\bx" "⊠" nil :system t)
@@ -2134,7 +2132,7 @@ This command is inspired by `quail-show-key'."
 (defun nael-abbrev-expand ()
   "Expand symbol-including abbreviation before point."
   (and abbrev-mode
-       (string-match-p "[^ -#&-+.-:<-?A-~-]"
+       (string-match-p "[^]-~!-#&-+.-:<-?A-[-]"
                        (char-to-string last-command-event))
        (let ((pt (point))) (backward-char)
             (unless (expand-abbrev)

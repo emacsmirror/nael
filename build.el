@@ -93,14 +93,23 @@
 
 (defconst build-abbrev-alist
   (when (member "abbreviations" build-targets)
-    (with-temp-buffer
-      (url-insert-file-contents
-       (concat "https://raw.githubusercontent.com"
-               "/leanprover/vscode-lean4/refs/heads/master"
-               "/lean4-unicode-input/src/abbreviations.json"))
-      (goto-char (point-min))
-      (let ((json-key-type 'string))
-        (json-read))))
+    ;; 1. Drop abbreviations that contain a space character so that
+    ;;    regexps can be used to distinguish abbreviation-expanding
+    ;;    character-insertions from abbreviation endings.  As of
+    ;;    writing this, ("+ " . "⊹") is the only affected pair.
+    ;; 2. Drop abbreviations that contain a backslash character so
+    ;;    that adjacent backslash-prefixed abbreviations expand
+    ;;    correctly typing \.\. SPC will yield ··.
+    (seq-remove
+     (lambda (pair) (string-match-p "[ \\]" (car pair)))
+     (with-temp-buffer
+       (url-insert-file-contents
+        (concat "https://raw.githubusercontent.com"
+                "/leanprover/vscode-lean4/refs/heads/master"
+                "/lean4-unicode-input/src/abbreviations.json"))
+       (goto-char (point-min))
+       (let ((json-key-type 'string))
+         (json-read)))))
   "Raw abbreviations alist mapping strings to strings.
 
 Keys may include `$CURSOR'.")
