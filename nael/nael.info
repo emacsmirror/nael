@@ -61,6 +61,7 @@ Installation from Sources
 
 Changelog
 
+* Version 0.8.0 from 2026-12-16: Version 080 from 2026-12-16.
 * Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15.
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30.
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30.
@@ -309,14 +310,29 @@ File: nael.info,  Node: Changelog,  Next: License and Maintenance,  Prev: Instal
 
 * Menu:
 
+* Version 0.8.0 from 2026-12-16: Version 080 from 2026-12-16.
 * Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15.
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30.
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30.
 
 
-File: nael.info,  Node: Version 070 from 2025-12-15,  Next: Version 062 from 2025-11-30,  Up: Changelog
+File: nael.info,  Node: Version 080 from 2026-12-16,  Next: Version 070 from 2025-12-15,  Up: Changelog
 
-5.1 Version 0.7.0 from 2025-12-15
+5.1 Version 0.8.0 from 2026-12-16
+=================================
+
+   • Fix bugs related to automatic abbreviation expansion:
+   • ‘\. SPC’ correctly now expands to =· = with a space behind, all
+     while the cursor is positioned at after the space character.
+   • Adjacent abbreviations expand correctly, i.e.  ‘\.\. SPC’ expands
+     to two middle dots and a space.
+   • Two abbreviations have been dropped: "\" (backspace); and "+ "
+     (plus and space).
+
+
+File: nael.info,  Node: Version 070 from 2025-12-15,  Next: Version 062 from 2025-11-30,  Prev: Version 080 from 2026-12-16,  Up: Changelog
+
+5.2 Version 0.7.0 from 2025-12-15
 =================================
 
    • Remove the ‘nael-markdown’ package.  Move its code into ‘nael’
@@ -327,7 +343,7 @@ File: nael.info,  Node: Version 070 from 2025-12-15,  Next: Version 062 from 202
 
 File: nael.info,  Node: Version 062 from 2025-11-30,  Next: Version 060 from 2025-11-30,  Prev: Version 070 from 2025-12-15,  Up: Changelog
 
-5.2 Version 0.6.2 from 2025-11-30
+5.3 Version 0.6.2 from 2025-11-30
 =================================
 
    • Re-add readme as .texi and .info to repository because Nael might
@@ -336,7 +352,7 @@ File: nael.info,  Node: Version 062 from 2025-11-30,  Next: Version 060 from 202
 
 File: nael.info,  Node: Version 060 from 2025-11-30,  Prev: Version 062 from 2025-11-30,  Up: Changelog
 
-5.3 Version 0.6.0 from 2025-11-30
+5.4 Version 0.6.0 from 2025-11-30
 =================================
 
    • Remove .texi, .info, and -autoloads.el files from repository.
@@ -376,21 +392,22 @@ GPL-3.0.
 
 Tag Table:
 Node: Top192
-Node: Get Started2245
-Node: Usage2582
-Node: Configuration4325
-Node: Installation5691
-Node: Installation from Melpa6012
-Node: Installation from Sources7048
-Node: Manual Installation7456
-Node: Installation via package-vc8392
-Ref: Installation via package-vc-selected-packages9065
-Ref: Installation via use-package vc10162
-Node: Changelog10980
-Node: Version 070 from 2025-12-1511301
-Node: Version 062 from 2025-11-3011774
-Node: Version 060 from 2025-11-3012127
-Node: License and Maintenance13225
+Node: Get Started2307
+Node: Usage2644
+Node: Configuration4387
+Node: Installation5753
+Node: Installation from Melpa6074
+Node: Installation from Sources7110
+Node: Manual Installation7518
+Node: Installation via package-vc8454
+Ref: Installation via package-vc-selected-packages9127
+Ref: Installation via use-package vc10224
+Node: Changelog11042
+Node: Version 080 from 2026-12-1611425
+Node: Version 070 from 2025-12-1512012
+Node: Version 062 from 2025-11-3012521
+Node: Version 060 from 2025-11-3012874
+Node: License and Maintenance13972
 
 End Tag Table
 

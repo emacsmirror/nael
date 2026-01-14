@@ -52,6 +52,7 @@ Installation from Sources
 
 Changelog
 
+* Version 0.8.0 from 2026-12-16: Version 080 from 2026-12-16. 
 * Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15. 
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30. 
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30. 
@@ -254,10 +255,25 @@ Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @
 @chapter Changelog
 
 @menu
+* Version 0.8.0 from 2026-12-16: Version 080 from 2026-12-16. 
 * Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15. 
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30. 
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30. 
 @end menu
+
+@node Version 080 from 2026-12-16
+@section Version 0.8.0 from 2026-12-16
+
+@itemize
+@item
+Fix bugs related to automatic abbreviation expansion:
+@item
+@samp{\. SPC} correctly now expands to =· = with a space behind, all while the cursor is positioned at after the space character.
+@item
+Adjacent abbreviations expand correctly, i.e. @samp{\.\. SPC} expands to two middle dots and a space.
+@item
+Two abbreviations have been dropped: "\" (backspace); and "+ " (plus and space).
+@end itemize
 
 @node Version 070 from 2025-12-15
 @section Version 0.7.0 from 2025-12-15
