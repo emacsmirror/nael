@@ -2130,13 +2130,20 @@ This command is inspired by `quail-show-key'."
 ;;;; Expansion and Configuration:
 
 (defun nael-abbrev-expand ()
-  "Expand symbol-including abbreviation before point."
-  (and abbrev-mode
-       (string-match-p "[^]-~!-#&-+.-:<-?A-[-]"
-                       (char-to-string last-command-event))
-       (let ((pt (point))) (backward-char)
-            (unless (expand-abbrev)
-              (goto-char pt)))))
+  "Expand symbol-including abbreviation before point.
+
+This function is meant to be used in `post-self-insert-hook'.  In
+particular, it checks what character `last-command-event' inserted and
+assumes that the abbreviation was located before that inserted
+character."
+  (when (string-match-p "[^]-~!-#&-+.-:<-?A-[-]"
+                        (char-to-string last-command-event))
+    ;; Quit when called at beginning of buffer or similar.
+    (when (condition-case nil (backward-char)
+            (error nil)
+            (:success t))
+      (expand-abbrev)
+      (forward-char))))
 
 ;;;###autoload
 (defun nael-abbrev-configure ()
