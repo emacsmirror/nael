@@ -282,7 +282,7 @@ Two abbreviations have been dropped, namely backslash and plus-space.
 @item
 Remove the @code{nael-markdown} package.  Move its code into @code{nael} package instead.  (Wrapped into @code{with-eval-after-load}.)
 @item
-@code{nael} is now on @uref{https://melpa.org/#/nael, Melpa} and @uref{https://stable.melpa.org/#/nael, Melpa-Stable}.  @code{nael-lsp} is not there yet.
+@code{nael} is now on @uref{https://melpa.org/#/nael, Melpa} and @uref{https://stable.melpa.org/#/nael, Melpa-Stable}.  @code{nael-lsp} is not there yet.  (Addendum: @code{nael-lsp} is available on Melpa (and Melpa-Stable) too, since )
 @end itemize
 
 @node Version 062 from 2025-11-30

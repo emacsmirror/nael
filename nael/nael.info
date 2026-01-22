@@ -340,6 +340,8 @@ File: nael.info,  Node: Version 070 from 2025-12-15,  Next: Version 062 from 202
      package instead.  (Wrapped into ‘with-eval-after-load’.)
    • ‘nael’ is now on Melpa (https://melpa.org/#/nael) and Melpa-Stable
      (https://stable.melpa.org/#/nael).  ‘nael-lsp’ is not there yet.
+     (Addendum: ‘nael-lsp’ is available on Melpa (and Melpa-Stable) too,
+     since )
 
 
 File: nael.info,  Node: Version 062 from 2025-11-30,  Next: Version 060 from 2025-11-30,  Prev: Version 070 from 2025-12-15,  Up: Changelog
@@ -406,9 +408,9 @@ Ref: Installation via use-package vc10224
 Node: Changelog11042
 Node: Version 080 from 2026-12-1611425
 Node: Version 070 from 2025-12-1512034
-Node: Version 062 from 2025-11-3012543
-Node: Version 060 from 2025-11-3012896
-Node: License and Maintenance13994
+Node: Version 062 from 2025-11-3012633
+Node: Version 060 from 2025-11-3012986
+Node: License and Maintenance14084
 
 End Tag Table
 

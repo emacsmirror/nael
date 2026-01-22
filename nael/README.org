@@ -168,7 +168,7 @@ Since version 30 from 2025, Emacs' popular ~use-package~ macro supports a =:vc= 
 ** Version 0.7.0 from 2025-12-15
 
 - Remove the ~nael-markdown~ package.  Move its code into ~nael~ package instead.  (Wrapped into ~with-eval-after-load~.)
-- ~nael~ is now on [[https://melpa.org/#/nael][Melpa]] and [[https://stable.melpa.org/#/nael][Melpa-Stable]].  ~nael-lsp~ is not there yet.
+- ~nael~ is now on [[https://melpa.org/#/nael][Melpa]] and [[https://stable.melpa.org/#/nael][Melpa-Stable]].  ~nael-lsp~ is not there yet.  (Addendum: ~nael-lsp~ is available on Melpa (and Melpa-Stable) too, since )
 
 ** Version 0.6.2 from 2025-11-30
 
