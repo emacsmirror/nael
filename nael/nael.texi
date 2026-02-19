@@ -52,6 +52,7 @@ Installation from Sources
 
 Changelog
 
+* Development::
 * Version 0.8.0 from 2026-12-16: Version 080 from 2026-12-16. 
 * Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15. 
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30. 
@@ -255,11 +256,20 @@ Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @
 @chapter Changelog
 
 @menu
+* Development::
 * Version 0.8.0 from 2026-12-16: Version 080 from 2026-12-16. 
 * Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15. 
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30. 
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30. 
 @end menu
+
+@node Development
+@section Development
+
+@itemize
+@item
+Improved rules for Font-Lock: Highlight identifiers in their definitions. For example, in @samp{def foo : Nat :​=​ 123}, @samp{foo} will be highlighted (via Font-Lock).
+@end itemize
 
 @node Version 080 from 2026-12-16
 @section Version 0.8.0 from 2026-12-16

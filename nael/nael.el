@@ -143,11 +143,17 @@
     table)
   "Syntax table used in `nael-mode'.")
 
+(defconst nael-syntax-definition-pre
+  (rx (zero-or-more (or "noncomputable" "partial" "unsafe"
+                        "private" "protected" "public" space))))
+
 (defconst nael-syntax-definition
   (rx
    ;; Use `line-start' rather than `word-start' for speed.
+   (zero-or-more line-start (regexp nael-syntax-definition-pre))
    line-start
    (group
+    (regexp nael-syntax-definition-pre)
     (or "axiom" "class" "constant" "def" "definition" "inductive"
         "instance" "lemma" "opaque" "structure" "theorem"
         (group "class" (zero-or-more space) "inductive")))
@@ -157,7 +163,7 @@
            "{" (zero-or-more (not (any "}"))) "}"
            (zero-or-more space)))
    (zero-or-more space)
-   (group (zero-or-more (not (any " \t\n\r{([")))))
+   (group-n 99 (zero-or-more (not (any " \t\n\r{([:")))))
   "Regular expression matching definitions.")
 
 (defvar nael-font-lock-defaults
@@ -187,7 +193,9 @@
           '(1 'font-lock-function-name-face))
 
     ;; Definitions:
-    nael-syntax-definition
+    (list nael-syntax-definition
+          '(1 'font-lock-keyword-face)
+          '(99 'font-lock-function-name-face))
 
     ;; Constants which have a keyword as subterm:
     (cons "∘if"
@@ -210,7 +218,7 @@
                "match" "match_syntax" "mut" "mutual" "namespace"
                "nomatch" "noncomputable" "notation" "open" "opaque"
                "partial" "postfix" "precedence" "prefix" "prelude"
-               "private" "protected" "raw" "rec"
+               "private" "protected" "public" "raw" "rec"
                "register_builtin_option" "renaming" "return" "run_cmd"
                "scoped" "section" "set_option" "show" "structure"
                "suffices" "syntax" "then" "theorem" "this" "try"
@@ -354,7 +362,7 @@
       (symbol-at-point))))
 
 (defvar nael-imenu-generic-expression
-  (list (list nil nael-syntax-definition 4))
+  (list (list nil nael-syntax-definition 99))
   "`imenu-generic-expression' for `nael-mode'.")
 
 ;;;; Preparation:
@@ -537,6 +545,12 @@ least evaluated an autoload statement for
 ;;;###autoload
 (add-to-list 'auto-mode-alist
              (cons "\\.lean\\'" 'nael-mode))
+
+(add-to-list 'project-vc-extra-root-markers
+             "lakefile.lean")
+
+(add-to-list 'project-vc-extra-root-markers
+             "lakefile.toml")
 
 (with-eval-after-load 'org-src
   (add-to-list 'org-src-lang-modes
