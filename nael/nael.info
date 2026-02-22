@@ -61,7 +61,7 @@ Installation from Sources
 
 Changelog
 
-* Development::
+* Version 0.8.2 from 2026-02-22: Version 082 from 2026-02-22.
 * Version 0.8.0 from 2026-12-16: Version 080 from 2026-12-16.
 * Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15.
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30.
@@ -311,24 +311,24 @@ File: nael.info,  Node: Changelog,  Next: License and Maintenance,  Prev: Instal
 
 * Menu:
 
-* Development::
+* Version 0.8.2 from 2026-02-22: Version 082 from 2026-02-22.
 * Version 0.8.0 from 2026-12-16: Version 080 from 2026-12-16.
 * Version 0.7.0 from 2025-12-15: Version 070 from 2025-12-15.
 * Version 0.6.2 from 2025-11-30: Version 062 from 2025-11-30.
 * Version 0.6.0 from 2025-11-30: Version 060 from 2025-11-30.
 
 
-File: nael.info,  Node: Development,  Next: Version 080 from 2026-12-16,  Up: Changelog
+File: nael.info,  Node: Version 082 from 2026-02-22,  Next: Version 080 from 2026-12-16,  Up: Changelog
 
-5.1 Development
-===============
+5.1 Version 0.8.2 from 2026-02-22
+=================================
 
    • Improved rules for Font-Lock: Highlight identifiers in their
-     definitions.  For example, in ‘def foo : Nat :​=​ 123’, ‘foo’ will be
+     definitions.  For example, in “def foo : Nat := 123”, ‘foo’ will be
      highlighted (via Font-Lock).
 
 
-File: nael.info,  Node: Version 080 from 2026-12-16,  Next: Version 070 from 2025-12-15,  Prev: Development,  Up: Changelog
+File: nael.info,  Node: Version 080 from 2026-12-16,  Next: Version 070 from 2025-12-15,  Prev: Version 082 from 2026-02-22,  Up: Changelog
 
 5.2 Version 0.8.0 from 2026-12-16
 =================================
@@ -407,23 +407,23 @@ GPL-3.0.
 
 Tag Table:
 Node: Top192
-Node: Get Started2323
-Node: Usage2660
-Node: Configuration4403
-Node: Installation5769
-Node: Installation from Melpa6090
-Node: Installation from Sources7126
-Node: Manual Installation7534
-Node: Installation via package-vc8470
-Ref: Installation via package-vc-selected-packages9143
-Ref: Installation via use-package vc10240
-Node: Changelog11058
-Node: Development11457
-Node: Version 080 from 2026-12-1611771
-Node: Version 070 from 2025-12-1512400
-Node: Version 062 from 2025-11-3012999
-Node: Version 060 from 2025-11-3013352
-Node: License and Maintenance14450
+Node: Get Started2369
+Node: Usage2706
+Node: Configuration4449
+Node: Installation5815
+Node: Installation from Melpa6136
+Node: Installation from Sources7172
+Node: Manual Installation7580
+Node: Installation via package-vc8516
+Ref: Installation via package-vc-selected-packages9189
+Ref: Installation via use-package vc10286
+Node: Changelog11104
+Node: Version 082 from 2026-02-2211549
+Node: Version 080 from 2026-12-1611909
+Node: Version 070 from 2025-12-1512554
+Node: Version 062 from 2025-11-3013153
+Node: Version 060 from 2025-11-3013506
+Node: License and Maintenance14604
 
 End Tag Table
 
