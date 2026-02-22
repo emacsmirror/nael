@@ -268,7 +268,7 @@ Since version 30 from 2025, Emacs' popular @code{use-package} macro supports a @
 
 @itemize
 @item
-Improved rules for Font-Lock: Highlight identifiers in their definitions. For example, in “def foo : Nat := 123”, @samp{foo} will be highlighted (via Font-Lock).
+Improved rules for Font-Lock: Highlight identifiers in their definitions.  For example, in “def foo : Nat := 123”, @samp{foo} will be highlighted (via Font-Lock).
 @end itemize
 
 @node Version 080 from 2026-12-16

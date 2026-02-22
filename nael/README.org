@@ -160,7 +160,7 @@ Since version 30 from 2025, Emacs' popular ~use-package~ macro supports a =:vc= 
 
 ** Version 0.8.2 from 2026-02-22
 
-- Improved rules for Font-Lock: Highlight identifiers in their definitions. For example, in “def foo : Nat := 123”, =foo= will be highlighted (via Font-Lock).
+- Improved rules for Font-Lock: Highlight identifiers in their definitions.  For example, in “def foo : Nat := 123”, =foo= will be highlighted (via Font-Lock).
 
 ** Version 0.8.0 from 2026-12-16
 
