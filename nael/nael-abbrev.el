@@ -1887,8 +1887,6 @@
     ("\\sigmaobj" "∐" nil :system t)
     ("\\xf" "×ᶠ" nil :system t)
     ("\\exf" "∃ᶠ" nil :system t)
-    ("\\c[" "⦃" nil :system t)
-    ("\\c]" "⦄" nil :system t)
     ("\\Yot" "Ϳ" nil :system t)
     ("\\goal" "⊢" nil :system t)
     ("\\Vdash" "⊩" nil :system t)
