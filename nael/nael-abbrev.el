@@ -2154,7 +2154,7 @@ Buffer-locally sets `local-abbrev-table' to
 `post-self-insert-hook' so that symbol-including abbreviations are
 expanded whenever suitable characters are inserted."
   (when nael-abbrev-table
-    (setq-local local-abbrev-table nael-abbrev-table))
+    (setq-local local-abbrev-table nael-abbrev-configure-table))
   (add-hook 'post-self-insert-hook
             #'nael-abbrev-expand nil 'local)
   (when nael-abbrev-capf
